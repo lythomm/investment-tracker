@@ -38,3 +38,22 @@ export const getAccounts = query({
       .collect();
   },
 });
+
+export const deleteAccount = mutation({
+  args: {
+    id: v.id("accounts"),
+  },
+  handler: async (ctx: any, args: any) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Non autorisé.");
+    }
+
+    const account = await ctx.db.get(args.id);
+    if (!account || account.userId !== userId) {
+      throw new Error("Compte non trouvé.");
+    }
+
+    await ctx.db.delete(args.id);
+  },
+});

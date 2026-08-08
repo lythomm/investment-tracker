@@ -2,8 +2,8 @@
 
 export const dynamic = "force-dynamic";
 
-import { useState, useEffect } from "react";
-import { useConvexAuth, useQuery, useMutation } from "convex/react";
+import { useState } from "react";
+import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { api } from "../../convex/_generated/api";
 import { Navbar } from "@/components/Navbar";
@@ -35,7 +35,9 @@ export default function Home() {
   const queryArgs = selectedAccountId ? { accountId: selectedAccountId as any } : {};
 
   // Convex Queries
-  const accounts = useQuery(api.accounts.getAccounts) || [];
+  const rawAccounts = useQuery(api.accounts.getAccounts, isAuthenticated ? {} : "skip");
+  const accounts = rawAccounts || [];
+  
   const portfolioSummary = useQuery(
     api.portfolio.getPortfolioSummary,
     isAuthenticated ? queryArgs : "skip"
@@ -56,15 +58,7 @@ export default function Home() {
     isAuthenticated ? queryArgs : "skip"
   ) || [];
 
-  const createAccount = useMutation(api.accounts.createAccount);
-
-  useEffect(() => {
-    if (isAuthenticated && accounts && accounts.length === 0) {
-      createAccount({ name: "PEA Principal", type: "PEA" });
-    }
-  }, [isAuthenticated, accounts]);
-
-  if (isLoading) {
+  if (isLoading || (isAuthenticated && rawAccounts === undefined)) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-900">
         <Loader2 className="h-8 w-8 animate-spin" />

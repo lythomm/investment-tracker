@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { X, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { Modal } from "./ui/Modal";
 
 interface AddTransactionModalProps {
   isOpen: boolean;
@@ -27,8 +28,6 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
   const getOrCreateAsset = useMutation(api.assets.getOrCreateAsset);
   const addTransaction = useMutation(api.transactions.addTransaction);
   const updateSnapshotForMonth = useMutation(api.snapshots.updateSnapshotForMonth);
-
-  if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,166 +64,156 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs">
-      <div className="w-full max-w-lg rounded-3xl bg-white border border-slate-200 p-6 sm:p-8 overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-          <h2 className="text-2xl font-normal text-slate-900 font-serif-display">
-            Nouvelle Transaction
-          </h2>
-          <button
-            onClick={onClose}
-            className="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
-          >
-            <X className="h-5 w-5" />
-          </button>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Nouvelle Transaction"
+      maxWidth="lg"
+    >
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
+            {error}
+          </div>
+        )}
+
+        {/* Type Toggle Pills */}
+        <div className="grid grid-cols-3 gap-1 rounded-full border border-slate-200 bg-slate-50 p-1">
+          {(["ACHAT", "VENTE", "DIVIDENDE"] as const).map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => setType(t)}
+              className={`rounded-full py-1.5 text-xs font-semibold transition ${
+                type === t
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              {t}
+            </button>
+          ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
-              {error}
-            </div>
-          )}
-
-          {/* Type Toggle Pills */}
-          <div className="grid grid-cols-3 gap-1 rounded-full border border-slate-200 bg-slate-50 p-1">
-            {(["ACHAT", "VENTE", "DIVIDENDE"] as const).map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setType(t)}
-                className={`rounded-full py-1.5 text-xs font-semibold transition ${
-                  type === t
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-600 hover:text-slate-900"
-                }`}
-              >
-                {t}
-              </button>
+        <div>
+          <label className="block text-xs font-semibold text-slate-700 mb-1">Compte</label>
+          <select
+            value={accountId}
+            onChange={(e) => setAccountId(e.target.value)}
+            className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+            required
+          >
+            {accounts.map((acc) => (
+              <option key={acc._id} value={acc._id}>
+                {acc.name} ({acc.type})
+              </option>
             ))}
-          </div>
+          </select>
+        </div>
 
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Compte</label>
-            <select
-              value={accountId}
-              onChange={(e) => setAccountId(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
-              required
-            >
-              {accounts.map((acc) => (
-                <option key={acc._id} value={acc._id}>
-                  {acc.name} ({acc.type})
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Ticker (ex: CW8)</label>
-              <input
-                type="text"
-                placeholder="CW8"
-                value={ticker}
-                onChange={(e) => setTicker(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 uppercase focus:border-slate-900 focus:outline-none"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Type d'Actif</label>
-              <select
-                value={assetType}
-                onChange={(e) => setAssetType(e.target.value as any)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
-              >
-                <option value="ETF">ETF</option>
-                <option value="Action">Action</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Nom complet</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Ticker (ex: CW8)</label>
             <input
               type="text"
-              placeholder="Amundi MSCI World"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+              placeholder="CW8"
+              value={ticker}
+              onChange={(e) => setTicker(e.target.value)}
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 uppercase focus:border-slate-900 focus:outline-none"
+              required
             />
           </div>
-
-          <div className="grid grid-cols-3 gap-2">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Quantité</label>
-              <input
-                type="number"
-                step="any"
-                placeholder="10"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Prix (€)</label>
-              <input
-                type="number"
-                step="any"
-                placeholder="500"
-                value={unitPrice}
-                onChange={(e) => setUnitPrice(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Frais (€)</label>
-              <input
-                type="number"
-                step="any"
-                placeholder="0"
-                value={fees}
-                onChange={(e) => setFees(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
-              />
-            </div>
-          </div>
-
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Date</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Type d'Actif</label>
+            <select
+              value={assetType}
+              onChange={(e) => setAssetType(e.target.value as any)}
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+            >
+              <option value="ETF">ETF</option>
+              <option value="Action">Action</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-slate-700 mb-1">Nom complet</label>
+          <input
+            type="text"
+            placeholder="Amundi MSCI World"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+          />
+        </div>
+
+        <div className="grid grid-cols-3 gap-2">
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Quantité</label>
             <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+              type="number"
+              step="any"
+              placeholder="10"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
               className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
               required
             />
           </div>
-
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-full px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
-            >
-              Annuler
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
-            >
-              <CheckCircle2 className="h-4 w-4" />
-              {loading ? "Enregistrement..." : "Ajouter la transaction"}
-            </button>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Prix (€)</label>
+            <input
+              type="number"
+              step="any"
+              placeholder="500"
+              value={unitPrice}
+              onChange={(e) => setUnitPrice(e.target.value)}
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+              required
+            />
           </div>
-        </form>
-      </div>
-    </div>
+          <div>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Frais (€)</label>
+            <input
+              type="number"
+              step="any"
+              placeholder="0"
+              value={fees}
+              onChange={(e) => setFees(e.target.value)}
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-slate-700 mb-1">Date</label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+            required
+          />
+        </div>
+
+        <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-full px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
+          >
+            Annuler
+          </button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
+          >
+            <CheckCircle2 className="h-4 w-4" />
+            {loading ? "Enregistrement..." : "Ajouter la transaction"}
+          </button>
+        </div>
+      </form>
+    </Modal>
   );
 }

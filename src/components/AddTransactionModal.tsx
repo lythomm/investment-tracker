@@ -65,37 +65,39 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-      <div className="glass-card w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900/90 shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between border-b border-slate-800 p-4">
-          <h2 className="text-lg font-bold text-white">Nouvelle Transaction</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs">
+      <div className="w-full max-w-lg rounded-3xl bg-white border border-slate-200 p-6 sm:p-8 overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
+          <h2 className="text-2xl font-normal text-slate-900 font-serif-display">
+            Nouvelle Transaction
+          </h2>
+          <button
+            onClick={onClose}
+            className="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-4 space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-xs text-rose-300">
+            <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
               {error}
             </div>
           )}
 
-          {/* Type Toggle */}
-          <div className="grid grid-cols-3 gap-1 rounded-xl border border-slate-800 bg-slate-950 p-1">
+          {/* Type Toggle Pills */}
+          <div className="grid grid-cols-3 gap-1 rounded-full border border-slate-200 bg-slate-50 p-1">
             {(["ACHAT", "VENTE", "DIVIDENDE"] as const).map((t) => (
               <button
                 key={t}
                 type="button"
                 onClick={() => setType(t)}
-                className={`rounded-lg py-1.5 text-xs font-semibold transition ${
+                className={`rounded-full py-1.5 text-xs font-semibold transition ${
                   type === t
-                    ? t === "ACHAT"
-                      ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                      : t === "VENTE"
-                      ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
-                      : "bg-teal-500/20 text-teal-400 border border-teal-500/30"
-                    : "text-slate-400 hover:text-white"
+                    ? "bg-slate-900 text-white"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 {t}
@@ -104,11 +106,11 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Compte</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Compte</label>
             <select
               value={accountId}
               onChange={(e) => setAccountId(e.target.value)}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
               required
             >
               {accounts.map((acc) => (
@@ -121,22 +123,22 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Ticker (ex: CW8)</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Ticker (ex: CW8)</label>
               <input
                 type="text"
                 placeholder="CW8"
                 value={ticker}
                 onChange={(e) => setTicker(e.target.value)}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white uppercase focus:outline-none focus:border-emerald-500"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 uppercase focus:border-slate-900 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Type d'Actif</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Type d'Actif</label>
               <select
                 value={assetType}
                 onChange={(e) => setAssetType(e.target.value as any)}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
               >
                 <option value="ETF">ETF</option>
                 <option value="Action">Action</option>
@@ -145,77 +147,77 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Nom complet</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Nom complet</label>
             <input
               type="text"
               placeholder="Amundi MSCI World"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
             />
           </div>
 
           <div className="grid grid-cols-3 gap-2">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Quantité</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Quantité</label>
               <input
                 type="number"
                 step="any"
                 placeholder="10"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Prix (€)</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Prix (€)</label>
               <input
                 type="number"
                 step="any"
                 placeholder="500"
                 value={unitPrice}
                 onChange={(e) => setUnitPrice(e.target.value)}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Frais (€)</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Frais (€)</label>
               <input
                 type="number"
                 step="any"
                 placeholder="0"
                 value={fees}
                 onChange={(e) => setFees(e.target.value)}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">Date</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">Date</label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500"
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
               required
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-medium text-slate-400 hover:text-white"
+              className="rounded-full px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2 text-xs font-semibold text-slate-950 hover:bg-emerald-400 disabled:opacity-50"
+              className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
             >
               <CheckCircle2 className="h-4 w-4" />
               {loading ? "Enregistrement..." : "Ajouter la transaction"}

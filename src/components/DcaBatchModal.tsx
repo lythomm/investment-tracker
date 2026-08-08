@@ -23,8 +23,7 @@ interface DcaRow {
 }
 
 export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps) {
-  const currentMonth = new Date().toISOString().substring(0, 7); // YYYY-MM
-  const defaultDate = new Date().toISOString().substring(0, 10); // YYYY-MM-DD
+  const defaultDate = new Date().toISOString().substring(0, 10);
 
   const [date, setDate] = useState(defaultDate);
   const [rows, setRows] = useState<DcaRow[]>([
@@ -108,7 +107,6 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
 
       await addBatchTransactions({ items: itemsToSubmit });
 
-      // Trigger monthly snapshot recalculation
       const yearMonth = date.substring(0, 7);
       await updateSnapshotForMonth({ yearMonth });
 
@@ -121,55 +119,55 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md">
-      <div className="glass-card w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl border border-slate-800 bg-slate-900/90 shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs">
+      <div className="w-full max-w-4xl max-h-[90vh] flex flex-col rounded-3xl bg-white border border-slate-200 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-800 p-4 sm:px-6">
+        <div className="flex items-center justify-between border-b border-slate-100 p-6">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-              <Calendar className="h-5 w-5" />
-            </div>
+            <Calendar className="h-6 w-6 text-slate-800" />
             <div>
-              <h2 className="text-lg font-bold text-white">Formulaire DCA du Mois</h2>
-              <p className="text-xs text-slate-400">
+              <h2 className="text-2xl font-normal text-slate-900 font-serif-display">
+                Formulaire DCA du Mois
+              </h2>
+              <p className="text-xs text-slate-500">
                 Enregistrez vos achats mensuels récurrents en 1 seule étape.
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white"
+            className="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-4 sm:p-6 flex flex-col justify-between">
+        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 flex flex-col justify-between">
           <div className="space-y-6">
             {error && (
-              <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-xs text-rose-300">
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
                 {error}
               </div>
             )}
 
             {/* Date Selection */}
             <div className="max-w-xs">
-              <label className="mb-1 block text-xs font-medium text-slate-300">
+              <label className="mb-1 block text-xs font-semibold text-slate-700">
                 Date du DCA
               </label>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
                 required
               />
             </div>
 
             {/* Batch Rows */}
             <div className="space-y-3">
-              <div className="hidden grid-cols-12 gap-2 text-xs font-semibold text-slate-400 sm:grid">
+              <div className="hidden grid-cols-12 gap-2 text-xs font-semibold text-slate-500 sm:grid px-2">
                 <span className="col-span-2">Ticker (ex: CW8)</span>
                 <span className="col-span-3">Nom (ex: MSCI World)</span>
                 <span className="col-span-2">Compte</span>
@@ -178,40 +176,37 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                 <span className="col-span-1 text-right">Action</span>
               </div>
 
-              {rows.map((row, index) => (
+              {rows.map((row) => (
                 <div
                   key={row.id}
-                  className="grid grid-cols-1 gap-2 rounded-xl border border-slate-800 bg-slate-950/60 p-3 sm:grid-cols-12 sm:items-center sm:p-2"
+                  className="grid grid-cols-1 gap-2 rounded-2xl border border-slate-200 bg-slate-50/60 p-3 sm:grid-cols-12 sm:items-center sm:p-2"
                 >
                   <div className="sm:col-span-2">
-                    <label className="text-[10px] text-slate-400 sm:hidden">Ticker</label>
                     <input
                       type="text"
                       placeholder="CW8"
                       value={row.ticker}
                       onChange={(e) => handleUpdateRow(row.id, "ticker", e.target.value)}
-                      className="w-full rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-xs text-white uppercase focus:border-emerald-500 focus:outline-none"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 uppercase focus:border-slate-900 focus:outline-none"
                       required
                     />
                   </div>
 
                   <div className="sm:col-span-3">
-                    <label className="text-[10px] text-slate-400 sm:hidden">Nom complet</label>
                     <input
                       type="text"
                       placeholder="Amundi MSCI World"
                       value={row.name}
                       onChange={(e) => handleUpdateRow(row.id, "name", e.target.value)}
-                      className="w-full rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-xs text-white focus:border-emerald-500 focus:outline-none"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
                     />
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label className="text-[10px] text-slate-400 sm:hidden">Compte</label>
                     <select
                       value={row.accountId}
                       onChange={(e) => handleUpdateRow(row.id, "accountId", e.target.value)}
-                      className="w-full rounded-lg border border-slate-800 bg-slate-900 px-2 py-1.5 text-xs text-white focus:border-emerald-500 focus:outline-none"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
                       required
                     >
                       {accounts.map((acc) => (
@@ -223,37 +218,35 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label className="text-[10px] text-slate-400 sm:hidden">Quantité</label>
                     <input
                       type="number"
                       step="any"
                       placeholder="1"
                       value={row.quantity}
                       onChange={(e) => handleUpdateRow(row.id, "quantity", e.target.value)}
-                      className="w-full rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-xs text-white focus:border-emerald-500 focus:outline-none"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
                       required
                     />
                   </div>
 
                   <div className="sm:col-span-2">
-                    <label className="text-[10px] text-slate-400 sm:hidden">Prix Unit. (€)</label>
                     <input
                       type="number"
                       step="any"
                       placeholder="500.00"
                       value={row.unitPrice}
                       onChange={(e) => handleUpdateRow(row.id, "unitPrice", e.target.value)}
-                      className="w-full rounded-lg border border-slate-800 bg-slate-900 px-2.5 py-1.5 text-xs text-white focus:border-emerald-500 focus:outline-none"
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
                       required
                     />
                   </div>
 
-                  <div className="flex items-center justify-end sm:col-span-1">
+                  <div className="flex items-center justify-end sm:col-span-1 pr-1">
                     <button
                       type="button"
                       onClick={() => handleRemoveRow(row.id)}
                       disabled={rows.length === 1}
-                      className="rounded-lg p-1.5 text-slate-500 hover:bg-rose-500/10 hover:text-rose-400 disabled:opacity-30"
+                      className="rounded-lg p-1.5 text-slate-400 hover:bg-rose-50 hover:text-rose-600 disabled:opacity-30 transition"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -265,25 +258,25 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
             <button
               type="button"
               onClick={handleAddRow}
-              className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300"
+              className="flex items-center gap-1.5 text-xs font-semibold text-slate-900 hover:text-slate-700"
             >
               <Plus className="h-4 w-4" /> Ajouter une ligne d'achat
             </button>
           </div>
 
           {/* Footer Submit */}
-          <div className="mt-6 flex items-center justify-end gap-3 border-t border-slate-800 pt-4">
+          <div className="mt-6 flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl px-4 py-2 text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-white"
+              className="rounded-full px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-2 text-xs font-semibold text-slate-950 shadow-lg shadow-emerald-500/20 hover:from-emerald-400 hover:to-teal-400 disabled:opacity-50"
+              className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
             >
               <CheckCircle2 className="h-4 w-4" />
               {loading ? "Enregistrement..." : "Valider le DCA du Mois"}

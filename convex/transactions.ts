@@ -84,7 +84,7 @@ export const addBatchTransactions = mutation({
 
 export const getTransactions = query({
   args: {
-    accountId: v.optional(v.id("accounts")),
+    accountId: v.optional(v.union(v.null(), v.id("accounts"))),
   },
   handler: async (ctx: any, args: any) => {
     const userId = await getAuthUserId(ctx);

@@ -30,11 +30,13 @@ export default function Home() {
   const [isAddTxOpen, setIsAddTxOpen] = useState(false);
   const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
 
+  const queryArgs = selectedAccountId ? { accountId: selectedAccountId as any } : {};
+
   // Convex Queries
   const accounts = useQuery(api.accounts.getAccounts) || [];
   const portfolioSummary = useQuery(
     api.portfolio.getPortfolioSummary,
-    isAuthenticated ? { accountId: selectedAccountId as any } : "skip"
+    isAuthenticated ? queryArgs : "skip"
   ) || {
     totalInvested: 0,
     totalValuation: 0,
@@ -49,7 +51,7 @@ export default function Home() {
   ) || [];
   const transactions = useQuery(
     api.transactions.getTransactions,
-    isAuthenticated ? { accountId: selectedAccountId as any } : "skip"
+    isAuthenticated ? queryArgs : "skip"
   ) || [];
 
   const createAccount = useMutation(api.accounts.createAccount);

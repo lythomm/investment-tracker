@@ -32,34 +32,36 @@ export function Navbar({
           </span>
         </div>
 
-        {/* Center: Perfectly Centered Navigation Links (Matching Screenshot) */}
-        <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
+        {/* Center: Fixed-Position Navigation Bar (Zero-Shift Layout) */}
+        <nav className="hidden md:flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
           <button
             onClick={() => onTabChange("dashboard")}
-            className={`transition ${
+            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
               activeTab === "dashboard"
-                ? "bg-slate-900 text-white rounded-full px-6 py-2 text-sm font-medium"
-                : "text-slate-500 font-normal hover:text-slate-900 px-2 py-2 text-sm"
+                ? "bg-slate-900 text-white font-medium"
+                : "text-slate-500 font-normal hover:text-slate-900"
             }`}
           >
             Dashboard
           </button>
+
           <button
             onClick={() => onTabChange("holdings")}
-            className={`transition ${
+            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
               activeTab === "holdings"
-                ? "bg-slate-900 text-white rounded-full px-6 py-2 text-sm font-medium"
-                : "text-slate-500 font-normal hover:text-slate-900 px-2 py-2 text-sm"
+                ? "bg-slate-900 text-white font-medium"
+                : "text-slate-500 font-normal hover:text-slate-900"
             }`}
           >
             Positions
           </button>
+
           <button
             onClick={() => onTabChange("transactions")}
-            className={`transition ${
+            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
               activeTab === "transactions"
-                ? "bg-slate-900 text-white rounded-full px-6 py-2 text-sm font-medium"
-                : "text-slate-500 font-normal hover:text-slate-900 px-2 py-2 text-sm"
+                ? "bg-slate-900 text-white font-medium"
+                : "text-slate-500 font-normal hover:text-slate-900"
             }`}
           >
             Historique

@@ -17,9 +17,9 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
   const isPositive = summary.totalGainAmount >= 0;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[2.5rem] p-6 sm:p-10 border border-slate-200/60 text-white min-h-[220px] flex flex-col justify-end">
+    <div className="relative w-full overflow-hidden rounded-[2.5rem] p-8 sm:p-14 lg:p-16 border border-slate-200/60 text-white min-h-[330px] flex flex-col justify-end">
       {/* Generated Meadow Background Image */}
-      <div
+      <div 
         className="absolute inset-0 bg-cover bg-center pointer-events-none"
         style={{
           backgroundImage: `url('/hero_meadow_bg.png')`,

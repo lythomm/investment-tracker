@@ -32,39 +32,39 @@ export function Navbar({
           </span>
         </div>
 
-        {/* Center: Perfectly Centered Navigation Pill Bar */}
-        <div className="hidden md:flex items-center gap-2 bg-slate-100/90 p-1 rounded-full border border-slate-200 absolute left-1/2 -translate-x-1/2">
+        {/* Center: Perfectly Centered Navigation Links (Matching Screenshot) */}
+        <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
           <button
             onClick={() => onTabChange("dashboard")}
-            className={`px-5 py-2 text-xs font-semibold rounded-full transition ${
+            className={`transition ${
               activeTab === "dashboard"
-                ? "bg-slate-900 text-white"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-slate-900 text-white rounded-full px-6 py-2 text-sm font-medium"
+                : "text-slate-500 font-normal hover:text-slate-900 px-2 py-2 text-sm"
             }`}
           >
             Dashboard
           </button>
           <button
             onClick={() => onTabChange("holdings")}
-            className={`px-5 py-2 text-xs font-semibold rounded-full transition ${
+            className={`transition ${
               activeTab === "holdings"
-                ? "bg-slate-900 text-white"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-slate-900 text-white rounded-full px-6 py-2 text-sm font-medium"
+                : "text-slate-500 font-normal hover:text-slate-900 px-2 py-2 text-sm"
             }`}
           >
             Positions
           </button>
           <button
             onClick={() => onTabChange("transactions")}
-            className={`px-5 py-2 text-xs font-semibold rounded-full transition ${
+            className={`transition ${
               activeTab === "transactions"
-                ? "bg-slate-900 text-white"
-                : "text-slate-600 hover:text-slate-900"
+                ? "bg-slate-900 text-white rounded-full px-6 py-2 text-sm font-medium"
+                : "text-slate-500 font-normal hover:text-slate-900 px-2 py-2 text-sm"
             }`}
           >
             Historique
           </button>
-        </div>
+        </nav>
 
         {/* Right Side: Actions */}
         <div className="flex items-center gap-2">

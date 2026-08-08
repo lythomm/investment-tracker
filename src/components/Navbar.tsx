@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Plus, LogOut } from "lucide-react";
+import { Button } from "./ui/Button";
 
 interface NavbarProps {
   onOpenAddTx?: () => void;
@@ -71,27 +72,28 @@ export function Navbar({
         {/* Right Side: Actions */}
         <div className="flex items-center gap-2">
           {onOpenAddTx && (
-            <button
+            <Button
               onClick={onOpenAddTx}
-              className="flex items-center gap-1.5 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 transition"
-              title="Ajouter une transaction"
+              variant="primary"
+              size="sm"
+              icon={<Plus className="h-3.5 w-3.5" />}
             >
-              <Plus className="h-3.5 w-3.5" />
-              <span>Transaction</span>
-            </button>
+              Transaction
+            </Button>
           )}
 
           <div className="h-5 w-px bg-slate-200 mx-1 hidden sm:block" />
 
           {/* Logout */}
           {onSignOut && (
-            <button
+            <Button
               onClick={onSignOut}
-              className="flex items-center rounded-full border border-slate-200 bg-white p-2 text-slate-600 hover:bg-rose-50 hover:text-rose-600 transition"
+              variant="secondary"
+              size="xs"
+              className="p-2 rounded-full border-slate-200 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200"
               title="Déconnexion"
-            >
-              <LogOut className="h-4 w-4" />
-            </button>
+              icon={<LogOut className="h-4 w-4" />}
+            />
           )}
         </div>
       </div>

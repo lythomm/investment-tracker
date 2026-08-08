@@ -3,8 +3,17 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair", display: "swap" });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Folio — Tracker d'Investissement Long Terme",
@@ -18,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
-      <body className="min-h-full bg-[#edf1f2] text-slate-900 selection:bg-slate-900 selection:text-white">
+      <body className={`${inter.className} min-h-full bg-[#edf1f2] text-slate-900 selection:bg-slate-900 selection:text-white`}>
         <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>

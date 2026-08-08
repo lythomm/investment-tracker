@@ -26,7 +26,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
         }}
       />
       {/* Soft Scrim Gradient Overlay for Text Legibility */}
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/30 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/30 to-transparent pointer-events-none" />
 
       <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         {/* Left Side: Total Balance */}

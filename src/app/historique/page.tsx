@@ -7,7 +7,6 @@ import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { api } from "../../../convex/_generated/api";
 import { Navbar } from "@/components/Navbar";
-import { HeroBanner } from "@/components/HeroBanner";
 import { TransactionsList } from "@/components/TransactionsList";
 import { AddTransactionModal } from "@/components/AddTransactionModal";
 import { AddAccountModal } from "@/components/AddAccountModal";
@@ -27,18 +26,6 @@ export default function HistoriquePage() {
   const rawAccounts = useQuery(api.accounts.getAccounts, isAuthenticated ? {} : "skip");
   const accounts = rawAccounts || [];
 
-  const portfolioSummary = useQuery(
-    api.portfolio.getPortfolioSummary,
-    isAuthenticated ? queryArgs : "skip"
-  ) || {
-    totalInvested: 0,
-    totalValuation: 0,
-    totalGainAmount: 0,
-    totalGainPercent: 0,
-    totalDividends: 0,
-    holdings: [],
-  };
-
   const transactions = useQuery(
     api.transactions.getTransactions,
     isAuthenticated ? queryArgs : "skip"
@@ -55,8 +42,6 @@ export default function HistoriquePage() {
   if (!isAuthenticated) {
     return <AuthScreen />;
   }
-
-  const selectedAccount = accounts.find((a: any) => a._id === selectedAccountId);
 
   return (
     <div className="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col pb-12">
@@ -82,11 +67,6 @@ export default function HistoriquePage() {
           </div>
         ) : (
           <>
-            <HeroBanner
-              summary={portfolioSummary}
-              selectedAccountName={selectedAccount ? `${selectedAccount.name} (${selectedAccount.type})` : null}
-            />
-
             <div className="flex items-center gap-2 overflow-x-auto py-1">
               <button
                 onClick={() => setSelectedAccountId(null)}

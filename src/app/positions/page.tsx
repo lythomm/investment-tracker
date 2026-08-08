@@ -7,7 +7,6 @@ import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { api } from "../../../convex/_generated/api";
 import { Navbar } from "@/components/Navbar";
-import { HeroBanner } from "@/components/HeroBanner";
 import { HoldingsTable } from "@/components/HoldingsTable";
 import { AddTransactionModal } from "@/components/AddTransactionModal";
 import { AddAccountModal } from "@/components/AddAccountModal";
@@ -51,8 +50,6 @@ export default function PositionsPage() {
     return <AuthScreen />;
   }
 
-  const selectedAccount = accounts.find((a: any) => a._id === selectedAccountId);
-
   return (
     <div className="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col pb-12">
       <Navbar
@@ -77,11 +74,6 @@ export default function PositionsPage() {
           </div>
         ) : (
           <>
-            <HeroBanner
-              summary={portfolioSummary}
-              selectedAccountName={selectedAccount ? `${selectedAccount.name} (${selectedAccount.type})` : null}
-            />
-
             <div className="flex items-center gap-2 overflow-x-auto py-1">
               <button
                 onClick={() => setSelectedAccountId(null)}

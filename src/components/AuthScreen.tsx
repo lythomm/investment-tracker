@@ -27,36 +27,32 @@ export function AuthScreen() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-950 p-4 relative overflow-hidden">
-      {/* Background Ambient Glows */}
-      <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-emerald-500/10 blur-3xl" />
-      <div className="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-teal-500/10 blur-3xl" />
-
-      <div className="glass-card relative z-10 w-full max-w-md rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl backdrop-blur-xl">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-200 p-4 relative overflow-hidden">
+      <div className="w-full max-w-md rounded-[2.5rem] bg-white border border-slate-100 p-8 sm:p-10 shadow-2xl">
         {/* Logo Header */}
         <div className="text-center mb-8">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 font-extrabold text-2xl text-slate-950 shadow-xl shadow-emerald-500/20 mb-3">
-            F
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 font-extrabold text-2xl text-white shadow-md mb-3">
+            ❖
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white">
+          <h1 className="text-3xl font-normal tracking-tight text-slate-900 font-serif-display">
             Folio
           </h1>
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs text-slate-500">
             Tracker d'Investissement Long Terme (DCA, PEA & CTO)
           </p>
         </div>
 
         {/* Tab Selector */}
-        <div className="mb-6 grid grid-cols-2 gap-1 rounded-xl border border-slate-800 bg-slate-950 p-1">
+        <div className="mb-6 grid grid-cols-2 gap-1 rounded-full bg-slate-100 p-1.5 border border-slate-200">
           <button
             onClick={() => {
               setStep("signIn");
               setError(null);
             }}
-            className={`rounded-lg py-2 text-xs font-semibold transition ${
+            className={`rounded-full py-2 text-xs font-semibold transition ${
               step === "signIn"
-                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                : "text-slate-400 hover:text-white"
+                ? "bg-slate-900 text-white shadow-sm"
+                : "text-slate-600 hover:text-slate-900"
             }`}
           >
             Se connecter
@@ -66,10 +62,10 @@ export function AuthScreen() {
               setStep("signUp");
               setError(null);
             }}
-            className={`rounded-lg py-2 text-xs font-semibold transition ${
+            className={`rounded-full py-2 text-xs font-semibold transition ${
               step === "signUp"
-                ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                : "text-slate-400 hover:text-white"
+                ? "bg-slate-900 text-white shadow-sm"
+                : "text-slate-600 hover:text-slate-900"
             }`}
           >
             Créer un compte
@@ -77,41 +73,41 @@ export function AuthScreen() {
         </div>
 
         {error && (
-          <div className="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-xs text-rose-300">
+          <div className="mb-4 rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-300">
+            <label className="mb-1 block text-xs font-medium text-slate-700">
               Adresse Email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+              <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
               <input
                 type="email"
                 placeholder="investisseur@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-slate-800 bg-slate-950 pl-10 pr-4 py-2.5 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-10 pr-4 py-3 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-300">
+            <label className="mb-1 block text-xs font-medium text-slate-700">
               Mot de passe
             </label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+              <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-400" />
               <input
                 type="password"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-slate-800 bg-slate-950 pl-10 pr-4 py-2.5 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-10 pr-4 py-3 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
                 required
               />
             </div>
@@ -120,16 +116,16 @@ export function AuthScreen() {
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/25 transition hover:from-emerald-400 hover:to-teal-400 disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-900/10 transition hover:bg-slate-800 disabled:opacity-50"
           >
             <span>{loading ? "Chargement..." : step === "signIn" ? "Connexion" : "S'inscrire"}</span>
             <ArrowRight className="h-4 w-4" />
           </button>
         </form>
 
-        <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-slate-500">
-          <ShieldCheck className="h-4 w-4 text-emerald-400" />
-          Données d'investissement chiffrées & isolées
+        <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-slate-400">
+          <ShieldCheck className="h-4 w-4 text-emerald-600" />
+          Données d'investissement isolées & sécurisées
         </div>
       </div>
     </div>

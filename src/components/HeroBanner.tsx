@@ -17,80 +17,67 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
   const isPositive = summary.totalGainAmount >= 0;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[2rem] border border-slate-800/80 bg-gradient-to-br from-emerald-950/60 via-slate-900 to-slate-950 p-6 sm:p-10 shadow-2xl">
-      {/* Background Subtle Scenic Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.15),transparent_50%)] pointer-events-none" />
-      <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(ellipse_at_top_right,rgba(20,184,166,0.1),transparent_70%)] pointer-events-none" />
+    <div className="relative w-full overflow-hidden rounded-[2.5rem] bg-gradient-to-r from-emerald-900 via-teal-800 to-sky-900 p-6 sm:p-10 shadow-xl border border-white/20 text-white">
+      {/* Background Nature / Meadow Decorative Overlay */}
+      <div 
+        className="absolute inset-0 opacity-40 mix-blend-overlay bg-cover bg-center pointer-events-none"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80')`,
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-900/40 to-transparent pointer-events-none" />
 
       <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        {/* Left Big Balance Display */}
+        {/* Left Side: Total Balance */}
         <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
-              {selectedAccountName ? `Valeur — ${selectedAccountName}` : "Valeur Totale du Portefeuille"}
-            </span>
-          </div>
+          <span className="text-sm font-medium text-slate-200 font-serif-display tracking-wide">
+            {selectedAccountName ? `Valeur — ${selectedAccountName}` : "Valeur du Portefeuille"}
+          </span>
 
-          <div className="flex items-baseline gap-3">
-            <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              {summary.totalValuation.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
-            </h1>
-          </div>
-
-          <p className="text-xs text-slate-400 max-w-sm">
-            Mise à jour en temps réel selon les derniers cours du marché.
-          </p>
+          <h1 className="text-4xl font-normal tracking-tight text-white sm:text-5xl lg:text-6xl font-sans">
+            {summary.totalValuation.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+          </h1>
         </div>
 
-        {/* Right Floating Quick Metric Cards (Inspired by reference UI cards) */}
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:w-auto">
-          {/* Card 1: Apports Investis */}
-          <div className="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between w-full sm:w-56 border border-slate-700/50 bg-slate-900/80 shadow-xl">
+        {/* Right Side Floating White Cards (Matching Finteco Reference UI) */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:w-auto">
+          {/* Card 1: Your Savings / Apports */}
+          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-5 text-slate-900 shadow-lg w-full sm:w-56 border border-white/40">
             <div className="flex items-center justify-between">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
                 <PiggyBank className="h-5 w-5" />
               </div>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                Mensuel / Total
-              </span>
+              <span className="text-[11px] font-semibold text-slate-400">Ce mois-ci</span>
             </div>
 
             <div className="mt-4">
-              <div className="text-xs font-medium text-slate-400">Apports Investis</div>
-              <div className="text-xl font-bold text-white mt-0.5">
+              <div className="text-xs font-serif-display text-slate-600">Apports Investis</div>
+              <div className="text-2xl font-bold text-slate-900 mt-1">
                 {summary.totalInvested.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
               </div>
             </div>
           </div>
 
-          {/* Card 2: Plus-Value Latente */}
-          <div className="glass-card rounded-2xl p-4 sm:p-5 flex flex-col justify-between w-full sm:w-56 border border-slate-700/50 bg-slate-900/80 shadow-xl">
+          {/* Card 2: Your Investment / Plus-Value */}
+          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-5 text-slate-900 shadow-lg w-full sm:w-56 border border-white/40">
             <div className="flex items-center justify-between">
-              <div
-                className={`flex h-9 w-9 items-center justify-center rounded-xl border ${
-                  isPositive
-                    ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
-                    : "bg-rose-500/20 text-rose-400 border-rose-500/30"
-                }`}
-              >
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
                 <TrendingUp className="h-5 w-5" />
               </div>
-              <span
-                className={`inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[10px] font-extrabold ${
-                  isPositive ? "bg-emerald-500/20 text-emerald-400" : "bg-rose-500/20 text-rose-400"
-                }`}
-              >
-                {isPositive ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
-                {isPositive ? "+" : ""}
-                {summary.totalGainPercent.toFixed(2)}%
-              </span>
+              <span className="text-[11px] font-semibold text-slate-400">Rendement</span>
             </div>
 
             <div className="mt-4">
-              <div className="text-xs font-medium text-slate-400">Plus-Value Latente</div>
-              <div className={`text-xl font-bold mt-0.5 ${isPositive ? "text-emerald-400" : "text-rose-400"}`}>
-                {isPositive ? "+" : ""}
-                {summary.totalGainAmount.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+              <div className="text-xs font-serif-display text-slate-600">Plus-Value Latente</div>
+              <div className="flex items-baseline gap-2 mt-1">
+                <div className={`text-2xl font-bold ${isPositive ? "text-slate-900" : "text-rose-600"}`}>
+                  {isPositive ? "+" : ""}
+                  {summary.totalGainAmount.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+                </div>
+              </div>
+              <div className="mt-1 flex items-center gap-1 text-xs font-semibold text-sky-600">
+                {isPositive ? <ArrowUpRight className="h-3.5 w-3.5" /> : <ArrowDownRight className="h-3.5 w-3.5" />}
+                ROI {isPositive ? "+" : ""}{summary.totalGainPercent.toFixed(1)}%
               </div>
             </div>
           </div>

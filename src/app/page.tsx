@@ -66,7 +66,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#090d16] text-emerald-400">
+      <div className="flex min-h-screen items-center justify-center bg-slate-200 text-slate-900">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
@@ -79,8 +79,8 @@ export default function Home() {
   const selectedAccount = accounts.find((a: any) => a._id === selectedAccountId);
 
   return (
-    <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col font-sans pb-10">
-      {/* Navigation */}
+    <div className="w-full max-w-[1440px] mx-auto rounded-[2.5rem] bg-white border border-slate-200/80 p-4 sm:p-6 lg:p-8 shadow-2xl space-y-6">
+      {/* Navigation Header */}
       <Navbar
         activeTab={activeTab}
         onTabChange={setActiveTab}
@@ -93,17 +93,17 @@ export default function Home() {
       />
 
       {/* Main Container */}
-      <main className="flex-1 w-full max-w-[1400px] mx-auto px-4 pt-4 space-y-6">
+      <main className="w-full space-y-6">
         {accounts.length === 0 ? (
-          <div className="card-fintech flex flex-col items-center justify-center rounded-3xl p-16 text-center my-12">
-            <Wallet className="h-12 w-12 text-emerald-400 mb-4" />
-            <h2 className="text-2xl font-bold text-white">Bienvenue sur Folio !</h2>
-            <p className="mt-2 text-sm text-slate-400 max-w-md">
-              Pour démarrer votre suivi d'investissements dépouillé et sobre, créez votre premier compte.
+          <div className="card-light flex flex-col items-center justify-center rounded-[2.5rem] p-16 text-center my-8 bg-slate-50 border border-slate-100">
+            <Wallet className="h-12 w-12 text-slate-800 mb-4" />
+            <h2 className="text-2xl font-bold text-slate-900 font-serif-display">Bienvenue sur Folio !</h2>
+            <p className="mt-2 text-sm text-slate-500 max-w-md">
+              Créez votre premier compte PEA ou CTO pour démarrer votre suivi d'investissements.
             </p>
             <button
               onClick={() => setIsAddAccountOpen(true)}
-              className="mt-6 flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-bold text-slate-950 hover:bg-emerald-400 shadow-xl shadow-emerald-500/20 transition"
+              className="mt-6 flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-slate-800 transition"
             >
               <Plus className="h-4 w-4" /> Créer mon premier compte PEA / CTO
             </button>
@@ -122,8 +122,8 @@ export default function Home() {
                 onClick={() => setSelectedAccountId(null)}
                 className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                   selectedAccountId === null
-                    ? "bg-white text-slate-950 shadow"
-                    : "border border-slate-800 bg-slate-900/80 text-slate-400 hover:text-white"
+                    ? "bg-slate-900 text-white shadow-xs"
+                    : "border border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200"
                 }`}
               >
                 Tous les comptes
@@ -134,8 +134,8 @@ export default function Home() {
                   onClick={() => setSelectedAccountId(acc._id)}
                   className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                     selectedAccountId === acc._id
-                      ? "bg-white text-slate-950 shadow"
-                      : "border border-slate-800 bg-slate-900/80 text-slate-400 hover:text-white"
+                      ? "bg-slate-900 text-white shadow-xs"
+                      : "border border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200"
                   }`}
                 >
                   {acc.name} ({acc.type})
@@ -143,7 +143,7 @@ export default function Home() {
               ))}
               <button
                 onClick={() => setIsAddAccountOpen(true)}
-                className="flex items-center gap-1 rounded-full border border-dashed border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white"
+                className="flex items-center gap-1 rounded-full border border-dashed border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-50"
               >
                 <Plus className="h-3.5 w-3.5" /> Nouveau Compte
               </button>

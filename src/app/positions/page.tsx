@@ -40,7 +40,7 @@ export default function PositionsPage() {
 
   if (isLoading || (isAuthenticated && rawAccounts === undefined)) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-900">
+      <div className="flex min-h-screen items-center justify-center bg-[#edf1f2] text-slate-900">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
@@ -51,7 +51,7 @@ export default function PositionsPage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col pb-12">
+    <div className="min-h-screen w-full bg-[#edf1f2] text-slate-900 flex flex-col pb-12">
       <Navbar
         onOpenAddTx={() => setIsAddTxOpen(true)}
         onSignOut={() => signOut()}

@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
-      <body className="min-h-full bg-slate-200 text-slate-900 selection:bg-slate-900 selection:text-white p-2 sm:p-6 lg:p-8">
+      <body className="min-h-full bg-slate-50 text-slate-900 selection:bg-slate-900 selection:text-white">
         <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>

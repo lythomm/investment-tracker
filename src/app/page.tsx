@@ -66,7 +66,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-200 text-slate-900">
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-900">
         <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
@@ -79,8 +79,8 @@ export default function Home() {
   const selectedAccount = accounts.find((a: any) => a._id === selectedAccountId);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto rounded-[2.5rem] bg-white border border-slate-200/80 p-4 sm:p-6 lg:p-8 shadow-2xl space-y-6">
-      {/* Navigation Header */}
+    <div className="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col pb-12">
+      {/* Sticky Full-Width Navigation Header */}
       <Navbar
         activeTab={activeTab}
         onTabChange={setActiveTab}
@@ -92,10 +92,10 @@ export default function Home() {
         accounts={accounts}
       />
 
-      {/* Main Container */}
-      <main className="w-full space-y-6">
+      {/* Full-Width Main Dashboard Layout */}
+      <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6">
         {accounts.length === 0 ? (
-          <div className="card-light flex flex-col items-center justify-center rounded-[2.5rem] p-16 text-center my-8 bg-slate-50 border border-slate-100">
+          <div className="card-light flex flex-col items-center justify-center rounded-3xl p-16 text-center my-8 bg-white border border-slate-100 shadow-sm">
             <Wallet className="h-12 w-12 text-slate-800 mb-4" />
             <h2 className="text-2xl font-bold text-slate-900 font-serif-display">Bienvenue sur Folio !</h2>
             <p className="mt-2 text-sm text-slate-500 max-w-md">
@@ -110,7 +110,7 @@ export default function Home() {
           </div>
         ) : (
           <>
-            {/* Top Hero Banner */}
+            {/* Top Full-Width Hero Banner */}
             <HeroBanner
               summary={portfolioSummary}
               selectedAccountName={selectedAccount ? `${selectedAccount.name} (${selectedAccount.type})` : null}
@@ -123,7 +123,7 @@ export default function Home() {
                 className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                   selectedAccountId === null
                     ? "bg-slate-900 text-white shadow-xs"
-                    : "border border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
                 }`}
               >
                 Tous les comptes
@@ -135,7 +135,7 @@ export default function Home() {
                   className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                     selectedAccountId === acc._id
                       ? "bg-slate-900 text-white shadow-xs"
-                      : "border border-slate-200 bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
                   }`}
                 >
                   {acc.name} ({acc.type})

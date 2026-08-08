@@ -1,94 +1,98 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Plus, LogOut } from "lucide-react";
 
 interface NavbarProps {
-  activeTab: "dashboard" | "transactions" | "holdings";
-  onTabChange: (tab: "dashboard" | "transactions" | "holdings") => void;
-  onOpenDca: () => void;
-  onOpenImport: () => void;
-  onOpenAddTx: () => void;
-  onOpenAddAccount: () => void;
-  onSignOut: () => void;
-  accounts: Array<{ _id: string; name: string; type: "PEA" | "CTO" }>;
+  onOpenAddTx?: () => void;
+  onSignOut?: () => void;
 }
 
 export function Navbar({
-  activeTab,
-  onTabChange,
   onOpenAddTx,
   onSignOut,
 }: NavbarProps) {
+  const pathname = usePathname();
+
+  const isDashboard = pathname === "/";
+  const isPositions = pathname === "/positions";
+  const isHistorique = pathname === "/historique";
+
   return (
     <header className="w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-40">
       <div className="relative w-full px-4 sm:px-8 lg:px-12 flex items-center justify-between py-3.5">
         {/* Left Side: Brand Logo */}
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-white font-extrabold text-lg">
             ❖
           </div>
           <span className="text-2xl font-semibold tracking-tight text-slate-900 font-serif-display">
             Folio
           </span>
-        </div>
+        </Link>
 
-        {/* Center: Fixed-Position Navigation Bar (Zero-Shift Layout) */}
+        {/* Center: Real Page Navigation Links (Zero-Shift Layout) */}
         <nav className="hidden md:flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
-          <button
-            onClick={() => onTabChange("dashboard")}
+          <Link
+            href="/"
             className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
-              activeTab === "dashboard"
+              isDashboard
                 ? "bg-slate-900 text-white font-medium"
                 : "text-slate-500 font-normal hover:text-slate-900"
             }`}
           >
             Dashboard
-          </button>
+          </Link>
 
-          <button
-            onClick={() => onTabChange("holdings")}
+          <Link
+            href="/positions"
             className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
-              activeTab === "holdings"
+              isPositions
                 ? "bg-slate-900 text-white font-medium"
                 : "text-slate-500 font-normal hover:text-slate-900"
             }`}
           >
             Positions
-          </button>
+          </Link>
 
-          <button
-            onClick={() => onTabChange("transactions")}
+          <Link
+            href="/historique"
             className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
-              activeTab === "transactions"
+              isHistorique
                 ? "bg-slate-900 text-white font-medium"
                 : "text-slate-500 font-normal hover:text-slate-900"
             }`}
           >
             Historique
-          </button>
+          </Link>
         </nav>
 
         {/* Right Side: Actions */}
         <div className="flex items-center gap-2">
-          <button
-            onClick={onOpenAddTx}
-            className="flex items-center gap-1.5 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 transition"
-            title="Ajouter une transaction"
-          >
-            <Plus className="h-3.5 w-3.5" />
-            <span>Transaction</span>
-          </button>
+          {onOpenAddTx && (
+            <button
+              onClick={onOpenAddTx}
+              className="flex items-center gap-1.5 rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800 transition"
+              title="Ajouter une transaction"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>Transaction</span>
+            </button>
+          )}
 
           <div className="h-5 w-px bg-slate-200 mx-1 hidden sm:block" />
 
           {/* Logout */}
-          <button
-            onClick={onSignOut}
-            className="flex items-center rounded-full border border-slate-200 bg-white p-2 text-slate-600 hover:bg-rose-50 hover:text-rose-600 transition"
-            title="Déconnexion"
-          >
-            <LogOut className="h-4 w-4" />
-          </button>
+          {onSignOut && (
+            <button
+              onClick={onSignOut}
+              className="flex items-center rounded-full border border-slate-200 bg-white p-2 text-slate-600 hover:bg-rose-50 hover:text-rose-600 transition"
+              title="Déconnexion"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+          )}
         </div>
       </div>
     </header>

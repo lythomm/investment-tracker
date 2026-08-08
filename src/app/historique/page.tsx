@@ -5,33 +5,25 @@ export const dynamic = "force-dynamic";
 import { useState } from "react";
 import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { api } from "../../convex/_generated/api";
+import { api } from "../../../convex/_generated/api";
 import { Navbar } from "@/components/Navbar";
 import { HeroBanner } from "@/components/HeroBanner";
-import { RecentInvestmentsTable } from "@/components/RecentInvestmentsTable";
-import { FinancialPerformanceCard } from "@/components/FinancialPerformanceCard";
-import { DcaBatchModal } from "@/components/DcaBatchModal";
-import { CsvImportModal } from "@/components/CsvImportModal";
+import { TransactionsList } from "@/components/TransactionsList";
 import { AddTransactionModal } from "@/components/AddTransactionModal";
 import { AddAccountModal } from "@/components/AddAccountModal";
 import { AuthScreen } from "@/components/AuthScreen";
 import { Loader2, Plus, Wallet } from "lucide-react";
 
-export default function Home() {
+export default function HistoriquePage() {
   const { isAuthenticated, isLoading } = useConvexAuth();
   const { signOut } = useAuthActions();
 
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>(null);
-
-  // Modals state
-  const [isDcaOpen, setIsDcaOpen] = useState(false);
-  const [isImportOpen, setIsImportOpen] = useState(false);
   const [isAddTxOpen, setIsAddTxOpen] = useState(false);
   const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
 
   const queryArgs = selectedAccountId ? { accountId: selectedAccountId as any } : {};
 
-  // Convex Queries
   const rawAccounts = useQuery(api.accounts.getAccounts, isAuthenticated ? {} : "skip");
   const accounts = rawAccounts || [];
 
@@ -46,10 +38,7 @@ export default function Home() {
     totalDividends: 0,
     holdings: [],
   };
-  const snapshots = useQuery(
-    api.snapshots.getMonthlySnapshots,
-    isAuthenticated ? {} : "skip"
-  ) || [];
+
   const transactions = useQuery(
     api.transactions.getTransactions,
     isAuthenticated ? queryArgs : "skip"
@@ -71,13 +60,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full bg-slate-50 text-slate-900 flex flex-col pb-12">
-      {/* Sticky Full-Width Navigation Header */}
       <Navbar
         onOpenAddTx={() => setIsAddTxOpen(true)}
         onSignOut={() => signOut()}
       />
 
-      {/* Full-Width Main Dashboard Layout */}
       <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6">
         {accounts.length === 0 ? (
           <div className="card-light flex flex-col items-center justify-center rounded-3xl p-16 text-center my-8 bg-white border border-slate-200">
@@ -95,13 +82,11 @@ export default function Home() {
           </div>
         ) : (
           <>
-            {/* Top Full-Width Hero Banner */}
             <HeroBanner
               summary={portfolioSummary}
               selectedAccountName={selectedAccount ? `${selectedAccount.name} (${selectedAccount.type})` : null}
             />
 
-            {/* Account Selector Filter Bar */}
             <div className="flex items-center gap-2 overflow-x-auto py-1">
               <button
                 onClick={() => setSelectedAccountId(null)}
@@ -134,30 +119,11 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Dashboard Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-              <div className="lg:col-span-2">
-                <RecentInvestmentsTable transactions={transactions as any} />
-              </div>
-              <div className="lg:col-span-1">
-                <FinancialPerformanceCard snapshots={snapshots} summary={portfolioSummary} />
-              </div>
-            </div>
+            <TransactionsList transactions={transactions as any} />
           </>
         )}
       </main>
 
-      {/* Modals */}
-      <DcaBatchModal
-        isOpen={isDcaOpen}
-        onClose={() => setIsDcaOpen(false)}
-        accounts={accounts}
-      />
-      <CsvImportModal
-        isOpen={isImportOpen}
-        onClose={() => setIsImportOpen(false)}
-        accounts={accounts}
-      />
       <AddTransactionModal
         isOpen={isAddTxOpen}
         onClose={() => setIsAddTxOpen(false)}

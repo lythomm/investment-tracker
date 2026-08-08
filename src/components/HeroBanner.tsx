@@ -17,7 +17,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
   const isPositive = summary.totalGainAmount >= 0;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-[2.5rem] p-6 sm:p-10 shadow-xl border border-slate-200/60 text-white min-h-[220px] flex flex-col justify-end">
+    <div className="relative w-full overflow-hidden rounded-[2.5rem] p-6 sm:p-10 border border-slate-200/60 text-white min-h-[220px] flex flex-col justify-end">
       {/* Generated Meadow Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center pointer-events-none"
@@ -31,11 +31,11 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
       <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         {/* Left Side: Total Balance */}
         <div className="space-y-1">
-          <span className="text-base font-normal text-white font-serif-display tracking-wide drop-shadow-md">
+          <span className="text-base font-normal text-white font-serif-display tracking-wide">
             {selectedAccountName ? `Valeur — ${selectedAccountName}` : "Total Balance"}
           </span>
 
-          <h1 className="text-4xl font-normal tracking-tight text-white sm:text-5xl lg:text-6xl font-sans drop-shadow-lg">
+          <h1 className="text-4xl font-normal tracking-tight text-white sm:text-5xl lg:text-6xl font-sans">
             {summary.totalValuation.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
           </h1>
         </div>
@@ -43,9 +43,9 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
         {/* Right Side Floating White Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:w-auto">
           {/* Card 1: Your Savings */}
-          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-5 text-slate-900 shadow-xl w-full sm:w-56 border border-white/60">
+          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-5 text-slate-900 w-full sm:w-56 border border-white/60">
             <div className="flex items-center justify-between">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500 text-white">
                 <PiggyBank className="h-5 w-5" />
               </div>
               <span className="text-[11px] font-semibold text-slate-400">Ce mois-ci</span>
@@ -60,9 +60,9 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
           </div>
 
           {/* Card 2: Your Investment */}
-          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-5 text-slate-900 shadow-xl w-full sm:w-56 border border-white/60">
+          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-5 text-slate-900 w-full sm:w-56 border border-white/60">
             <div className="flex items-center justify-between">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500 text-white shadow-sm">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500 text-white">
                 <TrendingUp className="h-5 w-5" />
               </div>
               <span className="text-[11px] font-semibold text-slate-400">Rendement</span>

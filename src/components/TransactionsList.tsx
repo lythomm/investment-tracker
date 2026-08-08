@@ -28,7 +28,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
   if (!transactions || transactions.length === 0) {
     return (
-      <div className="card-light flex flex-col items-center justify-center rounded-[2.25rem] p-8 text-center bg-white border border-slate-100 shadow-sm">
+      <div className="card-light flex flex-col items-center justify-center rounded-[2.25rem] p-8 text-center bg-white border border-slate-200">
         <History className="h-8 w-8 text-slate-300 mb-2" />
         <p className="text-xs text-slate-500 font-serif-display">Aucune transaction enregistrée dans le journal.</p>
       </div>
@@ -36,7 +36,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
   }
 
   return (
-    <div className="card-light rounded-[2.25rem] p-6 sm:p-8 bg-white border border-slate-100 shadow-sm">
+    <div className="card-light rounded-[2.25rem] p-6 sm:p-8 bg-white border border-slate-200">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-normal text-slate-900 font-serif-display">
@@ -54,7 +54,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
           {transactions.map((tx) => (
             <div
               key={tx._id}
-              className="flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50/50 p-4 hover:bg-slate-50 transition"
+              className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/50 p-4 hover:bg-slate-50 transition"
             >
               <div className="flex items-center gap-3">
                 <span

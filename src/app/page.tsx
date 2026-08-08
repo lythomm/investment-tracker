@@ -89,7 +89,7 @@ export default function Home() {
       {/* Full-Width Main Dashboard Layout */}
       <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6">
         {accounts.length === 0 ? (
-          <div className="card-light flex flex-col items-center justify-center rounded-3xl p-16 text-center my-8 bg-white border border-slate-100 shadow-sm">
+          <div className="card-light flex flex-col items-center justify-center rounded-3xl p-16 text-center my-8 bg-white border border-slate-200">
             <Wallet className="h-12 w-12 text-slate-800 mb-4" />
             <h2 className="text-2xl font-bold text-slate-900 font-serif-display">Bienvenue sur Folio !</h2>
             <p className="mt-2 text-sm text-slate-500 max-w-md">
@@ -97,7 +97,7 @@ export default function Home() {
             </p>
             <button
               onClick={() => setIsAddAccountOpen(true)}
-              className="mt-6 flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-slate-800 transition"
+              className="mt-6 flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-bold text-white hover:bg-slate-800 transition"
             >
               <Plus className="h-4 w-4" /> Créer mon premier compte PEA / CTO
             </button>
@@ -116,7 +116,7 @@ export default function Home() {
                 onClick={() => setSelectedAccountId(null)}
                 className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                   selectedAccountId === null
-                    ? "bg-slate-900 text-white shadow-xs"
+                    ? "bg-slate-900 text-white"
                     : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
                 }`}
               >
@@ -128,7 +128,7 @@ export default function Home() {
                   onClick={() => setSelectedAccountId(acc._id)}
                   className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                     selectedAccountId === acc._id
-                      ? "bg-slate-900 text-white shadow-xs"
+                      ? "bg-slate-900 text-white"
                       : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
                   }`}
                 >

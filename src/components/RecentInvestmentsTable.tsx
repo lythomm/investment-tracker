@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MoreVertical, Trash2, Layers } from "lucide-react";
+import { Trash2, Layers } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
@@ -34,7 +34,7 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
   };
 
   return (
-    <div className="card-light rounded-[2.25rem] p-6 sm:p-8 bg-white border border-slate-100 shadow-sm">
+    <div className="card-light rounded-[2.25rem] p-6 sm:p-8 bg-white border border-slate-200">
       {/* Header & Filter Pills */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <h2 className="text-2xl font-normal text-slate-900 font-serif-display">
@@ -49,7 +49,7 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
               onClick={() => setFilter(f)}
               className={`rounded-full px-4 py-1.5 text-xs font-medium border transition ${
                 filter === f
-                  ? "bg-slate-900 text-white border-slate-900 shadow-xs"
+                  ? "bg-slate-900 text-white border-slate-900"
                   : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
               }`}
             >

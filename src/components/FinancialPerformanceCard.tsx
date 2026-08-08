@@ -41,7 +41,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
   return (
     <div className="space-y-6">
       {/* Top Chart Card: Financial Performance */}
-      <div className="card-light rounded-[2.25rem] p-6 bg-white border border-slate-100 shadow-sm">
+      <div className="card-light rounded-[2.25rem] p-6 bg-white border border-slate-200">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-xl font-normal text-slate-900 font-serif-display">
             Financial Performance
@@ -50,7 +50,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
             <select
               value={timeframe}
               onChange={(e) => setTimeframe(e.target.value as any)}
-              className="appearance-none rounded-full border border-slate-200 bg-white pl-3 pr-7 py-1 text-xs font-medium text-slate-600 focus:outline-none shadow-xs"
+              className="appearance-none rounded-full border border-slate-200 bg-white pl-3 pr-7 py-1 text-xs font-medium text-slate-600 focus:outline-none"
             >
               <option value="MONTHLY">Monthly</option>
               <option value="ALL">Last 7 Days</option>
@@ -78,7 +78,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
                   borderRadius: "12px",
                   fontSize: "11px",
                   color: "#fff",
-                  boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                  boxShadow: "none",
                 }}
                 formatter={(val: any) => [`${Number(val).toLocaleString("fr-FR")} €`, "Valeur"]}
               />
@@ -96,7 +96,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
       </div>
 
       {/* Bottom Insights Card: Quick Insights */}
-      <div className="card-light rounded-[2.25rem] p-6 bg-white border border-slate-100 shadow-sm">
+      <div className="card-light rounded-[2.25rem] p-6 bg-white border border-slate-200">
         <h3 className="text-xl font-normal text-slate-900 font-serif-display mb-4">
           Quick Insights
         </h3>

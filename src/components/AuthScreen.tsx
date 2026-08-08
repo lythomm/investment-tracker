@@ -27,11 +27,11 @@ export function AuthScreen() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-200 p-4 relative overflow-hidden">
-      <div className="w-full max-w-md rounded-[2.5rem] bg-white border border-slate-100 p-8 sm:p-10 shadow-2xl">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-100 p-4 relative overflow-hidden">
+      <div className="w-full max-w-md rounded-[2.5rem] bg-white border border-slate-200 p-8 sm:p-10">
         {/* Logo Header */}
         <div className="text-center mb-8">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 font-extrabold text-2xl text-white shadow-md mb-3">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 font-extrabold text-2xl text-white mb-3">
             ❖
           </div>
           <h1 className="text-3xl font-normal tracking-tight text-slate-900 font-serif-display">
@@ -51,7 +51,7 @@ export function AuthScreen() {
             }}
             className={`rounded-full py-2 text-xs font-semibold transition ${
               step === "signIn"
-                ? "bg-slate-900 text-white shadow-sm"
+                ? "bg-slate-900 text-white"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
@@ -64,7 +64,7 @@ export function AuthScreen() {
             }}
             className={`rounded-full py-2 text-xs font-semibold transition ${
               step === "signUp"
-                ? "bg-slate-900 text-white shadow-sm"
+                ? "bg-slate-900 text-white"
                 : "text-slate-600 hover:text-slate-900"
             }`}
           >
@@ -116,7 +116,7 @@ export function AuthScreen() {
           <button
             type="submit"
             disabled={loading}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-900/10 transition hover:bg-slate-800 disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 py-3.5 text-sm font-bold text-white transition hover:bg-slate-800 disabled:opacity-50"
           >
             <span>{loading ? "Chargement..." : step === "signIn" ? "Connexion" : "S'inscrire"}</span>
             <ArrowRight className="h-4 w-4" />

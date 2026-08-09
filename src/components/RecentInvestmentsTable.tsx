@@ -89,7 +89,7 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
                 </tr>
               </thead>
               <tbody>
-                {filtered.slice(0, 5).map((tx) => {
+                {filtered.slice(0, 6).map((tx) => {
                   const total = tx.quantity * tx.unitPrice + tx.fees;
                   return (
                     <tr key={tx._id} className="hover:bg-slate-50/80 transition">

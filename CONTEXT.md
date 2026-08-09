@@ -13,6 +13,7 @@
   - `DIVIDENDE` : Revenu perçu associé à un actif détenu.
 - **Règle de Gestion (Hors-Cash)** : L'application ne gère pas de poche de liquidités (solde espèces). Seuls les flux d'achats/ventes/dividendes sur les actifs sont enregistrés.
 - **Montant Investi (Total Capital Deposited)** : Somme cumulée des achats (`Quantité * Prix + Frais`) moins les ventes (`Quantité * Prix - Frais`).
+- **Saisie Multistep de Transaction** : Formulaire guidé en 4 étapes (`Type` -> `Compte` -> `Recherche Ticker/Actif avec autocomplétion Yahoo Finance` -> `Quantité/Prix/Frais/Date`) remplaçant l'ancienne modal unique.
 - **Saisie DCA Mensuelle (Batch Entry)** : Formulaire optimisé permettant à l'investisseur d'enregistrer plusieurs achats simultanément pour son point mensuel.
 - **Importation Initial Excel / CSV** : Fonctionnalité de migration d'historique permettant d'importer les transactions d'un fichier Excel/CSV existant en 1 clic.
 

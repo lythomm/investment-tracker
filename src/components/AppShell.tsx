@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, createContext, useContext } from "react";
+import { useRouter } from "next/navigation";
 import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { api } from "../../convex/_generated/api";
 import { Navbar } from "./Navbar";
-import { AddTransactionModal } from "./AddTransactionModal";
 import { AddAccountModal } from "./AddAccountModal";
 import { AuthScreen } from "./AuthScreen";
 import { Loader2 } from "lucide-react";
@@ -25,10 +25,10 @@ const ModalContext = createContext<ModalContextType>({
 export const useModals = () => useContext(ModalContext);
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const { isAuthenticated, isLoading } = useConvexAuth();
   const { signOut } = useAuthActions();
 
-  const [isAddTxOpen, setIsAddTxOpen] = useState(false);
   const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
 
   const rawAccounts = useQuery(api.accounts.getAccounts, isAuthenticated ? {} : "skip");
@@ -49,7 +49,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <ModalContext.Provider
       value={{
-        openAddTransaction: () => setIsAddTxOpen(true),
+        openAddTransaction: () => router.push("/transactions/new"),
         openAddAccount: () => setIsAddAccountOpen(true),
         accounts,
       }}
@@ -57,7 +57,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen w-full bg-[#edf1f2] text-slate-900 flex flex-col pb-12">
         {/* Rendered ONCE Globally for all pages */}
         <Navbar
-          onOpenAddTx={() => setIsAddTxOpen(true)}
+          onOpenAddTx={() => router.push("/transactions/new")}
           onSignOut={() => signOut()}
         />
 
@@ -65,11 +65,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {children}
 
         {/* Global Modals */}
-        <AddTransactionModal
-          isOpen={isAddTxOpen}
-          onClose={() => setIsAddTxOpen(false)}
-          accounts={accounts}
-        />
         <AddAccountModal
           isOpen={isAddAccountOpen}
           onClose={() => setIsAddAccountOpen(false)}

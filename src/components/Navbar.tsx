@@ -37,13 +37,13 @@ export function Navbar({
         <nav className="hidden md:flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
           <Link
             href="/"
-            className={`w-32 h-10 flex items-center justify-center rounded-2xl text-base transition-colors duration-150 select-none ${
+            className={`w-36 h-10 flex items-center justify-center rounded-2xl text-base transition-colors duration-150 select-none ${
               isDashboard
                 ? "bg-slate-900 text-white font-medium"
                 : "text-slate-500 font-normal hover:text-slate-900"
             }`}
           >
-            Dashboard
+            Tableau de bord
           </Link>
 
           <Link

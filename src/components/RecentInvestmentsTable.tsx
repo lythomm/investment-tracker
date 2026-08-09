@@ -75,7 +75,6 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
                 <th className="pb-3">Compte</th>
                 <th className="pb-3">Type</th>
                 <th className="pb-3 text-right">Montant</th>
-                <th className="pb-3 text-center">Statut</th>
                 <th className="pb-3 text-right pr-2">Action</th>
               </tr>
             </thead>
@@ -93,18 +92,22 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
                       {tx.account?.name || "Compte"}
                     </td>
 
-                    <td className="py-4 text-slate-700 font-medium">
-                      {tx.type} ({tx.quantity} u.)
+                    <td className="py-4 font-medium">
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1 text-xs font-bold ${
+                          tx.type === "ACHAT"
+                            ? "bg-emerald-100 text-emerald-800"
+                            : tx.type === "VENTE"
+                            ? "bg-rose-100 text-rose-800"
+                            : "bg-amber-100 text-amber-800"
+                        }`}
+                      >
+                        {tx.type} ({tx.quantity} u.)
+                      </span>
                     </td>
 
                     <td className="py-4 text-right font-bold text-base text-slate-900">
                       {total.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
-                    </td>
-
-                    <td className="py-4 text-center">
-                      <span className={tx.type === "ACHAT" ? "status-badge-complete" : tx.type === "VENTE" ? "status-badge-failed" : "status-badge-pending"}>
-                        Complete
-                      </span>
                     </td>
 
                     <td className="py-4 text-right pr-2">

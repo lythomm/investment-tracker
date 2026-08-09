@@ -44,7 +44,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
       <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-2xl font-normal text-slate-900 font-serif-display">
-            Financial Performance
+            Performance Financière
           </h3>
           <div className="relative">
             <select
@@ -52,8 +52,8 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
               onChange={(e) => setTimeframe(e.target.value as any)}
               className="appearance-none rounded-2xl bg-slate-100 pl-4 pr-8 py-1.5 text-xs font-semibold text-slate-700 focus:outline-none"
             >
-              <option value="MONTHLY">Monthly</option>
-              <option value="ALL">Last 7 Days</option>
+              <option value="MONTHLY">Mensuel</option>
+              <option value="ALL">Historique global</option>
             </select>
             <ChevronDown className="absolute right-2.5 top-2.5 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
           </div>
@@ -98,7 +98,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
       {/* Bottom Insights Card: Quick Insights */}
       <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
         <h3 className="text-2xl font-normal text-slate-900 font-serif-display mb-4">
-          Quick Insights
+          Aperçu Rapide
         </h3>
 
         <ul className="space-y-4 text-sm text-slate-700">

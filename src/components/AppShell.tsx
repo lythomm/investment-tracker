@@ -1,0 +1,80 @@
+"use client";
+
+import { useState, createContext, useContext } from "react";
+import { useConvexAuth, useQuery } from "convex/react";
+import { useAuthActions } from "@convex-dev/auth/react";
+import { api } from "../../convex/_generated/api";
+import { Navbar } from "./Navbar";
+import { AddTransactionModal } from "./AddTransactionModal";
+import { AddAccountModal } from "./AddAccountModal";
+import { AuthScreen } from "./AuthScreen";
+import { Loader2 } from "lucide-react";
+
+interface ModalContextType {
+  openAddTransaction: () => void;
+  openAddAccount: () => void;
+  accounts: Array<{ _id: string; name: string; type: "PEA" | "CTO" }>;
+}
+
+const ModalContext = createContext<ModalContextType>({
+  openAddTransaction: () => {},
+  openAddAccount: () => {},
+  accounts: [],
+});
+
+export const useModals = () => useContext(ModalContext);
+
+export function AppShell({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, isLoading } = useConvexAuth();
+  const { signOut } = useAuthActions();
+
+  const [isAddTxOpen, setIsAddTxOpen] = useState(false);
+  const [isAddAccountOpen, setIsAddAccountOpen] = useState(false);
+
+  const rawAccounts = useQuery(api.accounts.getAccounts, isAuthenticated ? {} : "skip");
+  const accounts = rawAccounts || [];
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#edf1f2] text-slate-900">
+        <Loader2 className="h-8 w-8 animate-spin font-sans" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <AuthScreen />;
+  }
+
+  return (
+    <ModalContext.Provider
+      value={{
+        openAddTransaction: () => setIsAddTxOpen(true),
+        openAddAccount: () => setIsAddAccountOpen(true),
+        accounts,
+      }}
+    >
+      <div className="min-h-screen w-full bg-[#edf1f2] text-slate-900 flex flex-col pb-12">
+        {/* Rendered ONCE Globally for all pages */}
+        <Navbar
+          onOpenAddTx={() => setIsAddTxOpen(true)}
+          onSignOut={() => signOut()}
+        />
+
+        {/* Active Page View */}
+        {children}
+
+        {/* Global Modals */}
+        <AddTransactionModal
+          isOpen={isAddTxOpen}
+          onClose={() => setIsAddTxOpen(false)}
+          accounts={accounts}
+        />
+        <AddAccountModal
+          isOpen={isAddAccountOpen}
+          onClose={() => setIsAddAccountOpen(false)}
+        />
+      </div>
+    </ModalContext.Provider>
+  );
+}

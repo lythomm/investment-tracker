@@ -21,7 +21,7 @@ export function Navbar({
   const isHistorique = pathname === "/historique";
 
   return (
-    <header className="w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-40">
+    <header className="w-full bg-[#edf1f2]/80 backdrop-blur-md sticky top-0 z-40">
       <div className="relative w-full px-4 sm:px-8 lg:px-12 flex items-center justify-between py-3.5">
         {/* Left Side: Brand Logo */}
         <Link href="/" className="flex items-center gap-3">
@@ -37,33 +37,30 @@ export function Navbar({
         <nav className="hidden md:flex items-center gap-4 absolute left-1/2 -translate-x-1/2">
           <Link
             href="/"
-            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
-              isDashboard
-                ? "bg-slate-900 text-white font-medium"
-                : "text-slate-500 font-normal hover:text-slate-900"
-            }`}
+            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${isDashboard
+              ? "bg-slate-900 text-white font-medium"
+              : "text-slate-500 font-normal hover:text-slate-900"
+              }`}
           >
             Dashboard
           </Link>
 
           <Link
             href="/positions"
-            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
-              isPositions
-                ? "bg-slate-900 text-white font-medium"
-                : "text-slate-500 font-normal hover:text-slate-900"
-            }`}
+            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${isPositions
+              ? "bg-slate-900 text-white font-medium"
+              : "text-slate-500 font-normal hover:text-slate-900"
+              }`}
           >
             Positions
           </Link>
 
           <Link
             href="/historique"
-            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${
-              isHistorique
-                ? "bg-slate-900 text-white font-medium"
-                : "text-slate-500 font-normal hover:text-slate-900"
-            }`}
+            className={`w-28 h-9 flex items-center justify-center rounded-full text-sm transition-colors duration-150 select-none ${isHistorique
+              ? "bg-slate-900 text-white font-medium"
+              : "text-slate-500 font-normal hover:text-slate-900"
+              }`}
           >
             Historique
           </Link>

@@ -1,21 +1,7 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
+import { AppShell } from "@/components/AppShell";
 
 export const metadata: Metadata = {
   title: "Folio — Tracker d'Investissement Long Terme",
@@ -28,9 +14,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
-      <body className={`${inter.className} min-h-full bg-[#edf1f2] text-slate-900 selection:bg-slate-900 selection:text-white`}>
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+    <html lang="fr" className="h-full antialiased">
+      <head>
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=gambarino@400&display=swap" />
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" />
+      </head>
+      <body className="min-h-full bg-[#edf1f2] text-slate-900 selection:bg-slate-900 selection:text-white">
+        <ConvexClientProvider>
+          <AppShell>{children}</AppShell>
+        </ConvexClientProvider>
       </body>
     </html>
   );

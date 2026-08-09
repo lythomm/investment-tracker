@@ -43,3 +43,31 @@ export const getOrCreateAsset = mutation({
     });
   },
 });
+
+export const updateAssetPrices = mutation({
+  args: {
+    updates: v.array(
+      v.object({
+        assetId: v.id("assets"),
+        currentPrice: v.number(),
+      })
+    ),
+  },
+  handler: async (ctx: any, args: any) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Non autorisé.");
+    }
+
+    const now = Date.now();
+    for (const update of args.updates) {
+      if (update.currentPrice > 0) {
+        await ctx.db.patch(update.assetId, {
+          currentPrice: update.currentPrice,
+          updatedAt: now,
+        });
+      }
+    }
+  },
+});
+

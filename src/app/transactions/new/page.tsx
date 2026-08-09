@@ -65,6 +65,7 @@ export default function NewTransactionPage() {
   // Convex queries & mutations
   const accounts = useQuery(api.accounts.getAccounts) || [];
   const localAssets = useQuery(api.assets.getAssets) || [];
+  const userTransactions = useQuery(api.transactions.getTransactions, {}) || [];
   const getOrCreateAsset = useMutation(api.assets.getOrCreateAsset);
   const addTransaction = useMutation(api.transactions.addTransaction);
   const updateSnapshotForMonth = useMutation(api.snapshots.updateSnapshotForMonth);
@@ -106,16 +107,19 @@ export default function NewTransactionPage() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Local assets matching search
+  // Local assets matching search (restricted to assets used in user's actual transactions)
   const filteredLocalAssets = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const queryUpper = searchQuery.trim().toUpperCase();
+    const userAssetIds = new Set(userTransactions.map((t: any) => t.assetId));
+
     return localAssets.filter(
       (a: any) =>
-        a.ticker.toUpperCase().includes(queryUpper) ||
-        a.name.toUpperCase().includes(queryUpper)
+        userAssetIds.has(a._id) &&
+        (a.ticker.toUpperCase().includes(queryUpper) ||
+          a.name.toUpperCase().includes(queryUpper))
     );
-  }, [localAssets, searchQuery]);
+  }, [localAssets, userTransactions, searchQuery]);
 
   const selectSearchResult = (item: SearchResult) => {
     setTicker(item.ticker);
@@ -129,12 +133,24 @@ export default function NewTransactionPage() {
     setShowDropdown(false);
   };
 
+  // Single Account Auto-Skip Logic
+  const hasSingleAccount = accounts.length === 1;
+
   // Step Navigation Validation
   const canGoNextFromStep2 = !!accountId || accounts.length > 0;
   const canGoNextFromStep3 = !!ticker.trim() && !!name.trim();
 
   const handleNext = () => {
     setError(null);
+    if (step === 1) {
+      if (hasSingleAccount) {
+        setAccountId(accounts[0]._id);
+        setStep(3);
+        return;
+      }
+      setStep(2);
+      return;
+    }
     if (step === 2 && !accountId && accounts.length > 0) {
       setAccountId(accounts[0]._id);
     }
@@ -151,6 +167,10 @@ export default function NewTransactionPage() {
 
   const handleBack = () => {
     setError(null);
+    if (step === 3 && hasSingleAccount) {
+      setStep(1);
+      return;
+    }
     setStep((prev) => Math.max(prev - 1, 1));
   };
 
@@ -206,12 +226,25 @@ export default function NewTransactionPage() {
     }
   };
 
-  const stepTitles = [
-    "Type d'opération",
-    "Compte d'investissement",
-    "Recherche de l'actif",
-    "Montants & Date",
-  ];
+  const stepTitles = hasSingleAccount
+    ? ["Type d'opération", "Recherche de l'actif", "Montants & Date"]
+    : [
+        "Type d'opération",
+        "Compte d'investissement",
+        "Recherche de l'actif",
+        "Montants & Date",
+      ];
+
+  const currentDisplayStep = hasSingleAccount
+    ? step === 1
+      ? 1
+      : step === 3
+      ? 2
+      : 3
+    : step;
+
+  const totalDisplaySteps = hasSingleAccount ? 3 : 4;
+  const progressPercentage = (currentDisplayStep / totalDisplaySteps) * 100;
 
   return (
     <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 pt-4 pb-12 space-y-6 max-w-5xl mx-auto">
@@ -226,7 +259,7 @@ export default function NewTransactionPage() {
           <span>Retour</span>
         </button>
         <span className="text-sm font-bold text-slate-500">
-          Étape {step} sur 4
+          Étape {currentDisplayStep} sur {totalDisplaySteps}
         </span>
       </div>
 
@@ -236,7 +269,7 @@ export default function NewTransactionPage() {
           {stepTitles.map((title, idx) => (
             <span
               key={title}
-              className={idx + 1 <= step ? "text-slate-900 font-bold" : ""}
+              className={idx + 1 <= currentDisplayStep ? "text-slate-900 font-bold" : ""}
             >
               {title}
             </span>
@@ -245,7 +278,7 @@ export default function NewTransactionPage() {
         <div className="h-3 w-full bg-slate-200/80 rounded-full overflow-hidden">
           <div
             className="h-full bg-slate-900 transition-all duration-300 ease-out"
-            style={{ width: `${(step / 4) * 100}%` }}
+            style={{ width: `${progressPercentage}%` }}
           />
         </div>
       </div>
@@ -473,10 +506,10 @@ export default function NewTransactionPage() {
                     </button>
                   ))}
 
-                  {/* Yahoo Finance API results */}
+                  {/* API results */}
                   {searchResults.length > 0 && (
                     <div className="px-3 py-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">
-                      Résultats Yahoo Finance
+                      Suggestions
                     </div>
                   )}
                   {searchResults.map((res, idx) => (

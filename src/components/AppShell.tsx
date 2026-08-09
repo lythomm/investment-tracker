@@ -8,6 +8,7 @@ import { api } from "../../convex/_generated/api";
 import { Navbar } from "./Navbar";
 import { AddAccountModal } from "./AddAccountModal";
 import { AuthScreen } from "./AuthScreen";
+import { PriceAutoSync } from "./PriceAutoSync";
 import { Loader2 } from "lucide-react";
 
 interface ModalContextType {
@@ -55,6 +56,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       }}
     >
       <div className="min-h-screen w-full bg-[#edf1f2] text-slate-900 flex flex-col pb-12">
+        <PriceAutoSync />
         {/* Rendered ONCE Globally for all pages */}
         <Navbar
           onOpenAddTx={() => router.push("/transactions/new")}

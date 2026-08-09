@@ -13,6 +13,7 @@ import type * as assets from "../assets.js";
 import type * as auth from "../auth.js";
 import type * as http from "../http.js";
 import type * as portfolio from "../portfolio.js";
+import type * as seeder from "../seeder.js";
 import type * as snapshots from "../snapshots.js";
 import type * as transactions from "../transactions.js";
 
@@ -28,6 +29,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   http: typeof http;
   portfolio: typeof portfolio;
+  seeder: typeof seeder;
   snapshots: typeof snapshots;
   transactions: typeof transactions;
 }>;

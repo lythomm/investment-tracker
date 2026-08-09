@@ -1,6 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { TrendingUp, PiggyBank, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import NumberFlow from "@number-flow/react";
 
 interface HeroBannerProps {
   summary: {
@@ -14,7 +16,18 @@ interface HeroBannerProps {
 }
 
 export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
   const isPositive = summary.totalGainAmount >= 0;
+
+  const valuation = isLoaded ? summary.totalValuation : 0;
+  const invested = isLoaded ? summary.totalInvested : 0;
+  const gainAmount = isLoaded ? summary.totalGainAmount : 0;
+  const gainPercent = isLoaded ? summary.totalGainPercent : 0;
 
   return (
     <div className="relative w-full overflow-hidden rounded-2xl p-8 text-white min-h-[25rem] flex flex-col justify-end">
@@ -36,7 +49,12 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
           </span>
 
           <h1 className="text-5xl font-normal tracking-tight text-white sm:text-6xl lg:text-7xl font-sans">
-            {summary.totalValuation.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+            <NumberFlow
+              value={valuation}
+              locales="fr-FR"
+              format={{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}
+              suffix=" €"
+            />
           </h1>
         </div>
 
@@ -54,7 +72,12 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
             <div className="mt-4">
               <div className="text-sm font-serif-display text-slate-600">Apports Investis</div>
               <div className="text-3xl font-bold text-slate-900 mt-1">
-                {summary.totalInvested.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+                <NumberFlow
+                  value={invested}
+                  locales="fr-FR"
+                  format={{ minimumFractionDigits: 2, maximumFractionDigits: 2 }}
+                  suffix=" €"
+                />
               </div>
             </div>
           </div>
@@ -72,13 +95,23 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
               <div className="text-sm font-serif-display text-slate-600">Plus-Value Latente</div>
               <div className="flex items-baseline gap-2 mt-1">
                 <div className={`text-3xl font-bold ${isPositive ? "text-slate-900" : "text-rose-600"}`}>
-                  {isPositive ? "+" : ""}
-                  {summary.totalGainAmount.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+                  <NumberFlow
+                    value={gainAmount}
+                    locales="fr-FR"
+                    format={{ minimumFractionDigits: 2, maximumFractionDigits: 2, signDisplay: isPositive ? "always" : "auto" }}
+                    suffix=" €"
+                  />
                 </div>
               </div>
               <div className="mt-1.5 flex items-center gap-1 text-sm font-semibold text-sky-500">
                 {isPositive ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
-                ROI {isPositive ? "+" : ""}{summary.totalGainPercent.toFixed(1)}%
+                ROI{" "}
+                <NumberFlow
+                  value={gainPercent}
+                  locales="fr-FR"
+                  format={{ minimumFractionDigits: 1, maximumFractionDigits: 1, signDisplay: isPositive ? "always" : "auto" }}
+                  suffix="%"
+                />
               </div>
             </div>
           </div>

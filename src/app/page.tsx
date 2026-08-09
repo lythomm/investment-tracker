@@ -25,7 +25,7 @@ export default function Home() {
     totalDividends: 0,
     holdings: [],
   };
-  const snapshots = useQuery(api.snapshots.getMonthlySnapshots, {}) || [];
+  const snapshots = useQuery(api.snapshots.getMonthlySnapshots, queryArgs) || [];
   const transactions = useQuery(api.transactions.getTransactions, queryArgs) || [];
 
   const selectedAccount = accounts.find((a: any) => a._id === selectedAccountId);
@@ -58,7 +58,7 @@ export default function Home() {
           <div className="flex items-center gap-2.5 overflow-x-auto py-1">
             <button
               onClick={() => setSelectedAccountId(null)}
-              className={`rounded-2xl px-5 py-2 text-sm font-semibold transition ${
+              className={`rounded-2xl px-5 py-2 text-sm font-semibold transition cursor-pointer ${
                 selectedAccountId === null
                   ? "bg-slate-900 text-white"
                   : "bg-white text-slate-600 hover:bg-slate-100"
@@ -70,7 +70,7 @@ export default function Home() {
               <button
                 key={acc._id}
                 onClick={() => setSelectedAccountId(acc._id)}
-                className={`rounded-2xl px-5 py-2 text-sm font-semibold transition ${
+                className={`rounded-2xl px-5 py-2 text-sm font-semibold transition cursor-pointer ${
                   selectedAccountId === acc._id
                     ? "bg-slate-900 text-white"
                     : "bg-white text-slate-600 hover:bg-slate-100"
@@ -81,7 +81,7 @@ export default function Home() {
             ))}
             <button
               onClick={openAddAccount}
-              className="flex items-center gap-1.5 rounded-2xl bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+              className="flex items-center gap-1.5 rounded-2xl bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 cursor-pointer"
             >
               <Plus className="h-4 w-4" /> Nouveau Compte
             </button>

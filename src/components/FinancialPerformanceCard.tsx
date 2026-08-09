@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
-import { CheckCircle2, ChevronDown } from "lucide-react";
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import { CheckCircle2, ChevronDown, TrendingUp, Wallet, Award, DollarSign } from "lucide-react";
 
 interface FinancialPerformanceCardProps {
   snapshots: Array<{
@@ -16,86 +16,144 @@ interface FinancialPerformanceCardProps {
     totalValuation: number;
     totalGainAmount: number;
     totalGainPercent: number;
+    totalDividends: number;
     holdings: Array<{ ticker: string; currentValuation: number }>;
   };
 }
 
 export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerformanceCardProps) {
-  const [timeframe, setTimeframe] = useState<"MONTHLY" | "ALL">("MONTHLY");
+  const [timeframe, setTimeframe] = useState<"1Y" | "3Y" | "ALL">("ALL");
 
-  const chartData = (snapshots.length > 0 ? snapshots : [
-    { yearMonth: "Jan", totalValuation: 21000 },
-    { yearMonth: "Fév", totalValuation: 21800 },
-    { yearMonth: "Mar", totalValuation: 22400 },
-    { yearMonth: "Avr", totalValuation: 23100 },
-    { yearMonth: "Mai", totalValuation: 24540 },
-  ]).map((s) => ({
+  // Filter snapshots according to selected timeframe
+  let filteredSnapshots = [...snapshots];
+  if (timeframe === "1Y") {
+    filteredSnapshots = filteredSnapshots.slice(-12);
+  } else if (timeframe === "3Y") {
+    filteredSnapshots = filteredSnapshots.slice(-36);
+  }
+
+  const chartData = filteredSnapshots.map((s) => ({
     name: s.yearMonth,
-    val: s.totalValuation,
+    valuation: s.totalValuation,
+    invested: s.totalInvested,
+    gain: s.totalGainAmount,
   }));
 
-  const topHolding = summary.holdings.length > 0
-    ? [...summary.holdings].sort((a, b) => b.currentValuation - a.currentValuation)[0]
-    : null;
+  const topHolding =
+    summary.holdings.length > 0
+      ? [...summary.holdings].sort((a, b) => b.currentValuation - a.currentValuation)[0]
+      : null;
+
+  const isGainPositive = summary.totalGainAmount >= 0;
 
   return (
     <div className="space-y-6">
       {/* Top Chart Card: Financial Performance */}
       <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-2xl font-normal text-slate-900 font-serif-display">
-            Performance Financière
-          </h3>
-          <div className="relative">
-            <select
-              value={timeframe}
-              onChange={(e) => setTimeframe(e.target.value as any)}
-              className="appearance-none rounded-2xl bg-slate-100 pl-4 pr-8 py-1.5 text-xs font-semibold text-slate-700 focus:outline-none"
-            >
-              <option value="MONTHLY">Mensuel</option>
-              <option value="ALL">Historique global</option>
-            </select>
-            <ChevronDown className="absolute right-2.5 top-2.5 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+          <div>
+            <h3 className="text-2xl font-normal text-slate-900 font-serif-display">
+              Performance Financière
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Évolution comparative du capital investi et de la valeur totale
+            </p>
           </div>
+          {snapshots.length > 0 && (
+            <div className="relative">
+              <select
+                value={timeframe}
+                onChange={(e) => setTimeframe(e.target.value as any)}
+                className="appearance-none rounded-2xl bg-slate-100 pl-3.5 pr-8 py-1.5 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer hover:bg-slate-200 transition"
+              >
+                <option value="1Y">1 An</option>
+                <option value="3Y">3 Ans</option>
+                <option value="ALL">Tout</option>
+              </select>
+              <ChevronDown className="absolute right-2.5 top-2.5 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+            </div>
+          )}
         </div>
 
-        {/* Smooth Blue Wave Area Chart */}
-        <div className="h-48 w-full pt-2">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-              <defs>
-                <linearGradient id="fintecoLightWave" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0284c7" stopOpacity={0.35} />
-                  <stop offset="95%" stopColor="#0284c7" stopOpacity={0.0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#0284c7",
-                  border: "none",
-                  borderRadius: "16px",
-                  fontSize: "12px",
-                  color: "#fff",
-                  boxShadow: "none",
-                }}
-                formatter={(val: any) => [`${Number(val).toLocaleString("fr-FR")} €`, "Valeur"]}
-              />
-              <Area
-                type="monotone"
-                dataKey="val"
-                stroke="#0284c7"
-                strokeWidth={3}
-                fillOpacity={1}
-                fill="url(#fintecoLightWave)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
+        {snapshots.length === 0 ? (
+          <div className="h-56 w-full flex flex-col items-center justify-center rounded-xl bg-slate-50 p-6 text-center border border-dashed border-slate-200">
+            <TrendingUp className="h-8 w-8 text-slate-400 mb-2" />
+            <p className="text-sm font-semibold text-slate-700">Aucun historique disponible</p>
+            <p className="text-xs text-slate-500 mt-1 max-w-xs">
+              Ajoutez vos premières transactions d'achat pour suivre la performance temporelle de votre portefeuille.
+            </p>
+          </div>
+        ) : (
+          <div className="h-56 w-full pt-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="valuationGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#0284c7" stopOpacity={0.35} />
+                    <stop offset="95%" stopColor="#0284c7" stopOpacity={0.0} />
+                  </linearGradient>
+                  <linearGradient id="investedGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#94a3b8" stopOpacity={0.2} />
+                    <stop offset="95%" stopColor="#94a3b8" stopOpacity={0.0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+                <Tooltip
+                  content={({ active, payload, label }) => {
+                    if (active && payload && payload.length) {
+                      const valuation = payload.find((p) => p.dataKey === "valuation")?.value as number;
+                      const invested = payload.find((p) => p.dataKey === "invested")?.value as number;
+                      const gain = valuation - invested;
+                      const gainPct = invested > 0 ? (gain / invested) * 100 : 0;
+                      return (
+                        <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl text-xs space-y-1.5 border border-slate-800">
+                          <p className="font-bold text-slate-300 border-b border-slate-700 pb-1">{label}</p>
+                          <div className="flex justify-between gap-4">
+                            <span className="text-slate-400">Valorisation:</span>
+                            <span className="font-semibold text-sky-400">{valuation.toLocaleString("fr-FR")} €</span>
+                          </div>
+                          <div className="flex justify-between gap-4">
+                            <span className="text-slate-400">Capital Investi:</span>
+                            <span className="font-semibold text-slate-300">{invested.toLocaleString("fr-FR")} €</span>
+                          </div>
+                          <div className="flex justify-between gap-4 pt-1 border-t border-slate-800">
+                            <span className="text-slate-400">Plus-value:</span>
+                            <span className={`font-bold ${gain >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                              {gain >= 0 ? "+" : ""}{gain.toLocaleString("fr-FR")} € ({gainPct >= 0 ? "+" : ""}{gainPct.toFixed(1)}%)
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  }}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="invested"
+                  stroke="#94a3b8"
+                  strokeWidth={1.5}
+                  strokeDasharray="4 4"
+                  fillOpacity={1}
+                  fill="url(#investedGradient)"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="valuation"
+                  stroke="#0284c7"
+                  strokeWidth={2.5}
+                  fillOpacity={1}
+                  fill="url(#valuationGradient)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </div>
 
-      {/* Bottom Insights Card: Quick Insights */}
+      {/* Bottom Insights Card: Dynamic Quick Insights */}
       <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
         <h3 className="text-2xl font-normal text-slate-900 font-serif-display mb-4">
           Aperçu Rapide
@@ -103,28 +161,49 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
 
         <ul className="space-y-4 text-sm text-slate-700">
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
+            <TrendingUp className={`h-5 w-5 shrink-0 mt-0.5 ${isGainPositive ? "text-emerald-500" : "text-rose-500"}`} />
             <span>
-              Rendement latent global : <strong className="text-slate-900 font-bold">+{summary.totalGainPercent.toFixed(1)}%</strong> ce mois-ci.
+              Plus-value latente globale :{" "}
+              <strong className={`font-bold ${isGainPositive ? "text-emerald-600" : "text-rose-600"}`}>
+                {isGainPositive ? "+" : ""}
+                {summary.totalGainAmount.toLocaleString("fr-FR")} € ({isGainPositive ? "+" : ""}
+                {summary.totalGainPercent.toFixed(1)}%)
+              </strong>.
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
+            <Wallet className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
             <span>
-              Apports cumulés : <strong className="text-slate-900 font-bold">{summary.totalInvested.toLocaleString("fr-FR")} €</strong> déposés.
+              Apports cumulés :{" "}
+              <strong className="text-slate-900 font-bold">
+                {summary.totalInvested.toLocaleString("fr-FR")} €
+              </strong>{" "}
+              déposés au total.
             </span>
           </li>
-          {topHolding && (
+          {topHolding ? (
+            <li className="flex items-start gap-3">
+              <Award className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+              <span>
+                Actif principal :{" "}
+                <strong className="text-slate-900 font-bold uppercase">{topHolding.ticker}</strong> (
+                {topHolding.currentValuation.toLocaleString("fr-FR")} €).
+              </span>
+            </li>
+          ) : (
             <li className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
-              <span>
-                Premier actif : <strong className="text-slate-900 font-bold uppercase">{topHolding.ticker}</strong> ({topHolding.currentValuation.toLocaleString("fr-FR")} €).
-              </span>
+              <span>Aucun actif en portefeuille pour le moment.</span>
             </li>
           )}
           <li className="flex items-start gap-3">
-            <CheckCircle2 className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
-            <span>Saisie DCA mensuelle simplifiée en 1 clic.</span>
+            <DollarSign className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+            <span>
+              Dividendes cumulés perçus :{" "}
+              <strong className="text-slate-900 font-bold">
+                {summary.totalDividends.toLocaleString("fr-FR")} €
+              </strong>.
+            </span>
           </li>
         </ul>
       </div>

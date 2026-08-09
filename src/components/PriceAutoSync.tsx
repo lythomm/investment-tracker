@@ -31,6 +31,7 @@ export function PriceAutoSync() {
           assets: staleAssets.map((a: any) => ({
             assetId: a._id,
             ticker: a.ticker,
+            isin: a.isin,
           })),
         };
 

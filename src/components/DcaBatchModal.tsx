@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Plus, Trash2, Calendar, CheckCircle2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plus, Trash2, Calendar, CheckCircle2, AlertCircle } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Modal } from "./ui/Modal";
@@ -46,6 +46,19 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
   const addBatchTransactions = useMutation(api.transactions.addBatchTransactions);
   const updateSnapshotForMonth = useMutation(api.snapshots.updateSnapshotForMonth);
 
+  // Sync rows accountId when accounts finish loading
+  useEffect(() => {
+    if (isOpen && accounts.length > 0) {
+      setRows((prevRows) =>
+        prevRows.map((r) =>
+          !r.accountId || !accounts.some((a) => a._id === r.accountId)
+            ? { ...r, accountId: accounts[0]._id }
+            : r
+        )
+      );
+    }
+  }, [accounts, isOpen]);
+
   const handleAddRow = () => {
     setRows([
       ...rows,
@@ -82,7 +95,8 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
       const itemsToSubmit = [];
 
       for (const row of rows) {
-        if (!row.ticker.trim() || !row.quantity || !row.unitPrice || !row.accountId) {
+        const targetAccountId = row.accountId || accounts[0]?._id;
+        if (!row.ticker.trim() || !row.quantity || !row.unitPrice || !targetAccountId) {
           throw new Error("Veuillez remplir le ticker, le compte, la quantité et le prix pour chaque ligne.");
         }
 
@@ -94,7 +108,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
         });
 
         itemsToSubmit.push({
-          accountId: row.accountId as any,
+          accountId: targetAccountId as any,
           assetId,
           type: "ACHAT" as const,
           quantity: parseFloat(row.quantity),
@@ -136,8 +150,9 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="rounded-2xl bg-rose-50 p-3 text-xs text-rose-700">
-            {error}
+          <div className="flex items-center gap-2 rounded-2xl bg-rose-50 p-3 text-xs text-rose-700">
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            <span>{error}</span>
           </div>
         )}
 
@@ -194,7 +209,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
 
               <div className="sm:col-span-2">
                 <select
-                  value={row.accountId}
+                  value={row.accountId || accounts[0]?._id || ""}
                   onChange={(e) => handleUpdateRow(row.id, "accountId", e.target.value)}
                   className="w-full rounded-2xl bg-white px-2.5 py-2 text-xs text-slate-900 focus:outline-none"
                   required

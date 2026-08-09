@@ -6,6 +6,7 @@ import { useConvexAuth, useQuery } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { api } from "../../convex/_generated/api";
 import { Navbar } from "./Navbar";
+import { MobileBottomNav } from "./MobileBottomNav";
 import { AddAccountModal } from "./AddAccountModal";
 import { AuthScreen } from "./AuthScreen";
 import { PriceAutoSync } from "./PriceAutoSync";
@@ -57,7 +58,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         accounts,
       }}
     >
-      <div className="min-h-screen w-full bg-[#edf1f2] text-slate-900 flex flex-col pb-12">
+      <div className="min-h-screen w-full bg-[#edf1f2] text-slate-900 flex flex-col pb-28 md:pb-12">
         <PriceAutoSync />
         {/* Rendered ONCE Globally for all pages */}
         <Navbar
@@ -67,6 +68,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         {/* Active Page View */}
         {children}
+
+        {/* Fixed Mobile Bottom Navigation Bar */}
+        <MobileBottomNav />
 
         {/* Global Modals */}
         <AddAccountModal

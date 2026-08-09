@@ -17,4 +17,11 @@ test.describe('Dashboard Page', () => {
 
     await expect(emptyState.or(heroBanner)).toBeVisible();
   });
+
+  test('should display fixed bottom navigation bar on mobile viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await expect(page.getByRole('link', { name: 'Dashboard' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Positions' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Historique' })).toBeVisible();
+  });
 });

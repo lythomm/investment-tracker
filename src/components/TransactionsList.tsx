@@ -59,39 +59,46 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
+        <table className="w-full text-left text-sm whitespace-nowrap">
           <thead>
-            <tr className="text-slate-500 font-semibold text-xs uppercase tracking-wide">
-              <th className="pb-3 pl-2">Date</th>
-              <th className="pb-3">Actif / Nom</th>
-              <th className="pb-3">Compte</th>
-              <th className="pb-3">Type</th>
-              <th className="pb-3 text-right">Quantité</th>
-              <th className="pb-3 text-right">Prix Unit.</th>
-              <th className="pb-3 text-right">Frais</th>
-              <th className="pb-3 text-right">Total</th>
-              <th className="pb-3 text-right pr-2">Action</th>
+            <tr className="text-slate-500 font-semibold text-xs uppercase tracking-wide border-b border-slate-100">
+              <th className="py-3 px-4 sm:px-6">Date</th>
+              <th className="py-3 px-4 sm:px-6">Actif / Nom</th>
+              <th className="py-3 px-4 sm:px-6">Compte</th>
+              <th className="py-3 px-4 sm:px-6">Type</th>
+              <th className="py-3 px-4 sm:px-6 text-right">Quantité</th>
+              <th className="py-3 px-4 sm:px-6 text-right">Prix Unit.</th>
+              <th className="py-3 px-4 sm:px-6 text-right">Frais</th>
+              <th className="py-3 px-4 sm:px-6 text-right">Total</th>
+              <th className="py-3 px-4 sm:px-6 text-right">Action</th>
             </tr>
           </thead>
           <tbody>
             {transactions.map((tx) => {
               const total = tx.quantity * tx.unitPrice + tx.fees;
+              const fullName = tx.asset?.name || tx.asset?.ticker || "";
+              const mobileName = fullName.length > 20 ? `${fullName.slice(0, 20)}...` : fullName;
               return (
-                <tr key={tx._id} className="hover:bg-slate-50/80 transition">
-                  <td className="py-4 pl-2 font-medium text-sm text-slate-700">
+                <tr key={tx._id} className="hover:bg-slate-50/80 transition border-b border-slate-50 last:border-0">
+                  <td className="py-4 px-4 sm:px-6 font-medium text-sm text-slate-700">
                     {prettyDisplayDate(tx.date)}
                   </td>
 
-                  <td className="py-4 font-medium text-slate-900">
+                  <td className="py-4 px-4 sm:px-6 font-medium text-slate-900">
                     <div className="font-bold text-base text-slate-900 uppercase">{tx.asset?.ticker || "—"}</div>
-                    <div className="text-xs text-slate-500">{tx.asset?.name}</div>
+                    {tx.asset?.name && (
+                      <div className="text-xs text-slate-500" title={fullName}>
+                        <span className="sm:hidden">{mobileName}</span>
+                        <span className="hidden sm:inline">{fullName}</span>
+                      </div>
+                    )}
                   </td>
 
-                  <td className="py-4 text-slate-700 font-medium">
+                  <td className="py-4 px-4 sm:px-6 text-slate-700 font-medium">
                     {tx.account?.name || "Compte"}
                   </td>
 
-                  <td className="py-4">
+                  <td className="py-4 px-4 sm:px-6">
                     <span
                       className={`rounded-2xl px-3 py-1 text-xs font-semibold ${
                         tx.type === "ACHAT"
@@ -105,23 +112,23 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                     </span>
                   </td>
 
-                  <td className="py-4 text-right font-medium text-slate-900">
+                  <td className="py-4 px-4 sm:px-6 text-right font-medium text-slate-900">
                     {tx.quantity}
                   </td>
 
-                  <td className="py-4 text-right text-slate-700">
+                  <td className="py-4 px-4 sm:px-6 text-right text-slate-700">
                     {tx.unitPrice.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
                   </td>
 
-                  <td className="py-4 text-right text-slate-500">
+                  <td className="py-4 px-4 sm:px-6 text-right text-slate-500">
                     {tx.fees.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
                   </td>
 
-                  <td className="py-4 text-right font-bold text-base text-slate-900">
+                  <td className="py-4 px-4 sm:px-6 text-right font-bold text-base text-slate-900">
                     {total.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
                   </td>
 
-                  <td className="py-4 text-right pr-2">
+                  <td className="py-4 px-4 sm:px-6 text-right">
                     <button
                       onClick={() => setDeleteId(tx._id)}
                       className="rounded-2xl p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"

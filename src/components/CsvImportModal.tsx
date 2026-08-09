@@ -147,7 +147,7 @@ export function CsvImportModal({ isOpen, onClose, accounts }: CsvImportModalProp
         {parsedData.length > 0 && (
           <div className="max-h-48 overflow-y-auto rounded-2xl bg-slate-100 p-3">
             <p className="text-xs font-semibold text-slate-600 mb-2">Aperçu ({parsedData.length} lignes) :</p>
-            <table className="w-full text-left text-xs text-slate-700">
+            <table className="w-full text-left text-xs text-slate-700 whitespace-nowrap">
               <thead>
                 <tr className="text-slate-500">
                   <th className="p-1">Date</th>

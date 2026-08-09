@@ -33,6 +33,12 @@
   h1, h2, h3, h4, h5, h6, .font-serif, .font-serif-display {
     font-family: 'Gambarino', serif !important;
   }
+
+  table th, table td {
+    white-space: nowrap !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+  }
 }
 
 @layer utilities {

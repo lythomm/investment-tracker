@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { HoldingsTable } from "@/components/HoldingsTable";
+import { PortfolioAllocationCard } from "@/components/PortfolioAllocationCard";
 import { useModals } from "@/components/AppShell";
 import { Plus, Wallet } from "lucide-react";
 
@@ -74,7 +75,18 @@ export default function PositionsPage() {
             </button>
           </div>
 
-          <HoldingsTable holdings={portfolioSummary.holdings} />
+          {/* Positions Layout Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+            <div className="lg:col-span-1">
+              <PortfolioAllocationCard
+                holdings={portfolioSummary.holdings}
+                totalValuation={portfolioSummary.totalValuation}
+              />
+            </div>
+            <div className="lg:col-span-2">
+              <HoldingsTable holdings={portfolioSummary.holdings} />
+            </div>
+          </div>
         </>
       )}
     </main>

@@ -288,7 +288,7 @@ export default function NewTransactionPage() {
       </div>
 
       {/* Main Multistep Form Card Container */}
-      <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-100 space-y-8">
+      <div className="bg-white rounded-3xl p-5 sm:p-12 shadow-sm border border-slate-100 space-y-8">
         {error && (
           <div className="flex items-center gap-3 rounded-2xl bg-rose-50 p-4 text-sm font-semibold text-rose-700">
             <AlertCircle className="h-5 w-5 shrink-0" />
@@ -308,59 +308,59 @@ export default function NewTransactionPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 gap-2 sm:gap-6">
               <button
                 type="button"
                 onClick={() => setType("ACHAT")}
-                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${type === "ACHAT"
+                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 ${type === "ACHAT"
                     ? "border-emerald-600 bg-emerald-50/50 text-emerald-950 shadow-sm"
                     : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
                   }`}
               >
                 <div
-                  className={`p-4 rounded-2xl mb-4 ${type === "ACHAT" ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600"
+                  className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl mb-1.5 sm:mb-4 ${type === "ACHAT" ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600"
                     }`}
                 >
-                  <TrendingUp className="h-8 w-8" />
+                  <TrendingUp className="h-5 w-5 sm:h-8 sm:w-8" />
                 </div>
-                <span className="font-bold text-lg">Achat</span>
-                <span className="text-xs sm:text-sm text-slate-400 mt-1">Nouvel investissement</span>
+                <span className="font-bold text-xs sm:text-lg">Achat</span>
+                <span className="hidden sm:block text-xs sm:text-sm text-slate-400 mt-1">Nouvel investissement</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setType("VENTE")}
-                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${type === "VENTE"
+                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 ${type === "VENTE"
                     ? "border-rose-600 bg-rose-50/50 text-rose-950 shadow-sm"
                     : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
                   }`}
               >
                 <div
-                  className={`p-4 rounded-2xl mb-4 ${type === "VENTE" ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-600"
+                  className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl mb-1.5 sm:mb-4 ${type === "VENTE" ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-600"
                     }`}
                 >
-                  <TrendingDown className="h-8 w-8" />
+                  <TrendingDown className="h-5 w-5 sm:h-8 sm:w-8" />
                 </div>
-                <span className="font-bold text-lg">Vente</span>
-                <span className="text-xs sm:text-sm text-slate-400 mt-1">Cession de titres</span>
+                <span className="font-bold text-xs sm:text-lg">Vente</span>
+                <span className="hidden sm:block text-xs sm:text-sm text-slate-400 mt-1">Cession de titres</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setType("DIVIDENDE")}
-                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${type === "DIVIDENDE"
+                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 ${type === "DIVIDENDE"
                     ? "border-amber-600 bg-amber-50/50 text-amber-950 shadow-sm"
                     : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
                   }`}
               >
                 <div
-                  className={`p-4 rounded-2xl mb-4 ${type === "DIVIDENDE" ? "bg-amber-600 text-white" : "bg-slate-100 text-slate-600"
+                  className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl mb-1.5 sm:mb-4 ${type === "DIVIDENDE" ? "bg-amber-600 text-white" : "bg-slate-100 text-slate-600"
                     }`}
                 >
-                  <Coins className="h-8 w-8" />
+                  <Coins className="h-5 w-5 sm:h-8 sm:w-8" />
                 </div>
-                <span className="font-bold text-lg">Dividende</span>
-                <span className="text-xs sm:text-sm text-slate-400 mt-1">Revenu d'actif</span>
+                <span className="font-bold text-xs sm:text-lg">Dividende</span>
+                <span className="hidden sm:block text-xs sm:text-sm text-slate-400 mt-1">Revenu d'actif</span>
               </button>
             </div>
           </div>
@@ -621,8 +621,8 @@ export default function NewTransactionPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              <div className="col-span-1 sm:col-span-1">
                 <label className="block text-sm font-bold text-slate-800 mb-2">
                   Quantité
                 </label>
@@ -636,32 +636,35 @@ export default function NewTransactionPage() {
                   required
                 />
               </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-800 mb-2">
-                  Prix unitaire (€)
-                </label>
-                <input
-                  type="number"
-                  step="any"
-                  placeholder="500"
-                  value={unitPrice}
-                  onChange={(e) => setUnitPrice(e.target.value)}
-                  className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-medium text-slate-900 focus:outline-none"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-800 mb-2">
-                  Frais (€)
-                </label>
-                <input
-                  type="number"
-                  step="any"
-                  placeholder="0"
-                  value={fees}
-                  onChange={(e) => setFees(e.target.value)}
-                  className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-medium text-slate-900 focus:outline-none"
-                />
+
+              <div className="col-span-1 sm:col-span-2 grid grid-cols-2 gap-3 sm:gap-6">
+                <div>
+                  <label className="block text-sm font-bold text-slate-800 mb-2">
+                    Prix unitaire (€)
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    placeholder="500"
+                    value={unitPrice}
+                    onChange={(e) => setUnitPrice(e.target.value)}
+                    className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-medium text-slate-900 focus:outline-none"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold text-slate-800 mb-2">
+                    Frais (€)
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    placeholder="0"
+                    value={fees}
+                    onChange={(e) => setFees(e.target.value)}
+                    className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-medium text-slate-900 focus:outline-none"
+                  />
+                </div>
               </div>
             </div>
 
@@ -737,7 +740,7 @@ export default function NewTransactionPage() {
               ) : (
                 <CheckCircle2 className="h-5 w-5" />
               )}
-              <span>Enregistrer la transaction</span>
+              <span>Enregistrer</span>
             </button>
           )}
         </div>

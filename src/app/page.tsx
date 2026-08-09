@@ -8,6 +8,7 @@ import { api } from "../../convex/_generated/api";
 import { HeroBanner } from "@/components/HeroBanner";
 import { RecentInvestmentsTable } from "@/components/RecentInvestmentsTable";
 import { FinancialPerformanceCard } from "@/components/FinancialPerformanceCard";
+import { AccountFilterPills } from "@/components/AccountFilterPills";
 import { useModals } from "@/components/AppShell";
 import { Plus, Wallet } from "lucide-react";
 
@@ -55,37 +56,12 @@ export default function Home() {
           />
 
           {/* Account Selector Filter Bar */}
-          <div className="flex items-center gap-2.5 overflow-x-auto py-1">
-            <button
-              onClick={() => setSelectedAccountId(null)}
-              className={`rounded-2xl px-5 py-2 text-sm font-semibold transition cursor-pointer ${
-                selectedAccountId === null
-                  ? "bg-slate-900 text-white"
-                  : "bg-white text-slate-600 hover:bg-slate-100"
-              }`}
-            >
-              Tous les comptes
-            </button>
-            {accounts.map((acc: any) => (
-              <button
-                key={acc._id}
-                onClick={() => setSelectedAccountId(acc._id)}
-                className={`rounded-2xl px-5 py-2 text-sm font-semibold transition cursor-pointer ${
-                  selectedAccountId === acc._id
-                    ? "bg-slate-900 text-white"
-                    : "bg-white text-slate-600 hover:bg-slate-100"
-                }`}
-              >
-                {acc.name} ({acc.type})
-              </button>
-            ))}
-            <button
-              onClick={openAddAccount}
-              className="flex items-center gap-1.5 rounded-2xl bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 cursor-pointer"
-            >
-              <Plus className="h-4 w-4" /> Nouveau Compte
-            </button>
-          </div>
+          <AccountFilterPills
+            accounts={accounts}
+            selectedAccountId={selectedAccountId}
+            onSelectAccount={setSelectedAccountId}
+            onOpenAddAccount={openAddAccount}
+          />
 
           {/* Dashboard Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">

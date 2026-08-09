@@ -88,4 +88,13 @@
     font-size: 0.825rem;
     font-weight: 600;
   }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
 }

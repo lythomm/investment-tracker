@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, History } from "lucide-react";
+import Link from "next/link";
+import { Trash2, History, Plus } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { prettyDisplayDate } from "@/lib/formatters";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import { Button } from "@/components/ui/Button";
 
 interface TransactionsListProps {
   transactions: Array<{
@@ -43,6 +45,11 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
         <p className="text-lg font-medium text-slate-600 font-serif-display">
           Aucune transaction enregistrée dans le journal.
         </p>
+        <Link href="/transactions/new" className="mt-4">
+          <Button variant="primary" size="md" icon={<Plus className="h-4 w-4" />}>
+            Ajouter une transaction
+          </Button>
+        </Link>
       </div>
     );
   }

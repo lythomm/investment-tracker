@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Trash2, Layers, ArrowRight } from "lucide-react";
+import { Trash2, Layers, ArrowRight, Plus } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { prettyDisplayDate } from "@/lib/formatters";
@@ -71,9 +71,14 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
 
       {/* Table */}
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-center">
+        <div className="flex flex-col items-center justify-center py-12 text-center">
           <Layers className="h-10 w-10 text-slate-300 mb-2" />
           <p className="text-base font-medium text-slate-500 font-serif-display">Aucun enregistrement récent.</p>
+          <Link href="/transactions/new" className="mt-4">
+            <Button variant="primary" size="md" icon={<Plus className="h-4 w-4" />}>
+              Ajouter une transaction
+            </Button>
+          </Link>
         </div>
       ) : (
         <>

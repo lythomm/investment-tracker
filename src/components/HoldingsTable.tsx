@@ -1,6 +1,8 @@
 "use client";
 
-import { Layers } from "lucide-react";
+import Link from "next/link";
+import { Layers, Plus } from "lucide-react";
+import { Button } from "./ui/Button";
 
 interface HoldingsTableProps {
   holdings: Array<{
@@ -31,6 +33,11 @@ export function HoldingsTable({ holdings }: HoldingsTableProps) {
         <p className="text-lg font-medium text-slate-600 font-serif-display">
           Aucun actif détenu dans le portefeuille.
         </p>
+        <Link href="/transactions/new" className="mt-4">
+          <Button variant="primary" size="md" icon={<Plus className="h-4 w-4" />}>
+            Ajouter une transaction
+          </Button>
+        </Link>
       </div>
     );
   }

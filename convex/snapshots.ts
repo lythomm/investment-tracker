@@ -58,6 +58,14 @@ export const getMonthlySnapshots = query({
 
     const yearMonths = Array.from(yearMonthsSet).sort();
 
+    // If only 1 month exists, prepend previous month as 0 EUR baseline so a line can be drawn
+    if (yearMonths.length === 1) {
+      const [y, m] = yearMonths[0].split("-").map(Number);
+      const prevDate = new Date(y, m - 2, 1);
+      const prevYM = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, "0")}`;
+      yearMonths.unshift(prevYM);
+    }
+
     const assetIds = Array.from(new Set<string>(txs.map((t: any) => String(t.assetId))));
     const assetMap = new Map<string, any>();
     for (const id of assetIds) {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
-import { CheckCircle2, ChevronDown, TrendingUp, Wallet, Award, DollarSign } from "lucide-react";
+import { CheckCircle2, ChevronDown, TrendingUp, Wallet, Award, DollarSign, Info } from "lucide-react";
 
 interface FinancialPerformanceCardProps {
   snapshots: Array<{
@@ -21,11 +21,33 @@ interface FinancialPerformanceCardProps {
   };
 }
 
+function formatYearMonth(ym: string) {
+  if (!ym || !ym.includes("-")) return ym;
+  const [year, month] = ym.split("-");
+  const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+  const monthName = date.toLocaleDateString("fr-FR", { month: "short" });
+  return `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${year.slice(2)}`;
+}
+
 export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerformanceCardProps) {
   const [timeframe, setTimeframe] = useState<"1Y" | "3Y" | "ALL">("ALL");
 
+  // If there's only 1 snapshot, prepend a baseline (0 EUR) point for the previous month
+  let rawSnapshots = [...snapshots];
+  if (rawSnapshots.length === 1) {
+    const [y, m] = rawSnapshots[0].yearMonth.split("-").map(Number);
+    const prevDate = new Date(y, m - 2, 1);
+    const prevYM = `${prevDate.getFullYear()}-${String(prevDate.getMonth() + 1).padStart(2, "0")}`;
+    rawSnapshots.unshift({
+      yearMonth: prevYM,
+      totalInvested: 0,
+      totalValuation: 0,
+      totalGainAmount: 0,
+    });
+  }
+
   // Filter snapshots according to selected timeframe
-  let filteredSnapshots = [...snapshots];
+  let filteredSnapshots = rawSnapshots;
   if (timeframe === "1Y") {
     filteredSnapshots = filteredSnapshots.slice(-12);
   } else if (timeframe === "3Y") {
@@ -33,7 +55,8 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
   }
 
   const chartData = filteredSnapshots.map((s) => ({
-    name: s.yearMonth,
+    name: formatYearMonth(s.yearMonth),
+    rawYM: s.yearMonth,
     valuation: s.totalValuation,
     invested: s.totalInvested,
     gain: s.totalGainAmount,
@@ -50,7 +73,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
     <div className="space-y-6">
       {/* Top Chart Card: Financial Performance */}
       <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-2">
           <div>
             <h3 className="text-2xl font-normal text-slate-900 font-serif-display">
               Performance Financière
@@ -75,6 +98,20 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
           )}
         </div>
 
+        {/* Legend Header */}
+        {snapshots.length > 0 && (
+          <div className="flex items-center gap-4 text-xs mt-3 mb-4 pb-2 border-b border-slate-100">
+            <div className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-sky-600 inline-block" />
+              <span className="text-slate-700 font-semibold">Valorisation Portefeuille</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-slate-400 inline-block" />
+              <span className="text-slate-500 font-medium">Capital Investi (Apports)</span>
+            </div>
+          </div>
+        )}
+
         {snapshots.length === 0 ? (
           <div className="h-56 w-full flex flex-col items-center justify-center rounded-xl bg-slate-50 p-6 text-center border border-dashed border-slate-200">
             <TrendingUp className="h-8 w-8 text-slate-400 mb-2" />
@@ -84,7 +121,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
             </p>
           </div>
         ) : (
-          <div className="h-56 w-full pt-2">
+          <div className="h-56 w-full pt-1">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
@@ -138,6 +175,8 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
                   strokeDasharray="4 4"
                   fillOpacity={1}
                   fill="url(#investedGradient)"
+                  dot={{ r: 4, fill: "#94a3b8", strokeWidth: 1, stroke: "#fff" }}
+                  activeDot={{ r: 6, fill: "#64748b" }}
                 />
                 <Area
                   type="monotone"
@@ -146,6 +185,8 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
                   strokeWidth={2.5}
                   fillOpacity={1}
                   fill="url(#valuationGradient)"
+                  dot={{ r: 5, fill: "#0284c7", strokeWidth: 2, stroke: "#fff" }}
+                  activeDot={{ r: 7, fill: "#0369a1" }}
                 />
               </AreaChart>
             </ResponsiveContainer>

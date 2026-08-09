@@ -30,6 +30,11 @@ export const getOrCreateAsset = mutation({
       .unique();
 
     if (existing) {
+      if (args.isin && !existing.isin) {
+        await ctx.db.patch(existing._id, {
+          isin: args.isin.trim().toUpperCase(),
+        });
+      }
       return existing._id;
     }
 

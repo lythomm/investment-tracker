@@ -26,6 +26,7 @@ type AssetType = "ETF" | "Action";
 
 interface SearchResult {
   ticker: string;
+  isin?: string;
   name: string;
   type: AssetType;
   exchDisp?: string;
@@ -42,6 +43,7 @@ export default function NewTransactionPage() {
   const [type, setType] = useState<TransactionType>("ACHAT");
   const [accountId, setAccountId] = useState<string>("");
   const [ticker, setTicker] = useState<string>("");
+  const [isin, setIsin] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [assetType, setAssetType] = useState<AssetType>("ETF");
   const [currentPrice, setCurrentPrice] = useState<number>(0);
@@ -124,6 +126,7 @@ export default function NewTransactionPage() {
   const selectSearchResult = (item: SearchResult) => {
     setTicker(item.ticker);
     setName(item.name);
+    if (item.isin) setIsin(item.isin);
     setAssetType(item.type);
     if (item.currentPrice && item.currentPrice > 0) {
       setCurrentPrice(item.currentPrice);
@@ -202,6 +205,7 @@ export default function NewTransactionPage() {
       const assetId = await getOrCreateAsset({
         ticker: ticker.trim().toUpperCase(),
         name: name.trim() || ticker.trim().toUpperCase(),
+        isin: isin.trim() ? isin.trim().toUpperCase() : undefined,
         type: assetType,
         currentPrice: currentPrice > 0 ? currentPrice : parseFloat(unitPrice),
       });

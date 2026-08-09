@@ -55,35 +55,35 @@ export function Modal({
       >
         {/* Header */}
         {(title || description) && (
-          <div className="flex items-center justify-between border-b border-slate-100 p-6">
+          <div className="flex items-center justify-between border-b border-slate-100 p-6 sm:px-8">
             <div>
               {typeof title === "string" ? (
-                <h2 className="text-2xl font-normal text-slate-900 font-serif-display">
+                <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
                   {title}
                 </h2>
               ) : (
                 title
               )}
               {description && (
-                <p className="text-xs text-slate-500 mt-0.5">{description}</p>
+                <p className="text-sm text-slate-500 mt-1">{description}</p>
               )}
             </div>
             <button
               onClick={onClose}
-              className="rounded-full p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+              className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
               title="Fermer"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5.5 w-5.5" />
             </button>
           </div>
         )}
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-6">{children}</div>
+        <div className="flex-1 overflow-y-auto p-6 sm:p-8 text-base">{children}</div>
 
         {/* Optional Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 border-t border-slate-100 p-4 sm:px-6 bg-slate-50/50">
+          <div className="flex items-center justify-end gap-3 border-t border-slate-100 p-4 sm:px-8 bg-slate-50/50">
             {footer}
           </div>
         )}

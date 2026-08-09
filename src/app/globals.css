@@ -17,6 +17,7 @@
     background-color: #edf1f2;
     color: #0f172a;
     font-family: 'Satoshi', system-ui, -apple-system, sans-serif !important;
+    font-size: 0.95rem;
     -webkit-font-smoothing: antialiased;
     box-shadow: none !important;
   }
@@ -38,7 +39,7 @@
   .card-light {
     background-color: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 1.25rem;
+    border-radius: 1.5rem;
     box-shadow: none !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -53,8 +54,8 @@
     background-color: #dcfce7;
     color: #166534;
     border-radius: 9999px;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.825rem;
     font-weight: 600;
   }
 
@@ -62,8 +63,8 @@
     background-color: #fef3c7;
     color: #92400e;
     border-radius: 9999px;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.825rem;
     font-weight: 600;
   }
 
@@ -71,8 +72,8 @@
     background-color: #fee2e2;
     color: #991b1b;
     border-radius: 9999px;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.825rem;
     font-weight: 600;
   }
 }

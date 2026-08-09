@@ -12,7 +12,7 @@ interface TransactionsListProps {
     unitPrice: number;
     fees: number;
     date: string;
-    asset?: { ticker: string; name: string } | null;
+    asset?: { ticker: string; name: string; type: string } | null;
     account?: { name: string; type: string } | null;
   }>;
 }
@@ -26,75 +26,105 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
     }
   };
 
-  if (!transactions || transactions.length === 0) {
+  if (transactions.length === 0) {
     return (
-      <div className="card-light flex flex-col items-center justify-center rounded-[2.25rem] p-8 text-center bg-white border border-slate-200">
-        <History className="h-8 w-8 text-slate-300 mb-2" />
-        <p className="text-xs text-slate-500 font-serif-display">Aucune transaction enregistrée dans le journal.</p>
+      <div className="card-light flex flex-col items-center justify-center rounded-[2.25rem] p-16 text-center bg-white border border-slate-200">
+        <History className="h-12 w-12 text-slate-300 mb-3" />
+        <p className="text-lg font-medium text-slate-600 font-serif-display">
+          Aucune transaction enregistrée dans le journal.
+        </p>
       </div>
     );
   }
 
   return (
     <div className="card-light rounded-[2.25rem] p-6 sm:p-8 bg-white border border-slate-200">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-normal text-slate-900 font-serif-display">
-            Journal Complet des Transactions
-          </h2>
-          <p className="text-xs text-slate-500">Historique complet de vos ordres et dividendes</p>
-        </div>
-        <span className="rounded-full bg-slate-100 border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600">
-          {transactions.length} enregistrements
-        </span>
+      <div className="mb-6">
+        <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
+          Journal d'Historique
+        </h2>
+        <p className="text-sm text-slate-500 mt-1">
+          Historique complet de toutes vos opérations enregistrées.
+        </p>
       </div>
 
-      <div className="max-h-96 overflow-y-auto pr-1">
-        <div className="space-y-2.5">
-          {transactions.map((tx) => (
-            <div
-              key={tx._id}
-              className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/50 p-4 hover:bg-slate-50 transition"
-            >
-              <div className="flex items-center gap-3">
-                <span
-                  className={
-                    tx.type === "ACHAT"
-                      ? "status-badge-complete"
-                      : tx.type === "VENTE"
-                      ? "status-badge-failed"
-                      : "status-badge-pending"
-                  }
-                >
-                  {tx.type}
-                </span>
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-sm">
+          <thead>
+            <tr className="border-b border-slate-200 text-slate-500 font-semibold text-xs uppercase tracking-wide">
+              <th className="pb-3 pl-2">Date</th>
+              <th className="pb-3">Actif / Nom</th>
+              <th className="pb-3">Compte</th>
+              <th className="pb-3">Type</th>
+              <th className="pb-3 text-right">Quantité</th>
+              <th className="pb-3 text-right">Prix Unit.</th>
+              <th className="pb-3 text-right">Frais</th>
+              <th className="pb-3 text-right">Total</th>
+              <th className="pb-3 text-right pr-2">Action</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {transactions.map((tx) => {
+              const total = tx.quantity * tx.unitPrice + tx.fees;
+              return (
+                <tr key={tx._id} className="hover:bg-slate-50/80 transition">
+                  <td className="py-4 pl-2 font-mono text-sm text-slate-600">
+                    {tx.date}
+                  </td>
 
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-slate-900 text-xs">{tx.asset?.ticker || "Actif"}</span>
-                    <span className="text-[10px] text-slate-400">({tx.account?.name || "Compte"})</span>
-                  </div>
-                  <div className="text-[11px] text-slate-500">
-                    {tx.date} • {tx.quantity} unit. @ {tx.unitPrice} € {tx.fees > 0 ? `(+${tx.fees}€ frais)` : ""}
-                  </div>
-                </div>
-              </div>
+                  <td className="py-4 font-medium text-slate-900">
+                    <div className="font-bold text-base text-slate-900 uppercase">{tx.asset?.ticker || "—"}</div>
+                    <div className="text-xs text-slate-500">{tx.asset?.name}</div>
+                  </td>
 
-              <div className="flex items-center gap-4">
-                <span className="font-bold text-sm text-slate-900">
-                  {(tx.quantity * tx.unitPrice).toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
-                </span>
-                <button
-                  onClick={() => handleDelete(tx._id)}
-                  className="rounded-lg p-1.5 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
-                  title="Supprimer"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+                  <td className="py-4 text-slate-700 font-medium">
+                    {tx.account?.name || "Compte"}
+                  </td>
+
+                  <td className="py-4">
+                    <span
+                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                        tx.type === "ACHAT"
+                          ? "bg-emerald-100 text-emerald-800"
+                          : tx.type === "VENTE"
+                          ? "bg-rose-100 text-rose-800"
+                          : "bg-amber-100 text-amber-800"
+                      }`}
+                    >
+                      {tx.type}
+                    </span>
+                  </td>
+
+                  <td className="py-4 text-right font-medium text-slate-900">
+                    {tx.quantity}
+                  </td>
+
+                  <td className="py-4 text-right text-slate-700">
+                    {tx.unitPrice.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+                  </td>
+
+                  <td className="py-4 text-right text-slate-500">
+                    {tx.fees.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+                  </td>
+
+                  <td className="py-4 text-right font-bold text-base text-slate-900">
+                    {total.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+                  </td>
+
+                  <td className="py-4 text-right pr-2">
+                    <button
+                      onClick={() => handleDelete(tx._id)}
+                      className="rounded-lg p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
+                      title="Supprimer"
+                    >
+                      <Trash2 className="h-4.5 w-4.5" />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );

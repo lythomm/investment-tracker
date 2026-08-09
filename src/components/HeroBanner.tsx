@@ -17,22 +17,22 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
   const isPositive = summary.totalGainAmount >= 0;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl p-8 sm:p-14 lg:p-16 text-white min-h-[330px] flex flex-col justify-end">
+    <div className="relative w-full overflow-hidden rounded-2xl p-8 text-white min-h-[25rem] flex flex-col justify-end">
       {/* Generated Meadow Background Image */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center pointer-events-none"
         style={{
           backgroundImage: `url('/hero_meadow_bg.png')`,
         }}
       />
       {/* Soft Scrim Gradient Overlay for Text Legibility */}
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/30 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-800/10 to-transparent pointer-events-none" />
 
       <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         {/* Left Side: Total Balance */}
         <div className="space-y-1">
           <span className="text-xl font-normal text-white font-serif-display tracking-wide">
-            {selectedAccountName ? `Valeur — ${selectedAccountName}` : "Total Balance"}
+            {selectedAccountName ? `Valeur — ${selectedAccountName}` : "Solde Total"}
           </span>
 
           <h1 className="text-5xl font-normal tracking-tight text-white sm:text-6xl lg:text-7xl font-sans">
@@ -76,7 +76,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
                   {summary.totalGainAmount.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
                 </div>
               </div>
-              <div className="mt-1.5 flex items-center gap-1 text-sm font-semibold text-sky-600">
+              <div className="mt-1.5 flex items-center gap-1 text-sm font-semibold text-sky-500">
                 {isPositive ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
                 ROI {isPositive ? "+" : ""}{summary.totalGainPercent.toFixed(1)}%
               </div>

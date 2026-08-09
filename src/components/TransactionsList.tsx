@@ -28,7 +28,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
   if (transactions.length === 0) {
     return (
-      <div className="card-light flex flex-col items-center justify-center rounded-[2.25rem] p-16 text-center bg-white border border-slate-200">
+      <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center bg-white border border-slate-200">
         <History className="h-12 w-12 text-slate-300 mb-3" />
         <p className="text-lg font-medium text-slate-600 font-serif-display">
           Aucune transaction enregistrée dans le journal.
@@ -38,7 +38,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
   }
 
   return (
-    <div className="card-light rounded-[2.25rem] p-6 sm:p-8 bg-white border border-slate-200">
+    <div className="card-light rounded-2xl p-6 sm:p-8 bg-white border border-slate-200">
       <div className="mb-6">
         <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
           Journal d'Historique
@@ -83,7 +83,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                   <td className="py-4">
                     <span
-                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      className={`rounded-2xl px-3 py-1 text-xs font-semibold ${
                         tx.type === "ACHAT"
                           ? "bg-emerald-100 text-emerald-800"
                           : tx.type === "VENTE"
@@ -114,7 +114,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                   <td className="py-4 text-right pr-2">
                     <button
                       onClick={() => handleDelete(tx._id)}
-                      className="rounded-lg p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
+                      className="rounded-2xl p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
                       title="Supprimer"
                     >
                       <Trash2 className="h-4.5 w-4.5" />

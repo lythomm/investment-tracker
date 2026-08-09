@@ -34,7 +34,7 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
   };
 
   return (
-    <div className="card-light rounded-[2.25rem] p-6 sm:p-8 bg-white border border-slate-200">
+    <div className="card-light rounded-2xl p-6 sm:p-8 bg-white border border-slate-200">
       {/* Header & Filter Pills */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
@@ -47,7 +47,7 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`rounded-full px-4 py-2 text-sm font-semibold border transition ${
+              className={`rounded-2xl px-4 py-2 text-sm font-semibold border transition ${
                 filter === f
                   ? "bg-slate-900 text-white border-slate-900"
                   : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
@@ -109,7 +109,7 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
                     <td className="py-4 text-right pr-2">
                       <button
                         onClick={() => handleDelete(tx._id)}
-                        className="rounded-lg p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
+                        className="rounded-2xl p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
                         title="Supprimer"
                       >
                         <Trash2 className="h-4.5 w-4.5" />

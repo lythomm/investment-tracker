@@ -95,14 +95,14 @@ export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
+            className="rounded-2xl px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
           >
             Annuler
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
+            className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
           >
             <CheckCircle2 className="h-4 w-4" />
             {loading ? "Création..." : "Créer le compte"}

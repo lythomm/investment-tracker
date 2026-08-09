@@ -27,7 +27,7 @@ export default function PositionsPage() {
   return (
     <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 pt-4 space-y-6">
       {accounts.length === 0 ? (
-        <div className="card-light flex flex-col items-center justify-center rounded-3xl p-16 text-center my-8 bg-white border border-slate-200">
+        <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center my-8 bg-white border border-slate-200">
           <Wallet className="h-12 w-12 text-slate-800 mb-4" />
           <h2 className="text-3xl font-bold text-slate-900 font-serif-display">Bienvenue sur Folio !</h2>
           <p className="mt-2 text-base text-slate-500 max-w-md">
@@ -35,7 +35,7 @@ export default function PositionsPage() {
           </p>
           <button
             onClick={openAddAccount}
-            className="mt-6 flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-base font-bold text-white hover:bg-slate-800 transition"
+            className="mt-6 flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 text-base font-bold text-white hover:bg-slate-800 transition"
           >
             <Plus className="h-5 w-5" /> Créer mon premier compte PEA / CTO
           </button>
@@ -45,7 +45,7 @@ export default function PositionsPage() {
           <div className="flex items-center gap-2.5 overflow-x-auto py-1">
             <button
               onClick={() => setSelectedAccountId(null)}
-              className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+              className={`rounded-2xl px-5 py-2 text-sm font-semibold transition ${
                 selectedAccountId === null
                   ? "bg-slate-900 text-white"
                   : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
@@ -57,7 +57,7 @@ export default function PositionsPage() {
               <button
                 key={acc._id}
                 onClick={() => setSelectedAccountId(acc._id)}
-                className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+                className={`rounded-2xl px-5 py-2 text-sm font-semibold transition ${
                   selectedAccountId === acc._id
                     ? "bg-slate-900 text-white"
                     : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
@@ -68,7 +68,7 @@ export default function PositionsPage() {
             ))}
             <button
               onClick={openAddAccount}
-              className="flex items-center gap-1.5 rounded-full border border-dashed border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+              className="flex items-center gap-1.5 rounded-2xl border border-dashed border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
             >
               <Plus className="h-4 w-4" /> Nouveau Compte
             </button>

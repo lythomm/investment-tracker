@@ -78,13 +78,13 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
         )}
 
         {/* Type Toggle Pills */}
-        <div className="grid grid-cols-3 gap-1 rounded-full border border-slate-200 bg-slate-50 p-1">
+        <div className="grid grid-cols-3 gap-1 rounded-2xl border border-slate-200 bg-slate-50 p-1">
           {(["ACHAT", "VENTE", "DIVIDENDE"] as const).map((t) => (
             <button
               key={t}
               type="button"
               onClick={() => setType(t)}
-              className={`rounded-full py-1.5 text-xs font-semibold transition ${
+              className={`rounded-2xl py-1.5 text-xs font-semibold transition ${
                 type === t
                   ? "bg-slate-900 text-white"
                   : "text-slate-600 hover:text-slate-900"
@@ -200,14 +200,14 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
+            className="rounded-2xl px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
           >
             Annuler
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
+            className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
           >
             <CheckCircle2 className="h-4 w-4" />
             {loading ? "Enregistrement..." : "Ajouter la transaction"}

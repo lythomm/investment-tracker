@@ -21,7 +21,7 @@ interface HoldingsTableProps {
 export function HoldingsTable({ holdings }: HoldingsTableProps) {
   if (holdings.length === 0) {
     return (
-      <div className="card-light flex flex-col items-center justify-center rounded-[2.25rem] p-16 text-center bg-white border border-slate-200">
+      <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center bg-white border border-slate-200">
         <Layers className="h-12 w-12 text-slate-300 mb-3" />
         <p className="text-lg font-medium text-slate-600 font-serif-display">
           Aucun actif détenu dans le portefeuille.
@@ -31,7 +31,7 @@ export function HoldingsTable({ holdings }: HoldingsTableProps) {
   }
 
   return (
-    <div className="card-light rounded-[2.25rem] p-6 sm:p-8 bg-white border border-slate-200">
+    <div className="card-light rounded-2xl p-6 sm:p-8 bg-white border border-slate-200">
       <div className="mb-6">
         <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
           Positions Ouvertes
@@ -69,7 +69,7 @@ export function HoldingsTable({ holdings }: HoldingsTableProps) {
                   </td>
 
                   <td className="py-4 text-slate-700 font-medium">
-                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                    <span className="rounded-2xl bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
                       {h.assetType || "ETF"}
                     </span>
                   </td>

@@ -50,7 +50,7 @@ export function Modal({
       onClick={onClose}
     >
       <div
-        className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] flex flex-col rounded-3xl bg-white border border-slate-200 overflow-hidden shadow-none`}
+        className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] flex flex-col rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-none`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -70,7 +70,7 @@ export function Modal({
             </div>
             <button
               onClick={onClose}
-              className="rounded-full p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+              className="rounded-2xl p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
               title="Fermer"
             >
               <X className="h-5.5 w-5.5" />

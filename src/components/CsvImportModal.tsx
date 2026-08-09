@@ -173,14 +173,14 @@ export function CsvImportModal({ isOpen, onClose, accounts }: CsvImportModalProp
         <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
           <button
             onClick={onClose}
-            className="rounded-full px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
+            className="rounded-2xl px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
           >
             Annuler
           </button>
           <button
             onClick={handleImport}
             disabled={loading || !parsedData.length}
-            className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-40"
+            className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-40"
           >
             {loading ? "Importation..." : "Importer les transactions"}
           </button>

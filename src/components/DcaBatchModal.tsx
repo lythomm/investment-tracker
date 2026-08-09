@@ -177,7 +177,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="CW8"
                   value={row.ticker}
                   onChange={(e) => handleUpdateRow(row.id, "ticker", e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 uppercase focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 uppercase focus:border-slate-900 focus:outline-none"
                   required
                 />
               </div>
@@ -188,7 +188,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="Amundi MSCI World"
                   value={row.name}
                   onChange={(e) => handleUpdateRow(row.id, "name", e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
                 />
               </div>
 
@@ -196,7 +196,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                 <select
                   value={row.accountId}
                   onChange={(e) => handleUpdateRow(row.id, "accountId", e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
                   required
                 >
                   {accounts.map((acc) => (
@@ -214,7 +214,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="1"
                   value={row.quantity}
                   onChange={(e) => handleUpdateRow(row.id, "quantity", e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
                   required
                 />
               </div>
@@ -226,7 +226,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="500.00"
                   value={row.unitPrice}
                   onChange={(e) => handleUpdateRow(row.id, "unitPrice", e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
                   required
                 />
               </div>
@@ -236,7 +236,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   type="button"
                   onClick={() => handleRemoveRow(row.id)}
                   disabled={rows.length === 1}
-                  className="rounded-lg p-1.5 text-slate-400 hover:bg-rose-50 hover:text-rose-600 disabled:opacity-30 transition"
+                  className="rounded-2xl p-1.5 text-slate-400 hover:bg-rose-50 hover:text-rose-600 disabled:opacity-30 transition"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -258,14 +258,14 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
+            className="rounded-2xl px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
           >
             Annuler
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
+            className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
           >
             <CheckCircle2 className="h-4 w-4" />
             {loading ? "Enregistrement..." : "Valider le DCA du Mois"}

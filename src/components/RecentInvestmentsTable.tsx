@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Trash2, Layers } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { prettyDisplayDate } from "@/lib/formatters";
 
 interface RecentInvestmentsTableProps {
   transactions: Array<{
@@ -85,7 +86,7 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
                   <tr key={tx._id} className="hover:bg-slate-50/80 transition">
                     <td className="py-4 pl-2 font-medium text-slate-900">
                       <div className="font-bold text-base text-slate-900">{tx.asset?.name || tx.asset?.ticker}</div>
-                      <div className="text-xs text-slate-500 font-mono uppercase">{tx.asset?.ticker} • {tx.date}</div>
+                      <div className="text-xs text-slate-500 font-mono uppercase">{tx.asset?.ticker} • {prettyDisplayDate(tx.date)}</div>
                     </td>
 
                     <td className="py-4 text-slate-700 font-medium">

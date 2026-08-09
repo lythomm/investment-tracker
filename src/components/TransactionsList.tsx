@@ -3,6 +3,7 @@
 import { Trash2, History } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { prettyDisplayDate } from "@/lib/formatters";
 
 interface TransactionsListProps {
   transactions: Array<{
@@ -68,8 +69,8 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
               const total = tx.quantity * tx.unitPrice + tx.fees;
               return (
                 <tr key={tx._id} className="hover:bg-slate-50/80 transition">
-                  <td className="py-4 pl-2 font-mono text-sm text-slate-600">
-                    {tx.date}
+                  <td className="py-4 pl-2 font-medium text-sm text-slate-700">
+                    {prettyDisplayDate(tx.date)}
                   </td>
 
                   <td className="py-4 font-medium text-slate-900">

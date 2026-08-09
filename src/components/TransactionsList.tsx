@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Trash2, History } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { prettyDisplayDate } from "@/lib/formatters";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
 
 interface TransactionsListProps {
   transactions: Array<{
@@ -19,11 +21,18 @@ interface TransactionsListProps {
 }
 
 export function TransactionsList({ transactions }: TransactionsListProps) {
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const deleteTransaction = useMutation(api.transactions.deleteTransaction);
 
-  const handleDelete = async (id: any) => {
-    if (confirm("Supprimer cette transaction ?")) {
-      await deleteTransaction({ id });
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
+    try {
+      await deleteTransaction({ id: deleteId as any });
+      setDeleteId(null);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -114,7 +123,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                   <td className="py-4 text-right pr-2">
                     <button
-                      onClick={() => handleDelete(tx._id)}
+                      onClick={() => setDeleteId(tx._id)}
                       className="rounded-2xl p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
                       title="Supprimer"
                     >
@@ -127,6 +136,15 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
           </tbody>
         </table>
       </div>
+
+      <ConfirmModal
+        isOpen={!!deleteId}
+        onClose={() => setDeleteId(null)}
+        onConfirm={confirmDelete}
+        isLoading={isDeleting}
+        title="Supprimer la transaction"
+        message="Êtes-vous sûr de vouloir supprimer cette transaction ? Cette action est irréversible."
+      />
     </div>
   );
 }

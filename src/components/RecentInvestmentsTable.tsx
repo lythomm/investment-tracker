@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, Layers } from "lucide-react";
+import Link from "next/link";
+import { Trash2, Layers, ArrowRight } from "lucide-react";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { prettyDisplayDate } from "@/lib/formatters";
+import { Button } from "@/components/ui/Button";
+import { ConfirmModal } from "@/components/ui/ConfirmModal";
 
 interface RecentInvestmentsTableProps {
   transactions: Array<{
@@ -21,6 +24,8 @@ interface RecentInvestmentsTableProps {
 
 export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableProps) {
   const [filter, setFilter] = useState<"ALL" | "ACHAT" | "VENTE" | "DIVIDENDE">("ALL");
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const deleteTransaction = useMutation(api.transactions.deleteTransaction);
 
   const filtered = transactions.filter((t) => {
@@ -28,9 +33,14 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
     return t.type === filter;
   });
 
-  const handleDelete = async (id: any) => {
-    if (confirm("Supprimer cet investissement ?")) {
-      await deleteTransaction({ id });
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
+    try {
+      await deleteTransaction({ id: deleteId as any });
+      setDeleteId(null);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -48,11 +58,10 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`rounded-2xl px-4 py-2 text-sm font-semibold transition ${
-                filter === f
-                  ? "bg-slate-900 text-white"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-              }`}
+              className={`rounded-2xl px-4 py-2 text-sm font-semibold transition ${filter === f
+                ? "bg-slate-900 text-white"
+                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                }`}
             >
               {f === "ALL" ? "Tous" : f}
             </button>
@@ -67,65 +76,83 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
           <p className="text-base font-medium text-slate-500 font-serif-display">Aucun enregistrement récent.</p>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead>
-              <tr className="text-slate-500 font-semibold text-xs uppercase tracking-wide">
-                <th className="pb-3 pl-2">Nom / Ticker</th>
-                <th className="pb-3">Compte</th>
-                <th className="pb-3">Type</th>
-                <th className="pb-3 text-right">Montant</th>
-                <th className="pb-3 text-right pr-2">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.slice(0, 10).map((tx) => {
-                const total = tx.quantity * tx.unitPrice + tx.fees;
-                return (
-                  <tr key={tx._id} className="hover:bg-slate-50/80 transition">
-                    <td className="py-4 pl-2 font-medium text-slate-900">
-                      <div className="font-bold text-base text-slate-900">{tx.asset?.name || tx.asset?.ticker}</div>
-                      <div className="text-xs text-slate-500 font-mono uppercase">{tx.asset?.ticker} • {prettyDisplayDate(tx.date)}</div>
-                    </td>
+        <>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="text-slate-500 font-semibold text-xs uppercase tracking-wide">
+                  <th className="pb-3 pl-2">Nom / Ticker</th>
+                  <th className="pb-3">Compte</th>
+                  <th className="pb-3">Type</th>
+                  <th className="pb-3 text-right">Montant</th>
+                  <th className="pb-3 text-right pr-2">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.slice(0, 5).map((tx) => {
+                  const total = tx.quantity * tx.unitPrice + tx.fees;
+                  return (
+                    <tr key={tx._id} className="hover:bg-slate-50/80 transition">
+                      <td className="py-4 pl-2 font-medium text-slate-900">
+                        <div className="font-bold text-base text-slate-900">{tx.asset?.name || tx.asset?.ticker}</div>
+                        <div className="text-xs text-slate-500 font-mono uppercase">{tx.asset?.ticker} • {prettyDisplayDate(tx.date)}</div>
+                      </td>
 
-                    <td className="py-4 text-slate-700 font-medium">
-                      {tx.account?.name || "Compte"}
-                    </td>
+                      <td className="py-4 text-slate-700 font-medium">
+                        {tx.account?.name || "Compte"}
+                      </td>
 
-                    <td className="py-4 font-medium">
-                      <span
-                        className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1 text-xs font-bold ${
-                          tx.type === "ACHAT"
+                      <td className="py-4 font-medium">
+                        <span
+                          className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1 text-xs font-bold ${tx.type === "ACHAT"
                             ? "bg-emerald-100 text-emerald-800"
                             : tx.type === "VENTE"
-                            ? "bg-rose-100 text-rose-800"
-                            : "bg-amber-100 text-amber-800"
-                        }`}
-                      >
-                        {tx.type} ({tx.quantity} u.)
-                      </span>
-                    </td>
+                              ? "bg-rose-100 text-rose-800"
+                              : "bg-amber-100 text-amber-800"
+                            }`}
+                        >
+                          {tx.type} ({tx.quantity} u.)
+                        </span>
+                      </td>
 
-                    <td className="py-4 text-right font-bold text-base text-slate-900">
-                      {total.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
-                    </td>
+                      <td className="py-4 text-right font-bold text-base text-slate-900">
+                        {total.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
+                      </td>
 
-                    <td className="py-4 text-right pr-2">
-                      <button
-                        onClick={() => handleDelete(tx._id)}
-                        className="rounded-2xl p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
-                        title="Supprimer"
-                      >
-                        <Trash2 className="h-4.5 w-4.5" />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                      <td className="py-4 text-right pr-2">
+                        <button
+                          onClick={() => setDeleteId(tx._id)}
+                          className="rounded-2xl p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition"
+                          title="Supprimer"
+                        >
+                          <Trash2 className="h-4.5 w-4.5" />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-6 flex justify-center">
+            <Link href="/historique">
+              <Button variant="primary" size="md">
+                Voir plus <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </>
       )}
+
+      <ConfirmModal
+        isOpen={!!deleteId}
+        onClose={() => setDeleteId(null)}
+        onConfirm={confirmDelete}
+        isLoading={isDeleting}
+        title="Supprimer l'investissement"
+        message="Êtes-vous sûr de vouloir supprimer cet investissement ? Cette action est irréversible."
+      />
     </div>
   );
 }

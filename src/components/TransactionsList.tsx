@@ -28,7 +28,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
   if (transactions.length === 0) {
     return (
-      <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center bg-white border border-slate-200">
+      <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center bg-white">
         <History className="h-12 w-12 text-slate-300 mb-3" />
         <p className="text-lg font-medium text-slate-600 font-serif-display">
           Aucune transaction enregistrée dans le journal.
@@ -38,7 +38,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
   }
 
   return (
-    <div className="card-light rounded-2xl p-6 sm:p-8 bg-white border border-slate-200">
+    <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
       <div className="mb-6">
         <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
           Journal d'Historique
@@ -51,7 +51,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-slate-200 text-slate-500 font-semibold text-xs uppercase tracking-wide">
+            <tr className="text-slate-500 font-semibold text-xs uppercase tracking-wide">
               <th className="pb-3 pl-2">Date</th>
               <th className="pb-3">Actif / Nom</th>
               <th className="pb-3">Compte</th>
@@ -63,7 +63,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
               <th className="pb-3 text-right pr-2">Action</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody>
             {transactions.map((tx) => {
               const total = tx.quantity * tx.unitPrice + tx.fees;
               return (

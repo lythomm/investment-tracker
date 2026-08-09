@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { Lock, Mail, ArrowRight, Wallet } from "lucide-react";
+import { Lock, Mail, ArrowRight } from "lucide-react";
 
 export function AuthScreen() {
   const { signIn } = useAuthActions();
@@ -37,7 +37,7 @@ export function AuthScreen() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#edf1f2] p-4 text-slate-900">
-      <div className="w-full max-w-md rounded-2xl bg-white border border-slate-200 p-8 sm:p-10">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 sm:p-10">
         {/* Brand Header */}
         <div className="mb-8 text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 font-extrabold text-2xl text-white mb-3">
@@ -52,7 +52,7 @@ export function AuthScreen() {
         </div>
 
         {/* Auth Toggle Tabs */}
-        <div className="mb-6 grid grid-cols-2 gap-1 rounded-2xl bg-slate-100 p-1.5 border border-slate-200">
+        <div className="mb-6 grid grid-cols-2 gap-1 rounded-2xl bg-slate-100 p-1.5">
           <button
             type="button"
             onClick={() => {
@@ -85,7 +85,7 @@ export function AuthScreen() {
 
         {/* Error Alert */}
         {error && (
-          <div className="mb-4 rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
+          <div className="mb-4 rounded-2xl bg-rose-50 p-3 text-xs text-rose-700">
             {error}
           </div>
         )}
@@ -102,7 +102,7 @@ export function AuthScreen() {
                 placeholder="votre@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-10 pr-4 py-3 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+                className="w-full rounded-2xl bg-slate-100 pl-10 pr-4 py-3 text-sm text-slate-900 focus:outline-none"
                 required
               />
             </div>
@@ -119,7 +119,7 @@ export function AuthScreen() {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 pl-10 pr-4 py-3 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+                className="w-full rounded-2xl bg-slate-100 pl-10 pr-4 py-3 text-sm text-slate-900 focus:outline-none"
                 required
               />
             </div>

@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 pt-4 space-y-6">
       {accounts.length === 0 ? (
-        <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center my-8 bg-white border border-slate-200">
+        <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center my-8 bg-white">
           <Wallet className="h-12 w-12 text-slate-800 mb-4" />
           <h2 className="text-3xl font-bold text-slate-900 font-serif-display">Bienvenue sur Folio !</h2>
           <p className="mt-2 text-base text-slate-500 max-w-md">
@@ -61,7 +61,7 @@ export default function Home() {
               className={`rounded-2xl px-5 py-2 text-sm font-semibold transition ${
                 selectedAccountId === null
                   ? "bg-slate-900 text-white"
-                  : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
+                  : "bg-white text-slate-600 hover:bg-slate-100"
               }`}
             >
               Tous les comptes
@@ -73,7 +73,7 @@ export default function Home() {
                 className={`rounded-2xl px-5 py-2 text-sm font-semibold transition ${
                   selectedAccountId === acc._id
                     ? "bg-slate-900 text-white"
-                    : "border border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
+                    : "bg-white text-slate-600 hover:bg-slate-100"
                 }`}
               >
                 {acc.name} ({acc.type})
@@ -81,7 +81,7 @@ export default function Home() {
             ))}
             <button
               onClick={openAddAccount}
-              className="flex items-center gap-1.5 rounded-2xl border border-dashed border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
+              className="flex items-center gap-1.5 rounded-2xl bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
             >
               <Plus className="h-4 w-4" /> Nouveau Compte
             </button>

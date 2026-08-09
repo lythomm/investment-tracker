@@ -136,7 +136,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
+          <div className="rounded-2xl bg-rose-50 p-3 text-xs text-rose-700">
             {error}
           </div>
         )}
@@ -150,7 +150,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+            className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
             required
           />
         </div>
@@ -169,7 +169,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
           {rows.map((row) => (
             <div
               key={row.id}
-              className="grid grid-cols-1 gap-2 rounded-2xl border border-slate-200 bg-slate-50/60 p-3 sm:grid-cols-12 sm:items-center sm:p-2"
+              className="grid grid-cols-1 gap-2 rounded-2xl bg-slate-100 p-3 sm:grid-cols-12 sm:items-center sm:p-2"
             >
               <div className="sm:col-span-2">
                 <input
@@ -177,7 +177,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="CW8"
                   value={row.ticker}
                   onChange={(e) => handleUpdateRow(row.id, "ticker", e.target.value)}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 uppercase focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl bg-white px-3 py-2 text-xs text-slate-900 uppercase focus:outline-none"
                   required
                 />
               </div>
@@ -188,7 +188,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="Amundi MSCI World"
                   value={row.name}
                   onChange={(e) => handleUpdateRow(row.id, "name", e.target.value)}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl bg-white px-3 py-2 text-xs text-slate-900 focus:outline-none"
                 />
               </div>
 
@@ -196,7 +196,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                 <select
                   value={row.accountId}
                   onChange={(e) => handleUpdateRow(row.id, "accountId", e.target.value)}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-2.5 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl bg-white px-2.5 py-2 text-xs text-slate-900 focus:outline-none"
                   required
                 >
                   {accounts.map((acc) => (
@@ -214,7 +214,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="1"
                   value={row.quantity}
                   onChange={(e) => handleUpdateRow(row.id, "quantity", e.target.value)}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl bg-white px-3 py-2 text-xs text-slate-900 focus:outline-none"
                   required
                 />
               </div>
@@ -226,7 +226,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="500.00"
                   value={row.unitPrice}
                   onChange={(e) => handleUpdateRow(row.id, "unitPrice", e.target.value)}
-                  className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 focus:border-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl bg-white px-3 py-2 text-xs text-slate-900 focus:outline-none"
                   required
                 />
               </div>
@@ -254,7 +254,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
         </button>
 
         {/* Footer Submit */}
-        <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
+        <div className="flex items-center justify-end gap-3 pt-4">
           <button
             type="button"
             onClick={onClose}

@@ -41,7 +41,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
   return (
     <div className="space-y-6">
       {/* Top Chart Card: Financial Performance */}
-      <div className="card-light rounded-2xl p-6 sm:p-8 bg-white border border-slate-200">
+      <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-2xl font-normal text-slate-900 font-serif-display">
             Financial Performance
@@ -50,7 +50,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
             <select
               value={timeframe}
               onChange={(e) => setTimeframe(e.target.value as any)}
-              className="appearance-none rounded-2xl border border-slate-200 bg-white pl-4 pr-8 py-1.5 text-xs font-semibold text-slate-700 focus:outline-none"
+              className="appearance-none rounded-2xl bg-slate-100 pl-4 pr-8 py-1.5 text-xs font-semibold text-slate-700 focus:outline-none"
             >
               <option value="MONTHLY">Monthly</option>
               <option value="ALL">Last 7 Days</option>
@@ -74,7 +74,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
               <Tooltip
                 contentStyle={{
                   backgroundColor: "#0284c7",
-                  borderColor: "#0284c7",
+                  border: "none",
                   borderRadius: "16px",
                   fontSize: "12px",
                   color: "#fff",
@@ -96,7 +96,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
       </div>
 
       {/* Bottom Insights Card: Quick Insights */}
-      <div className="card-light rounded-2xl p-6 sm:p-8 bg-white border border-slate-200">
+      <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
         <h3 className="text-2xl font-normal text-slate-900 font-serif-display mb-4">
           Quick Insights
         </h3>

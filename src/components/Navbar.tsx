@@ -21,7 +21,7 @@ export function Navbar({
   const isHistorique = pathname === "/historique";
 
   return (
-    <header className="w-full border-b border-slate-200/80 bg-[#edf1f2]/80 backdrop-blur-md sticky top-0 z-40">
+    <header className="w-full bg-[#edf1f2]/80 backdrop-blur-md sticky top-0 z-40">
       <div className="relative w-full px-4 sm:px-8 lg:px-12 flex items-center justify-between py-4">
         {/* Left Side: Brand Logo */}
         <Link href="/" className="flex items-center gap-3">
@@ -82,15 +82,13 @@ export function Navbar({
             </Button>
           )}
 
-          <div className="h-6 w-px bg-slate-200 mx-1 hidden sm:block" />
-
           {/* Logout */}
           {onSignOut && (
             <Button
               onClick={onSignOut}
               variant="secondary"
               size="sm"
-              className="p-2.5 rounded-2xl border-slate-200 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200"
+              className="p-2.5 rounded-2xl hover:bg-rose-50 hover:text-rose-600"
               title="Déconnexion"
               icon={<LogOut className="h-4 w-4" />}
             />

@@ -50,12 +50,12 @@ export function Modal({
       onClick={onClose}
     >
       <div
-        className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] flex flex-col rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-none`}
+        className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] flex flex-col rounded-2xl bg-white overflow-hidden shadow-none`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         {(title || description) && (
-          <div className="flex items-center justify-between border-b border-slate-100 p-6 sm:px-8">
+          <div className="flex items-center justify-between p-6 sm:px-8 pb-4">
             <div>
               {typeof title === "string" ? (
                 <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
@@ -83,7 +83,7 @@ export function Modal({
 
         {/* Optional Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 border-t border-slate-100 p-4 sm:px-8 bg-slate-50/50">
+          <div className="flex items-center justify-end gap-3 p-4 sm:px-8 bg-slate-50/50">
             {footer}
           </div>
         )}

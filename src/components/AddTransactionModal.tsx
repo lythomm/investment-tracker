@@ -72,13 +72,13 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700">
+          <div className="rounded-2xl bg-rose-50 p-3 text-xs text-rose-700">
             {error}
           </div>
         )}
 
         {/* Type Toggle Pills */}
-        <div className="grid grid-cols-3 gap-1 rounded-2xl border border-slate-200 bg-slate-50 p-1">
+        <div className="grid grid-cols-3 gap-1 rounded-2xl bg-slate-100 p-1">
           {(["ACHAT", "VENTE", "DIVIDENDE"] as const).map((t) => (
             <button
               key={t}
@@ -100,7 +100,7 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
           <select
             value={accountId}
             onChange={(e) => setAccountId(e.target.value)}
-            className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+            className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
             required
           >
             {accounts.map((acc) => (
@@ -119,7 +119,7 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
               placeholder="CW8"
               value={ticker}
               onChange={(e) => setTicker(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 uppercase focus:border-slate-900 focus:outline-none"
+              className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 uppercase focus:outline-none"
               required
             />
           </div>
@@ -128,7 +128,7 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
             <select
               value={assetType}
               onChange={(e) => setAssetType(e.target.value as any)}
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+              className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
             >
               <option value="ETF">ETF</option>
               <option value="Action">Action</option>
@@ -143,7 +143,7 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
             placeholder="Amundi MSCI World"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+            className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
           />
         </div>
 
@@ -156,7 +156,7 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
               placeholder="10"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+              className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
               required
             />
           </div>
@@ -168,7 +168,7 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
               placeholder="500"
               value={unitPrice}
               onChange={(e) => setUnitPrice(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+              className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
               required
             />
           </div>
@@ -180,7 +180,7 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
               placeholder="0"
               value={fees}
               onChange={(e) => setFees(e.target.value)}
-              className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+              className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
             />
           </div>
         </div>
@@ -191,12 +191,12 @@ export function AddTransactionModal({ isOpen, onClose, accounts }: AddTransactio
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:border-slate-900 focus:outline-none"
+            className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
             required
           />
         </div>
 
-        <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+        <div className="flex justify-end gap-3 pt-4">
           <button
             type="button"
             onClick={onClose}

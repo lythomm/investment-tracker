@@ -17,7 +17,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
   const isPositive = summary.totalGainAmount >= 0;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl p-8 sm:p-14 lg:p-16 border border-slate-200/60 text-white min-h-[330px] flex flex-col justify-end">
+    <div className="relative w-full overflow-hidden rounded-2xl p-8 sm:p-14 lg:p-16 text-white min-h-[330px] flex flex-col justify-end">
       {/* Generated Meadow Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center pointer-events-none"
@@ -43,7 +43,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
         {/* Right Side Floating White Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:w-auto">
           {/* Card 1: Your Savings */}
-          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-6 text-slate-900 w-full sm:w-64 border border-white/60">
+          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-6 text-slate-900 w-full sm:w-64">
             <div className="flex items-center justify-between">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500 text-white">
                 <PiggyBank className="h-5 w-5" />
@@ -60,7 +60,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
           </div>
 
           {/* Card 2: Your Investment */}
-          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-6 text-slate-900 w-full sm:w-64 border border-white/60">
+          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-6 text-slate-900 w-full sm:w-64">
             <div className="flex items-center justify-between">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500 text-white">
                 <TrendingUp className="h-5 w-5" />

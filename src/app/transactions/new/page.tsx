@@ -233,18 +233,18 @@ export default function NewTransactionPage() {
   const stepTitles = hasSingleAccount
     ? ["Type d'opération", "Recherche de l'actif", "Montants & Date"]
     : [
-        "Type d'opération",
-        "Compte d'investissement",
-        "Recherche de l'actif",
-        "Montants & Date",
-      ];
+      "Type d'opération",
+      "Compte d'investissement",
+      "Recherche de l'actif",
+      "Montants & Date",
+    ];
 
   const currentDisplayStep = hasSingleAccount
     ? step === 1
       ? 1
       : step === 3
-      ? 2
-      : 3
+        ? 2
+        : 3
     : step;
 
   const totalDisplaySteps = hasSingleAccount ? 3 : 4;
@@ -312,16 +312,14 @@ export default function NewTransactionPage() {
               <button
                 type="button"
                 onClick={() => setType("ACHAT")}
-                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${
-                  type === "ACHAT"
+                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${type === "ACHAT"
                     ? "border-emerald-600 bg-emerald-50/50 text-emerald-950 shadow-sm"
                     : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
-                }`}
+                  }`}
               >
                 <div
-                  className={`p-4 rounded-2xl mb-4 ${
-                    type === "ACHAT" ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600"
-                  }`}
+                  className={`p-4 rounded-2xl mb-4 ${type === "ACHAT" ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600"
+                    }`}
                 >
                   <TrendingUp className="h-8 w-8" />
                 </div>
@@ -332,16 +330,14 @@ export default function NewTransactionPage() {
               <button
                 type="button"
                 onClick={() => setType("VENTE")}
-                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${
-                  type === "VENTE"
+                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${type === "VENTE"
                     ? "border-rose-600 bg-rose-50/50 text-rose-950 shadow-sm"
                     : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
-                }`}
+                  }`}
               >
                 <div
-                  className={`p-4 rounded-2xl mb-4 ${
-                    type === "VENTE" ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-600"
-                  }`}
+                  className={`p-4 rounded-2xl mb-4 ${type === "VENTE" ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-600"
+                    }`}
                 >
                   <TrendingDown className="h-8 w-8" />
                 </div>
@@ -352,16 +348,14 @@ export default function NewTransactionPage() {
               <button
                 type="button"
                 onClick={() => setType("DIVIDENDE")}
-                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${
-                  type === "DIVIDENDE"
+                className={`flex flex-col items-center justify-center p-8 rounded-3xl border-2 transition-all duration-150 ${type === "DIVIDENDE"
                     ? "border-amber-600 bg-amber-50/50 text-amber-950 shadow-sm"
                     : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
-                }`}
+                  }`}
               >
                 <div
-                  className={`p-4 rounded-2xl mb-4 ${
-                    type === "DIVIDENDE" ? "bg-amber-600 text-white" : "bg-slate-100 text-slate-600"
-                  }`}
+                  className={`p-4 rounded-2xl mb-4 ${type === "DIVIDENDE" ? "bg-amber-600 text-white" : "bg-slate-100 text-slate-600"
+                    }`}
                 >
                   <Coins className="h-8 w-8" />
                 </div>
@@ -407,28 +401,25 @@ export default function NewTransactionPage() {
                     key={acc._id}
                     type="button"
                     onClick={() => setAccountId(acc._id)}
-                    className={`flex items-center justify-between p-6 rounded-3xl border-2 text-left transition-all duration-150 ${
-                      accountId === acc._id
+                    className={`flex items-center justify-between p-6 rounded-3xl border-2 text-left transition-all duration-150 ${accountId === acc._id
                         ? "border-slate-900 bg-slate-900 text-white shadow-md"
                         : "border-slate-100 hover:border-slate-200 text-slate-800 bg-slate-50/50"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-4">
                       <div
-                        className={`p-3.5 rounded-2xl ${
-                          accountId === acc._id
+                        className={`p-3.5 rounded-2xl ${accountId === acc._id
                             ? "bg-slate-800 text-white"
                             : "bg-white text-slate-700 shadow-sm"
-                        }`}
+                          }`}
                       >
                         <Building2 className="h-6 w-6" />
                       </div>
                       <div>
                         <div className="font-bold text-lg">{acc.name}</div>
                         <div
-                          className={`text-sm mt-0.5 ${
-                            accountId === acc._id ? "text-slate-300" : "text-slate-500"
-                          }`}
+                          className={`text-sm mt-0.5 ${accountId === acc._id ? "text-slate-300" : "text-slate-500"
+                            }`}
                         >
                           Enveloppe : {acc.type}
                         </div>
@@ -457,7 +448,7 @@ export default function NewTransactionPage() {
             {/* Live Search Input */}
             <div className="relative">
               <label className="block text-sm font-bold text-slate-800 mb-2">
-                Rechercher un Ticker / Actif
+                Rechercher par Ticker / ISIN / Nom
               </label>
               <div className="relative">
                 <Search className="absolute left-4 top-4 h-5 w-5 text-slate-400" />
@@ -576,11 +567,10 @@ export default function NewTransactionPage() {
                       key={t}
                       type="button"
                       onClick={() => setAssetType(t)}
-                      className={`rounded-xl py-2.5 text-sm font-bold transition ${
-                        assetType === t
+                      className={`rounded-xl py-2.5 text-sm font-bold transition ${assetType === t
                           ? "bg-slate-900 text-white shadow-xs"
                           : "text-slate-600 hover:text-slate-900"
-                      }`}
+                        }`}
                     >
                       {t}
                     </button>

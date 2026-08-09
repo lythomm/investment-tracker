@@ -79,7 +79,7 @@ export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
                 key={t}
                 type="button"
                 onClick={() => setType(t)}
-                className={`rounded-2xl p-3 text-xs font-semibold transition ${
+                className={`rounded-2xl p-3 text-xs font-semibold transition cursor-pointer ${
                   type === t
                     ? "bg-slate-900 text-white"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"

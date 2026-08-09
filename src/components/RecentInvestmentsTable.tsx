@@ -58,7 +58,7 @@ export function RecentInvestmentsTable({ transactions }: RecentInvestmentsTableP
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`rounded-2xl px-4 py-2 text-sm font-semibold transition ${filter === f
+              className={`rounded-2xl px-4 py-2 text-sm font-semibold transition cursor-pointer ${filter === f
                 ? "bg-slate-900 text-white"
                 : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                 }`}

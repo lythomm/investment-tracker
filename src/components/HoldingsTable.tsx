@@ -7,13 +7,18 @@ interface HoldingsTableProps {
     assetId: string;
     ticker: string;
     name: string;
+    type?: "ETF" | "Action";
     assetType?: "ETF" | "Action";
     totalQuantity: number;
+    pru?: number;
     averageBuyPrice?: number;
+    totalInvestedCost?: number;
     totalInvested?: number;
     currentPrice: number;
     currentValuation: number;
+    unrealizedGainAmount?: number;
     gainAmount?: number;
+    unrealizedGainPercent?: number;
     gainPercent?: number;
   }>;
 }
@@ -56,10 +61,15 @@ export function HoldingsTable({ holdings }: HoldingsTableProps) {
           </thead>
           <tbody>
             {holdings.map((h) => {
-              const gainAmount = h.gainAmount ?? (h.currentValuation - (h.totalInvested ?? 0));
+              const investedCost = h.totalInvestedCost ?? h.totalInvested ?? 0;
+              const gainAmount = h.unrealizedGainAmount ?? h.gainAmount ?? (h.currentValuation - investedCost);
+              const gainPercent =
+                h.unrealizedGainPercent ??
+                h.gainPercent ??
+                (investedCost > 0 ? (gainAmount / investedCost) * 100 : 0);
+              const pru = h.pru ?? h.averageBuyPrice ?? (h.totalQuantity > 0 ? investedCost / h.totalQuantity : 0);
               const isPositive = gainAmount >= 0;
-              const pru = h.averageBuyPrice ?? (h.totalQuantity > 0 ? (h.totalInvested ?? 0) / h.totalQuantity : 0);
-              const gainPercent = h.gainPercent ?? (h.totalInvested && h.totalInvested > 0 ? (gainAmount / h.totalInvested) * 100 : 0);
+              const assetType = h.type || h.assetType || "ETF";
 
               return (
                 <tr key={h.assetId} className="hover:bg-slate-50/80 transition">
@@ -70,7 +80,7 @@ export function HoldingsTable({ holdings }: HoldingsTableProps) {
 
                   <td className="py-4 text-slate-700 font-medium">
                     <span className="rounded-2xl bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                      {h.assetType || "ETF"}
+                      {assetType}
                     </span>
                   </td>
 

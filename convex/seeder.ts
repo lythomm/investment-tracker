@@ -34,11 +34,11 @@ export const seedUserPortfolio = mutation({
     // 2. Define assets from avis d'opéré
     const assetsData = [
       {
-        ticker: "PUUST.PA",
+        ticker: "PUST.PA",
         isin: "FR0011871110",
         name: "AMUN.PEA NASDAQ-100 UC.ETF ACC",
         type: "ETF" as const,
-        currentPrice: 104.60,
+        currentPrice: 103.18,
       },
       {
         ticker: "WPEA.PA",

@@ -68,9 +68,19 @@ export const getMonthlySnapshots = query({
 
     const assetIds = Array.from(new Set<string>(txs.map((t: any) => String(t.assetId))));
     const assetMap = new Map<string, any>();
+    const priceHistoryMap = new Map<string, number>();
+
     for (const id of assetIds) {
       const asset = await ctx.db.get(id as any);
       if (asset) assetMap.set(id as string, asset);
+
+      const historyRows = await ctx.db
+        .query("asset_prices_history")
+        .withIndex("by_asset_month", (q: any) => q.eq("assetId", id as any))
+        .collect();
+      for (const row of historyRows) {
+        priceHistoryMap.set(`${id}_${row.yearMonth}`, row.closingPrice);
+      }
     }
 
     const result: Array<{
@@ -101,7 +111,9 @@ export const getMonthlySnapshots = query({
       for (const [assetId, qty] of qtyMap.entries()) {
         const asset = assetMap.get(assetId);
         if (asset && qty > 0) {
-          valuation += qty * asset.currentPrice;
+          const histPrice = priceHistoryMap.get(`${assetId}_${ym}`);
+          const priceToUse = typeof histPrice === "number" && histPrice > 0 ? histPrice : asset.currentPrice;
+          valuation += qty * priceToUse;
         }
       }
 

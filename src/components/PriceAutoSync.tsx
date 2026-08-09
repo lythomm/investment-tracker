@@ -9,6 +9,7 @@ const TWO_MINUTES_MS = 2 * 60 * 1000;
 export function PriceAutoSync() {
   const assets = useQuery(api.assets.getAssets);
   const updatePrices = useMutation(api.assets.updateAssetPrices);
+  const upsertPriceHistory = useMutation(api.assets.upsertAssetPriceHistory);
   const isSyncingRef = useRef(false);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export function PriceAutoSync() {
           })),
         };
 
+        // 1. Sync current market prices
         const res = await fetch("/api/assets/refresh", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -45,8 +47,27 @@ export function PriceAutoSync() {
             await updatePrices({ updates: data.updates });
           }
         }
+
+        // 2. Sync historical monthly closing prices from Yahoo Finance
+        const historyRes = await fetch("/api/assets/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (historyRes.ok) {
+          const historyData = await historyRes.json();
+          if (historyData.histories && historyData.histories.length > 0) {
+            for (const item of historyData.histories) {
+              await upsertPriceHistory({
+                assetId: item.assetId,
+                history: item.history,
+              });
+            }
+          }
+        }
       } catch (err) {
-        console.error("Auto price sync failed:", err);
+        console.error("Auto price & history sync failed:", err);
       } finally {
         isSyncingRef.current = false;
       }
@@ -58,7 +79,7 @@ export function PriceAutoSync() {
     // Interval every 2 minutes
     const interval = setInterval(syncPrices, TWO_MINUTES_MS);
     return () => clearInterval(interval);
-  }, [assets, updatePrices]);
+  }, [assets, updatePrices, upsertPriceHistory]);
 
   return null;
 }

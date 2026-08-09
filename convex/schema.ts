@@ -44,4 +44,11 @@ export default defineSchema({
     totalGainPercent: v.number(),
     updatedAt: v.number(),
   }).index("by_user_month", ["userId", "yearMonth"]),
+
+  asset_prices_history: defineTable({
+    assetId: v.id("assets"),
+    yearMonth: v.string(),
+    closingPrice: v.number(),
+    updatedAt: v.number(),
+  }).index("by_asset_month", ["assetId", "yearMonth"]),
 });

@@ -71,3 +71,46 @@ export const updateAssetPrices = mutation({
   },
 });
 
+export const upsertAssetPriceHistory = mutation({
+  args: {
+    assetId: v.id("assets"),
+    history: v.array(
+      v.object({
+        yearMonth: v.string(),
+        closingPrice: v.number(),
+      })
+    ),
+  },
+  handler: async (ctx: any, args: any) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Non autorisé.");
+    }
+
+    const now = Date.now();
+    for (const item of args.history) {
+      if (item.closingPrice <= 0) continue;
+
+      const existing = await ctx.db
+        .query("asset_prices_history")
+        .withIndex("by_asset_month", (q: any) =>
+          q.eq("assetId", args.assetId).eq("yearMonth", item.yearMonth)
+        )
+        .unique();
+
+      if (existing) {
+        await ctx.db.patch(existing._id, {
+          closingPrice: item.closingPrice,
+          updatedAt: now,
+        });
+      } else {
+        await ctx.db.insert("asset_prices_history", {
+          assetId: args.assetId,
+          yearMonth: item.yearMonth,
+          closingPrice: item.closingPrice,
+          updatedAt: now,
+        });
+      }
+    }
+  },
+});

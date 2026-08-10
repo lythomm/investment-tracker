@@ -138,6 +138,8 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
                 <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip
+                  isAnimationActive={false}
+                  wrapperStyle={{ outline: "none", zIndex: 40 }}
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
                       const valuation = payload.find((p) => p.dataKey === "valuation")?.value as number;
@@ -145,20 +147,21 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
                       const gain = valuation - invested;
                       const gainPct = invested > 0 ? (gain / invested) * 100 : 0;
                       return (
-                        <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl text-xs space-y-1.5 border border-slate-800">
-                          <p className="font-bold text-slate-300 border-b border-slate-700 pb-1">{label}</p>
-                          <div className="flex justify-between gap-4">
-                            <span className="text-slate-400">Valorisation:</span>
-                            <span className="font-semibold text-sky-400">{valuation.toLocaleString("fr-FR")} €</span>
+                        <div className="bg-slate-900/95 backdrop-blur-md text-white p-4 rounded-2xl shadow-2xl space-y-2 border border-slate-800 pointer-events-none min-w-[220px]">
+                          <p className="font-bold text-sm text-slate-200 border-b border-slate-800 pb-1.5">{label}</p>
+                          <div className="flex justify-between items-center gap-4">
+                            <span className="text-slate-400 text-xs font-medium">Valorisation:</span>
+                            <span className="font-bold text-sm text-sky-400">{valuation.toLocaleString("fr-FR")} €</span>
                           </div>
-                          <div className="flex justify-between gap-4">
-                            <span className="text-slate-400">Capital Investi:</span>
-                            <span className="font-semibold text-slate-300">{invested.toLocaleString("fr-FR")} €</span>
+                          <div className="flex justify-between items-center gap-4">
+                            <span className="text-slate-400 text-xs font-medium">Capital Investi:</span>
+                            <span className="font-bold text-sm text-slate-200">{invested.toLocaleString("fr-FR")} €</span>
                           </div>
-                          <div className="flex justify-between gap-4 pt-1 border-t border-slate-800">
-                            <span className="text-slate-400">Plus-value:</span>
-                            <span className={`font-bold ${gain >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
-                              {gain >= 0 ? "+" : ""}{gain.toLocaleString("fr-FR")} € ({gainPct >= 0 ? "+" : ""}{gainPct.toFixed(1)}%)
+                          <div className="flex justify-between items-center gap-4 pt-1.5 border-t border-slate-800/80">
+                            <span className="text-slate-400 text-xs font-medium">Plus-value:</span>
+                            <span className={`font-bold text-sm ${gain >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+                              {gain >= 0 ? "+" : ""}{gain.toLocaleString("fr-FR")} €{" "}
+                              <span className="text-xs font-semibold">({gainPct >= 0 ? "+" : ""}{gainPct.toFixed(1)}%)</span>
                             </span>
                           </div>
                         </div>
@@ -171,22 +174,22 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
                   type="monotone"
                   dataKey="invested"
                   stroke="#94a3b8"
-                  strokeWidth={1.5}
+                  strokeWidth={2}
                   strokeDasharray="4 4"
                   fillOpacity={1}
                   fill="url(#investedGradient)"
-                  dot={{ r: 4, fill: "#94a3b8", strokeWidth: 1, stroke: "#fff" }}
-                  activeDot={{ r: 6, fill: "#64748b" }}
+                  dot={false}
+                  activeDot={{ r: 6, fill: "#94a3b8", stroke: "#ffffff", strokeWidth: 2 }}
                 />
                 <Area
                   type="monotone"
                   dataKey="valuation"
                   stroke="#0284c7"
-                  strokeWidth={2.5}
+                  strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#valuationGradient)"
-                  dot={{ r: 5, fill: "#0284c7", strokeWidth: 2, stroke: "#fff" }}
-                  activeDot={{ r: 7, fill: "#0369a1" }}
+                  dot={false}
+                  activeDot={{ r: 7, fill: "#0284c7", stroke: "#ffffff", strokeWidth: 2 }}
                 />
               </AreaChart>
             </ResponsiveContainer>

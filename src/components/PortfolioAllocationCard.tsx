@@ -96,13 +96,14 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
                     if (active && payload && payload.length) {
                       const item = payload[0].payload;
                       return (
-                        <div className="bg-slate-900/95 backdrop-blur-md text-white p-3 rounded-xl shadow-2xl text-xs space-y-1 border border-slate-800 pointer-events-none">
-                          <p className="font-bold text-sky-400 uppercase">{item.name}</p>
-                          <p className="text-slate-300 text-[11px] max-w-[180px] truncate">{item.fullName}</p>
-                          <div className="flex justify-between gap-4 pt-1 border-t border-slate-800/80 mt-1">
-                            <span className="text-slate-400">Valeur:</span>
-                            <span className="font-semibold text-white">
-                              {Number(item.value).toLocaleString("fr-FR")} € ({Number(item.percent).toFixed(1)}%)
+                        <div className="bg-slate-900/95 backdrop-blur-md text-white p-4 rounded-2xl shadow-2xl space-y-1.5 border border-slate-800 pointer-events-none min-w-[200px]">
+                          <p className="font-bold text-sm text-sky-400 uppercase tracking-wide">{item.name}</p>
+                          <p className="text-slate-200 text-xs font-medium max-w-[220px] truncate">{item.fullName}</p>
+                          <div className="flex items-center justify-between gap-4 pt-2 border-t border-slate-800/80 mt-1.5">
+                            <span className="text-slate-400 text-xs">Valeur:</span>
+                            <span className="font-bold text-sm text-white">
+                              {Number(item.value).toLocaleString("fr-FR")} €{" "}
+                              <span className="text-sky-400 text-xs font-semibold">({Number(item.percent).toFixed(1)}%)</span>
                             </span>
                           </div>
                         </div>
@@ -117,13 +118,13 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-4 transition-all duration-200">
               {activeItem ? (
                 <div className="flex flex-col items-center animate-in fade-in zoom-in-95 duration-150">
-                  <span className="text-xs font-bold text-sky-500 dark:text-sky-400 uppercase truncate max-w-[110px]">
+                  <span className="text-sm font-bold text-sky-500 dark:text-sky-400 uppercase truncate max-w-[120px]">
                     {activeItem.name}
                   </span>
-                  <span className="text-lg font-bold text-main">
+                  <span className="text-xl font-bold text-main">
                     {activeItem.value.toLocaleString("fr-FR")} €
                   </span>
-                  <span className="text-[11px] font-semibold text-muted">
+                  <span className="text-xs font-semibold text-muted">
                     {activeItem.percent.toFixed(1)}% du total
                   </span>
                 </div>

@@ -32,7 +32,7 @@ test.describe('Multistep Transaction Workflow', () => {
     await page.getByRole('button', { name: 'Suivant' }).click();
 
     // Step: Financials & Calculation Verification
-    await expect(page.locator('text=Détails financiers & Date')).toBeVisible();
+    await expect(page.locator('text=Montants financiers')).toBeVisible();
     await page.getByPlaceholder('10').fill('10');
     await page.getByPlaceholder('500').fill('500');
     await page.getByPlaceholder('0').fill('2.50');

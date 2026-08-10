@@ -44,7 +44,6 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
 
   const getOrCreateAsset = useMutation(api.assets.getOrCreateAsset);
   const addBatchTransactions = useMutation(api.transactions.addBatchTransactions);
-  const updateSnapshotForMonth = useMutation(api.snapshots.updateSnapshotForMonth);
 
   // Sync rows accountId when accounts finish loading
   useEffect(() => {
@@ -119,9 +118,6 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
       }
 
       await addBatchTransactions({ items: itemsToSubmit });
-
-      const yearMonth = date.substring(0, 7);
-      await updateSnapshotForMonth({ yearMonth });
 
       onClose();
     } catch (err: any) {

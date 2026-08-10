@@ -70,7 +70,6 @@ export default function NewTransactionPage() {
   const userTransactions = useQuery(api.transactions.getTransactions, {}) || [];
   const getOrCreateAsset = useMutation(api.assets.getOrCreateAsset);
   const addTransaction = useMutation(api.transactions.addTransaction);
-  const updateSnapshotForMonth = useMutation(api.snapshots.updateSnapshotForMonth);
 
   // Pre-select account if available
   useEffect(() => {
@@ -219,8 +218,6 @@ export default function NewTransactionPage() {
         fees: parseFloat(fees || "0"),
         date,
       });
-
-      await updateSnapshotForMonth({ yearMonth: date.substring(0, 7) });
 
       router.push("/");
     } catch (err: any) {

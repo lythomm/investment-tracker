@@ -12,19 +12,7 @@ export const getMonthlySnapshots = query({
       return [];
     }
 
-    // If no account filter, check existing monthly_snapshots table first
-    if (!args.accountId) {
-      const dbSnapshots = await ctx.db
-        .query("monthly_snapshots")
-        .withIndex("by_user_month", (q: any) => q.eq("userId", userId))
-        .collect();
-
-      if (dbSnapshots.length > 0) {
-        return dbSnapshots.sort((a: any, b: any) => a.yearMonth.localeCompare(b.yearMonth));
-      }
-    }
-
-    // Compute dynamically from transactions if filtered by accountId or no snapshots exist
+    // Always compute dynamically from transactions
     let txs;
     if (args.accountId) {
       txs = await ctx.db
@@ -45,20 +33,26 @@ export const getMonthlySnapshots = query({
 
     txs.sort((a: any, b: any) => a.date.localeCompare(b.date));
 
-    const yearMonthsSet = new Set<string>();
-    for (const t of txs) {
-      if (t.date && t.date.length >= 7) {
-        yearMonthsSet.add(t.date.substring(0, 7));
+    const now = new Date();
+    const currentYM = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    const firstYM = txs[0].date.substring(0, 7);
+
+    const [startYear, startMonth] = firstYM.split("-").map(Number);
+    const [endYear, endMonth] = currentYM.split("-").map(Number);
+
+    const yearMonths: string[] = [];
+    let curY = startYear;
+    let curM = startMonth;
+    while (curY < endYear || (curY === endYear && curM <= endMonth)) {
+      yearMonths.push(`${curY}-${String(curM).padStart(2, "0")}`);
+      curM++;
+      if (curM > 12) {
+        curM = 1;
+        curY++;
       }
     }
 
-    const now = new Date();
-    const currentYM = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-    yearMonthsSet.add(currentYM);
-
-    const yearMonths = Array.from(yearMonthsSet).sort();
-
-    // If only 1 month exists, prepend previous month as 0 EUR baseline so a line can be drawn
+    // Prepend previous month as 0 EUR baseline if needed
     if (yearMonths.length === 1) {
       const [y, m] = yearMonths[0].split("-").map(Number);
       const prevDate = new Date(y, m - 2, 1);
@@ -130,78 +124,4 @@ export const getMonthlySnapshots = query({
   },
 });
 
-export const updateSnapshotForMonth = mutation({
-  args: {
-    yearMonth: v.string(),
-  },
-  handler: async (ctx: any, args: any) => {
-    const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error("Non autorisé.");
-    }
 
-    const allTxs = await ctx.db
-      .query("transactions")
-      .withIndex("by_user", (q: any) => q.eq("userId", userId))
-      .collect();
-
-    const filteredTxs = allTxs
-      .filter((t: any) => t.date.substring(0, 7) <= args.yearMonth)
-      .sort((a: any, b: any) => a.date.localeCompare(b.date));
-
-    let invested = 0;
-    let valuation = 0;
-    const qtyMap = new Map<string, number>();
-
-    for (const t of filteredTxs) {
-      const asset = await ctx.db.get(t.assetId);
-      if (!asset) continue;
-
-      const currentQty = qtyMap.get(t.assetId) || 0;
-      if (t.type === "ACHAT") {
-        invested += t.quantity * t.unitPrice + t.fees;
-        qtyMap.set(t.assetId, currentQty + t.quantity);
-      } else if (t.type === "VENTE") {
-        invested = Math.max(0, invested - (t.quantity * t.unitPrice - t.fees));
-        qtyMap.set(t.assetId, Math.max(0, currentQty - t.quantity));
-      }
-    }
-
-    for (const [assetId, qty] of qtyMap.entries()) {
-      const asset = await ctx.db.get(assetId as any);
-      if (asset && qty > 0) {
-        valuation += qty * asset.currentPrice;
-      }
-    }
-
-    const gainAmount = valuation - invested;
-    const gainPercent = invested > 0 ? (gainAmount / invested) * 100 : 0;
-
-    const existing = await ctx.db
-      .query("monthly_snapshots")
-      .withIndex("by_user_month", (q: any) =>
-        q.eq("userId", userId).eq("yearMonth", args.yearMonth)
-      )
-      .unique();
-
-    if (existing) {
-      await ctx.db.patch(existing._id, {
-        totalInvested: Math.round(invested * 100) / 100,
-        totalValuation: Math.round(valuation * 100) / 100,
-        totalGainAmount: Math.round(gainAmount * 100) / 100,
-        totalGainPercent: Math.round(gainPercent * 100) / 100,
-        updatedAt: Date.now(),
-      });
-    } else {
-      await ctx.db.insert("monthly_snapshots", {
-        userId,
-        yearMonth: args.yearMonth,
-        totalInvested: Math.round(invested * 100) / 100,
-        totalValuation: Math.round(valuation * 100) / 100,
-        totalGainAmount: Math.round(gainAmount * 100) / 100,
-        totalGainPercent: Math.round(gainPercent * 100) / 100,
-        updatedAt: Date.now(),
-      });
-    }
-  },
-});

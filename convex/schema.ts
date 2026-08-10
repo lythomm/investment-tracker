@@ -35,16 +35,6 @@ export default defineSchema({
     .index("by_account", ["accountId"])
     .index("by_user_date", ["userId", "date"]),
 
-  monthly_snapshots: defineTable({
-    userId: v.id("users"),
-    yearMonth: v.string(),
-    totalInvested: v.number(),
-    totalValuation: v.number(),
-    totalGainAmount: v.number(),
-    totalGainPercent: v.number(),
-    updatedAt: v.number(),
-  }).index("by_user_month", ["userId", "yearMonth"]),
-
   asset_prices_history: defineTable({
     assetId: v.id("assets"),
     yearMonth: v.string(),

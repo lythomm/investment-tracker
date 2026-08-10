@@ -27,6 +27,14 @@ function formatYearMonth(ym: string) {
   return `${month.padStart(2, "0")}/${year.slice(2)}`;
 }
 
+function formatFullYearMonth(ym: string) {
+  if (!ym || !ym.includes("-")) return ym;
+  const [year, month] = ym.split("-");
+  const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+  const monthName = date.toLocaleDateString("fr-FR", { month: "long" });
+  return `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${year}`;
+}
+
 export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerformanceCardProps) {
   const [timeframe, setTimeframe] = useState<"1Y" | "3Y" | "ALL">("ALL");
 
@@ -54,6 +62,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
 
   const chartData = filteredSnapshots.map((s) => ({
     name: formatYearMonth(s.yearMonth),
+    fullName: formatFullYearMonth(s.yearMonth),
     rawYM: s.yearMonth,
     valuation: s.totalValuation,
     invested: s.totalInvested,
@@ -140,13 +149,14 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
                   wrapperStyle={{ outline: "none", zIndex: 40 }}
                   content={({ active, payload, label }) => {
                     if (active && payload && payload.length) {
+                      const item = payload[0].payload;
                       const valuation = payload.find((p) => p.dataKey === "valuation")?.value as number;
                       const invested = payload.find((p) => p.dataKey === "invested")?.value as number;
                       const gain = valuation - invested;
                       const gainPct = invested > 0 ? (gain / invested) * 100 : 0;
                       return (
                         <div className="bg-slate-900/95 backdrop-blur-md text-white p-4 rounded-2xl shadow-2xl space-y-2 border border-slate-800 pointer-events-none min-w-[220px]">
-                          <p className="font-bold text-sm text-slate-200 border-b border-slate-800 pb-1.5">{label}</p>
+                          <p className="font-bold text-sm text-slate-200 border-b border-slate-800 pb-1.5">{item?.fullName || label}</p>
                           <div className="flex justify-between items-center gap-4">
                             <span className="text-slate-400 text-xs font-medium">Valorisation:</span>
                             <span className="font-bold text-sm text-sky-400">{valuation.toLocaleString("fr-FR")} €</span>

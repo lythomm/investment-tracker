@@ -105,7 +105,7 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
           </div>
 
           {/* Allocation Legend List */}
-          <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
+          <div className="space-y-2.5 pt-2">
             {chartData.map((item, idx) => (
               <div key={item.name} className="flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2 min-w-0">

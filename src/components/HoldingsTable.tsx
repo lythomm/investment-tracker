@@ -81,7 +81,10 @@ export function HoldingsTable({ holdings }: HoldingsTableProps) {
               const mobileName = fullName.length > 20 ? `${fullName.slice(0, 20)}...` : fullName;
 
               return (
-                <tr key={h.assetId} className="hover:bg-surface-hover transition border-b border-subtle last:border-0">
+                <tr
+                  key={h.assetId}
+                  className="hover:bg-surface-hover transition border-b border-subtle last:border-0"
+                >
                   <td className="py-4 px-4 sm:px-6 font-medium text-main">
                     <div className="font-bold text-base text-main uppercase">{h.ticker}</div>
                     <div className="text-xs text-muted" title={fullName}>

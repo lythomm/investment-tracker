@@ -1,6 +1,7 @@
 "use client";
 
 import { DollarSign, TrendingUp, Wallet, ArrowUpRight, ArrowDownRight, Gift } from "lucide-react";
+import { motion, Variants } from "framer-motion";
 
 interface MetricsOverviewProps {
   summary: {
@@ -12,13 +13,37 @@ interface MetricsOverviewProps {
   };
 }
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 15 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 350, damping: 25 },
+  },
+};
+
 export function MetricsOverview({ summary }: MetricsOverviewProps) {
   const isPositive = summary.totalGainAmount >= 0;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+      className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+    >
       {/* Total Valuation */}
-      <div className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
+      <motion.div variants={itemVariants} className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted">
             Valeur du Portefeuille
@@ -35,10 +60,10 @@ export function MetricsOverview({ summary }: MetricsOverviewProps) {
         <div className="mt-2 text-[11px] text-muted">
           Valeur actuelle estimée des positions
         </div>
-      </div>
+      </motion.div>
 
       {/* Total Invested */}
-      <div className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
+      <motion.div variants={itemVariants} className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted">
             Total Apports Investis
@@ -55,10 +80,10 @@ export function MetricsOverview({ summary }: MetricsOverviewProps) {
         <div className="mt-2 text-[11px] text-muted">
           Capital total injecté dans les actifs
         </div>
-      </div>
+      </motion.div>
 
       {/* Plus-Value Latente */}
-      <div className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
+      <motion.div variants={itemVariants} className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted">
             Plus-Value Latente
@@ -94,10 +119,10 @@ export function MetricsOverview({ summary }: MetricsOverviewProps) {
         <div className="mt-2 text-[11px] text-muted">
           Gain/perte théorique non réalisé
         </div>
-      </div>
+      </motion.div>
 
-      {/* Dividendes Perçus */}
-      <div className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
+      {/* Dividendes Cumulés */}
+      <motion.div variants={itemVariants} className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted">
             Dividendes Cumulés
@@ -114,7 +139,7 @@ export function MetricsOverview({ summary }: MetricsOverviewProps) {
         <div className="mt-2 text-[11px] text-muted">
           Revenus passifs totaux perçus
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

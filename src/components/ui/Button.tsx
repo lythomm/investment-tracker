@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
@@ -42,12 +43,15 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     return (
-      <button
+      <motion.button
         ref={ref}
         type={type}
         disabled={disabled || isLoading}
+        whileHover={disabled || isLoading ? undefined : { scale: 1.02 }}
+        whileTap={disabled || isLoading ? undefined : { scale: 0.97 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         className={`inline-flex items-center justify-center transition-colors duration-150 select-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
-        {...props}
+        {...(props as any)}
       >
         {isLoading ? (
           <Loader2 className="h-4 w-4 animate-spin shrink-0" />
@@ -55,7 +59,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <span className="shrink-0">{icon}</span>
         ) : null}
         {children}
-      </button>
+      </motion.button>
     );
   }
 );

@@ -32,9 +32,9 @@ export function ThemeToggle() {
       aria-label="Basculer le mode sombre"
     >
       {isDark ? (
-        <Moon className="h-4 w-4 text-indigo-400" />
+        <Moon className="h-4 w-4 text-white" />
       ) : (
-        <Sun className="h-4 w-4 text-amber-500" />
+        <Sun className="h-4 w-4 text-main" />
       )}
     </button>
   );

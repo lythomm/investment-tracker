@@ -46,11 +46,11 @@ export function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-xs animate-in fade-in duration-150"
       onClick={onClose}
     >
       <div
-        className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] flex flex-col rounded-2xl bg-white overflow-hidden shadow-none`}
+        className={`w-full ${maxWidthClasses[maxWidth]} max-h-[90vh] flex flex-col rounded-2xl bg-surface border border-subtle overflow-hidden shadow-none`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -58,19 +58,19 @@ export function Modal({
           <div className="flex items-center justify-between p-6 sm:px-8 pb-4">
             <div>
               {typeof title === "string" ? (
-                <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
+                <h2 className="text-3xl font-normal text-main font-serif-display">
                   {title}
                 </h2>
               ) : (
                 title
               )}
               {description && (
-                <p className="text-sm text-slate-500 mt-1">{description}</p>
+                <p className="text-sm text-muted mt-1">{description}</p>
               )}
             </div>
             <button
               onClick={onClose}
-              className="rounded-2xl p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+              className="rounded-2xl p-1.5 text-muted hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-main transition"
               title="Fermer"
             >
               <X className="h-5.5 w-5.5" />
@@ -79,11 +79,11 @@ export function Modal({
         )}
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto p-6 sm:p-8 text-base">{children}</div>
+        <div className="flex-1 overflow-y-auto p-6 sm:p-8 text-base text-main">{children}</div>
 
         {/* Optional Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 p-4 sm:px-8 bg-slate-50/50">
+          <div className="flex items-center justify-end gap-3 p-4 sm:px-8 bg-surface-subtle border-t border-subtle">
             {footer}
           </div>
         )}

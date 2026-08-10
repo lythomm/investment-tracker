@@ -58,20 +58,20 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
           </h1>
         </div>
 
-        {/* Right Side Floating White Cards */}
+        {/* Right Side Floating White/Dark Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:w-auto">
           {/* Card 1: Your Savings */}
-          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-6 text-slate-900 w-full sm:w-64">
+          <div className="rounded-2xl bg-surface/90 border border-subtle/50 backdrop-blur-md p-6 text-main w-full sm:w-64">
             <div className="flex items-center justify-between">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500 text-white">
                 <PiggyBank className="h-5 w-5" />
               </div>
-              <span className="text-xs font-semibold text-slate-400">Ce mois-ci</span>
+              <span className="text-xs font-semibold text-muted">Ce mois-ci</span>
             </div>
 
             <div className="mt-4">
-              <div className="text-sm font-serif-display text-slate-600">Apports Investis</div>
-              <div className="text-3xl font-bold text-slate-900 mt-1">
+              <div className="text-sm font-serif-display text-muted">Apports Investis</div>
+              <div className="text-3xl font-bold text-main mt-1">
                 <NumberFlow
                   value={invested}
                   locales="fr-FR"
@@ -83,18 +83,18 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
           </div>
 
           {/* Card 2: Your Investment */}
-          <div className="rounded-2xl bg-white/95 backdrop-blur-md p-6 text-slate-900 w-full sm:w-64">
+          <div className="rounded-2xl bg-surface/90 border border-subtle/50 backdrop-blur-md p-6 text-main w-full sm:w-64">
             <div className="flex items-center justify-between">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500 text-white">
                 <TrendingUp className="h-5 w-5" />
               </div>
-              <span className="text-xs font-semibold text-slate-400">Rendement</span>
+              <span className="text-xs font-semibold text-muted">Rendement</span>
             </div>
 
             <div className="mt-4">
-              <div className="text-sm font-serif-display text-slate-600">Plus-Value Latente</div>
+              <div className="text-sm font-serif-display text-muted">Plus-Value Latente</div>
               <div className="flex items-baseline gap-2 mt-1">
-                <div className={`text-3xl font-bold ${isPositive ? "text-slate-900" : "text-rose-600"}`}>
+                <div className={`text-3xl font-bold ${isPositive ? "text-main" : "text-rose-600 dark:text-rose-400"}`}>
                   <NumberFlow
                     value={gainAmount}
                     locales="fr-FR"

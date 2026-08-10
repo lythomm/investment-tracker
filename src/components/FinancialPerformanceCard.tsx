@@ -72,13 +72,13 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
   return (
     <div className="space-y-6">
       {/* Top Chart Card: Financial Performance */}
-      <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
+      <div className="card-light rounded-2xl p-6 sm:p-8">
         <div className="flex items-center justify-between mb-2">
           <div>
-            <h3 className="text-2xl font-normal text-slate-900 font-serif-display">
+            <h3 className="text-2xl font-normal text-main font-serif-display">
               Performance Financière
             </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <p className="text-xs text-muted mt-0.5">
               Évolution comparative du capital investi et de la valeur totale
             </p>
           </div>
@@ -87,36 +87,36 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
               <select
                 value={timeframe}
                 onChange={(e) => setTimeframe(e.target.value as any)}
-                className="appearance-none rounded-2xl bg-slate-100 pl-3.5 pr-8 py-1.5 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer hover:bg-slate-200 transition"
+                className="appearance-none rounded-2xl bg-surface-subtle border border-subtle pl-3.5 pr-8 py-1.5 text-xs font-semibold text-main focus:outline-none cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800 transition"
               >
                 <option value="1Y">1 An</option>
                 <option value="3Y">3 Ans</option>
                 <option value="ALL">Tout</option>
               </select>
-              <ChevronDown className="absolute right-2.5 top-2.5 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+              <ChevronDown className="absolute right-2.5 top-2.5 h-3.5 w-3.5 text-muted pointer-events-none" />
             </div>
           )}
         </div>
 
         {/* Legend Header */}
         {snapshots.length > 0 && (
-          <div className="flex items-center gap-4 text-xs mt-3 mb-4 pb-2 border-b border-slate-100">
+          <div className="flex items-center gap-4 text-xs mt-3 mb-4 pb-2 border-b border-subtle">
             <div className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-sky-600 inline-block" />
-              <span className="text-slate-700 font-semibold">Valorisation Portefeuille</span>
+              <span className="text-main font-semibold">Valorisation Portefeuille</span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-slate-400 inline-block" />
-              <span className="text-slate-500 font-medium">Capital Investi (Apports)</span>
+              <span className="text-muted font-medium">Capital Investi (Apports)</span>
             </div>
           </div>
         )}
 
         {snapshots.length === 0 ? (
-          <div className="h-56 w-full flex flex-col items-center justify-center rounded-xl bg-slate-50 p-6 text-center border border-dashed border-slate-200">
-            <TrendingUp className="h-8 w-8 text-slate-400 mb-2" />
-            <p className="text-sm font-semibold text-slate-700">Aucun historique disponible</p>
-            <p className="text-xs text-slate-500 mt-1 max-w-xs">
+          <div className="h-56 w-full flex flex-col items-center justify-center rounded-xl bg-surface-subtle p-6 text-center border border-dashed border-subtle">
+            <TrendingUp className="h-8 w-8 text-muted mb-2" />
+            <p className="text-sm font-semibold text-main">Aucun historique disponible</p>
+            <p className="text-xs text-muted mt-1 max-w-xs">
               Ajoutez vos premières transactions d'achat pour suivre la performance temporelle de votre portefeuille.
             </p>
           </div>
@@ -134,7 +134,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
                     <stop offset="95%" stopColor="#94a3b8" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
                 <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip
@@ -195,17 +195,17 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
       </div>
 
       {/* Bottom Insights Card: Dynamic Quick Insights */}
-      <div className="card-light rounded-2xl p-6 sm:p-8 bg-white">
-        <h3 className="text-2xl font-normal text-slate-900 font-serif-display mb-4">
+      <div className="card-light rounded-2xl p-6 sm:p-8">
+        <h3 className="text-2xl font-normal text-main font-serif-display mb-4">
           Aperçu Rapide
         </h3>
 
-        <ul className="space-y-4 text-sm text-slate-700">
+        <ul className="space-y-4 text-sm text-main">
           <li className="flex items-start gap-3">
             <TrendingUp className={`h-5 w-5 shrink-0 mt-0.5 ${isGainPositive ? "text-emerald-500" : "text-rose-500"}`} />
             <span>
               Plus-value latente globale :{" "}
-              <strong className={`font-bold ${isGainPositive ? "text-emerald-600" : "text-rose-600"}`}>
+              <strong className={`font-bold ${isGainPositive ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}>
                 {isGainPositive ? "+" : ""}
                 {summary.totalGainAmount.toLocaleString("fr-FR")} € ({isGainPositive ? "+" : ""}
                 {summary.totalGainPercent.toFixed(1)}%)
@@ -213,10 +213,10 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
             </span>
           </li>
           <li className="flex items-start gap-3">
-            <Wallet className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
+            <Wallet className="h-5 w-5 text-muted shrink-0 mt-0.5" />
             <span>
               Apports cumulés :{" "}
-              <strong className="text-slate-900 font-bold">
+              <strong className="text-main font-bold">
                 {summary.totalInvested.toLocaleString("fr-FR")} €
               </strong>{" "}
               déposés au total.
@@ -227,21 +227,21 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
               <Award className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
               <span>
                 Actif principal :{" "}
-                <strong className="text-slate-900 font-bold uppercase">{topHolding.ticker}</strong> (
+                <strong className="text-main font-bold uppercase">{topHolding.ticker}</strong> (
                 {topHolding.currentValuation.toLocaleString("fr-FR")} €).
               </span>
             </li>
           ) : (
             <li className="flex items-start gap-3">
-              <CheckCircle2 className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
+              <CheckCircle2 className="h-5 w-5 text-muted shrink-0 mt-0.5" />
               <span>Aucun actif en portefeuille pour le moment.</span>
             </li>
           )}
           <li className="flex items-start gap-3">
-            <DollarSign className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
+            <DollarSign className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
             <span>
               Dividendes cumulés perçus :{" "}
-              <strong className="text-slate-900 font-bold">
+              <strong className="text-main font-bold">
                 {summary.totalDividends.toLocaleString("fr-FR")} €
               </strong>.
             </span>

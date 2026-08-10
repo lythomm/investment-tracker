@@ -23,8 +23,8 @@ export function AccountFilterPills({
         onClick={() => onSelectAccount(null)}
         className={`shrink-0 h-11 px-4 sm:px-5 flex items-center justify-center rounded-2xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap ${
           selectedAccountId === null
-            ? "bg-slate-900 text-white shadow-xs"
-            : "bg-white text-slate-600 hover:bg-slate-100"
+            ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
+            : "bg-surface text-muted hover:text-main hover:bg-slate-100 dark:hover:bg-slate-800 border border-subtle"
         }`}
       >
         Tous les comptes
@@ -38,8 +38,8 @@ export function AccountFilterPills({
           onClick={() => onSelectAccount(acc._id)}
           className={`shrink-0 h-11 px-4 sm:px-5 flex items-center justify-center rounded-2xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap max-w-[200px] ${
             selectedAccountId === acc._id
-              ? "bg-slate-900 text-white shadow-xs"
-              : "bg-white text-slate-600 hover:bg-slate-100"
+              ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
+              : "bg-surface text-muted hover:text-main hover:bg-slate-100 dark:hover:bg-slate-800 border border-subtle"
           }`}
         >
           <span className="truncate">
@@ -52,7 +52,7 @@ export function AccountFilterPills({
       <button
         type="button"
         onClick={onOpenAddAccount}
-        className="shrink-0 h-11 px-4 sm:px-5 flex items-center justify-center gap-1.5 rounded-2xl bg-white text-xs sm:text-sm font-medium text-slate-600 hover:bg-slate-100 cursor-pointer whitespace-nowrap"
+        className="shrink-0 h-11 px-4 sm:px-5 flex items-center justify-center gap-1.5 rounded-2xl bg-surface text-xs sm:text-sm font-medium text-muted hover:text-main hover:bg-slate-100 dark:hover:bg-slate-800 border border-subtle cursor-pointer whitespace-nowrap"
       >
         <Plus className="h-4 w-4 shrink-0" />
         <span>Nouveau Compte</span>

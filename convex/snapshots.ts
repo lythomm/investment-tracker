@@ -17,9 +17,10 @@ export const getMonthlySnapshots = query({
     if (args.accountId) {
       txs = await ctx.db
         .query("transactions")
-        .withIndex("by_account", (q: any) => q.eq("accountId", args.accountId!))
+        .withIndex("by_user_account", (q: any) =>
+          q.eq("userId", userId).eq("accountId", args.accountId!)
+        )
         .collect();
-      txs = txs.filter((t: any) => t.userId === userId);
     } else {
       txs = await ctx.db
         .query("transactions")
@@ -61,21 +62,30 @@ export const getMonthlySnapshots = query({
     }
 
     const assetIds = Array.from(new Set<string>(txs.map((t: any) => String(t.assetId))));
+    const [fetchedAssets, fetchedHistories] = await Promise.all([
+      Promise.all(assetIds.map((id) => ctx.db.get(id as any))),
+      Promise.all(
+        assetIds.map((id) =>
+          ctx.db
+            .query("asset_prices_history")
+            .withIndex("by_asset_month", (q: any) => q.eq("assetId", id as any))
+            .collect()
+        )
+      ),
+    ]);
+
     const assetMap = new Map<string, any>();
+    fetchedAssets.forEach((asset) => {
+      if (asset) assetMap.set(String(asset._id), asset);
+    });
+
     const priceHistoryMap = new Map<string, number>();
-
-    for (const id of assetIds) {
-      const asset = await ctx.db.get(id as any);
-      if (asset) assetMap.set(id as string, asset);
-
-      const historyRows = await ctx.db
-        .query("asset_prices_history")
-        .withIndex("by_asset_month", (q: any) => q.eq("assetId", id as any))
-        .collect();
-      for (const row of historyRows) {
+    fetchedHistories.forEach((rows, idx) => {
+      const id = assetIds[idx];
+      for (const row of rows) {
         priceHistoryMap.set(`${id}_${row.yearMonth}`, row.closingPrice);
       }
-    }
+    });
 
     const result: Array<{
       yearMonth: string;

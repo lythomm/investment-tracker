@@ -33,7 +33,9 @@ export default defineSchema({
   })
     .index("by_user", ["userId"])
     .index("by_account", ["accountId"])
-    .index("by_user_date", ["userId", "date"]),
+    .index("by_user_date", ["userId", "date"])
+    .index("by_user_account", ["userId", "accountId"])
+    .index("by_user_asset", ["userId", "assetId"]),
 
   asset_prices_history: defineTable({
     assetId: v.id("assets"),

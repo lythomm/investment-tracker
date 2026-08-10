@@ -38,9 +38,10 @@ export const getPortfolioSummary = query({
     if (args.accountId) {
       txs = await ctx.db
         .query("transactions")
-        .withIndex("by_account", (q: any) => q.eq("accountId", args.accountId!))
+        .withIndex("by_user_account", (q: any) =>
+          q.eq("userId", userId).eq("accountId", args.accountId!)
+        )
         .collect();
-      txs = txs.filter((t: any) => t.userId === userId);
     } else {
       txs = await ctx.db
         .query("transactions")
@@ -50,13 +51,20 @@ export const getPortfolioSummary = query({
 
     txs.sort((a: any, b: any) => a.date.localeCompare(b.date));
 
+    const uniqueAssetIds = Array.from(new Set<string>(txs.map((t: any) => String(t.assetId))));
+    const fetchedAssets = await Promise.all(uniqueAssetIds.map((id) => ctx.db.get(id as any)));
+    const assetMap = new Map<string, any>();
+    fetchedAssets.forEach((asset) => {
+      if (asset) assetMap.set(String(asset._id), asset);
+    });
+
     const holdingsMap = new Map<string, AssetHolding>();
     let grandTotalInvested = 0;
     let grandTotalValuation = 0;
     let grandTotalDividends = 0;
 
     for (const t of txs) {
-      const asset = await ctx.db.get(t.assetId);
+      const asset = assetMap.get(String(t.assetId));
       if (!asset) continue;
 
       let holding = holdingsMap.get(t.assetId);

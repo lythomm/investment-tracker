@@ -96,9 +96,10 @@ export const getTransactions = query({
     if (args.accountId) {
       txs = await ctx.db
         .query("transactions")
-        .withIndex("by_account", (q: any) => q.eq("accountId", args.accountId!))
+        .withIndex("by_user_account", (q: any) =>
+          q.eq("userId", userId).eq("accountId", args.accountId!)
+        )
         .collect();
-      txs = txs.filter((t: any) => t.userId === userId);
     } else {
       txs = await ctx.db
         .query("transactions")
@@ -106,16 +107,29 @@ export const getTransactions = query({
         .collect();
     }
 
-    const result = [];
-    for (const t of txs) {
-      const asset = await ctx.db.get(t.assetId);
-      const account = await ctx.db.get(t.accountId);
-      result.push({
-        ...t,
-        asset,
-        account,
-      });
-    }
+    const uniqueAssetIds = Array.from(new Set<string>(txs.map((t: any) => String(t.assetId))));
+    const uniqueAccountIds = Array.from(new Set<string>(txs.map((t: any) => String(t.accountId))));
+
+    const [assets, accounts] = await Promise.all([
+      Promise.all(uniqueAssetIds.map((id) => ctx.db.get(id as any))),
+      Promise.all(uniqueAccountIds.map((id) => ctx.db.get(id as any))),
+    ]);
+
+    const assetMap = new Map<string, any>();
+    assets.forEach((a) => {
+      if (a) assetMap.set(String(a._id), a);
+    });
+
+    const accountMap = new Map<string, any>();
+    accounts.forEach((acc) => {
+      if (acc) accountMap.set(String(acc._id), acc);
+    });
+
+    const result = txs.map((t: any) => ({
+      ...t,
+      asset: assetMap.get(String(t.assetId)) || null,
+      account: accountMap.get(String(t.accountId)) || null,
+    }));
 
     return result.sort((a: any, b: any) => b.date.localeCompare(a.date));
   },

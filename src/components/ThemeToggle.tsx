@@ -27,14 +27,14 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors duration-150 flex items-center justify-center select-none cursor-pointer"
+      className="p-2.5 rounded-2xl bg-slate-900 dark:bg-white border border-slate-900 dark:border-white hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors duration-150 flex items-center justify-center select-none cursor-pointer"
       title={`Thème : ${isDark ? "Sombre" : "Clair"} (Cliquez pour passer au mode ${isDark ? "Clair" : "Sombre"})`}
       aria-label="Basculer le mode sombre"
     >
       {isDark ? (
-        <Sun className="h-4 w-4 text-white" />
+        <Sun className="h-4 w-4 text-slate-900" />
       ) : (
-        <Moon className="h-4 w-4 text-slate-900" />
+        <Moon className="h-4 w-4 text-white" />
       )}
     </button>
   );

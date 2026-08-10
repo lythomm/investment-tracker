@@ -24,9 +24,7 @@ interface FinancialPerformanceCardProps {
 function formatYearMonth(ym: string) {
   if (!ym || !ym.includes("-")) return ym;
   const [year, month] = ym.split("-");
-  const date = new Date(parseInt(year), parseInt(month) - 1, 1);
-  const monthName = date.toLocaleDateString("fr-FR", { month: "short" });
-  return `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${year.slice(2)}`;
+  return `${month.padStart(2, "0")}/${year.slice(2)}`;
 }
 
 export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerformanceCardProps) {

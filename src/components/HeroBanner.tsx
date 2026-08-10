@@ -32,12 +32,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
   return (
     <div className="relative w-full overflow-hidden rounded-2xl p-8 text-white min-h-[25rem] flex flex-col justify-end">
       {/* Generated Meadow Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center pointer-events-none"
-        style={{
-          backgroundImage: `url('/hero_meadow_bg.png')`,
-        }}
-      />
+      <div className="absolute inset-0 bg-cover bg-center pointer-events-none bg-[url('/hero_meadow_bg.png')] dark:bg-[url('/hero_meadow_bg_night.png')]" />
       {/* Soft Scrim Gradient Overlay for Text Legibility */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-800/10 to-transparent pointer-events-none" />
 

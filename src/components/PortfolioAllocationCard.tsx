@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 import { PieChart as PieChartIcon } from "lucide-react";
 
@@ -24,6 +25,8 @@ const COLORS = [
 ];
 
 export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioAllocationCardProps) {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
   const activeHoldings = holdings
     .filter((h) => h.currentValuation > 0)
     .sort((a, b) => b.currentValuation - a.currentValuation);
@@ -34,6 +37,8 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
     value: h.currentValuation,
     percent: totalValuation > 0 ? (h.currentValuation / totalValuation) * 100 : 0,
   }));
+
+  const activeItem = activeIndex !== null ? chartData[activeIndex] : null;
 
   return (
     <div className="card-light rounded-2xl p-6 sm:p-8 h-full flex flex-col justify-between space-y-6">
@@ -68,20 +73,33 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
                   outerRadius={90}
                   paddingAngle={4}
                   dataKey="value"
+                  onMouseEnter={(_, index) => setActiveIndex(index)}
+                  onMouseLeave={() => setActiveIndex(null)}
                 >
                   {chartData.map((_, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} stroke="none" />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                      stroke="none"
+                      className="transition-all duration-200 cursor-pointer outline-none"
+                      style={{
+                        transform: activeIndex === index ? "scale(1.04)" : "scale(1)",
+                        transformOrigin: "center center",
+                      }}
+                    />
                   ))}
                 </Pie>
                 <Tooltip
+                  isAnimationActive={false}
+                  wrapperStyle={{ outline: "none", zIndex: 40 }}
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const item = payload[0].payload;
                       return (
-                        <div className="bg-slate-900 text-white p-3 rounded-xl shadow-xl text-xs space-y-1 border border-slate-800">
+                        <div className="bg-slate-900/95 backdrop-blur-md text-white p-3 rounded-xl shadow-2xl text-xs space-y-1 border border-slate-800 pointer-events-none">
                           <p className="font-bold text-sky-400 uppercase">{item.name}</p>
-                          <p className="text-slate-300 text-[11px]">{item.fullName}</p>
-                          <div className="flex justify-between gap-4 pt-1 border-t border-slate-800 mt-1">
+                          <p className="text-slate-300 text-[11px] max-w-[180px] truncate">{item.fullName}</p>
+                          <div className="flex justify-between gap-4 pt-1 border-t border-slate-800/80 mt-1">
                             <span className="text-slate-400">Valeur:</span>
                             <span className="font-semibold text-white">
                               {Number(item.value).toLocaleString("fr-FR")} € ({Number(item.percent).toFixed(1)}%)
@@ -95,12 +113,28 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
                 />
               </PieChart>
             </ResponsiveContainer>
-            {/* Center Total Overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-              <span className="text-xs font-medium text-muted">Total</span>
-              <span className="text-lg font-bold text-main">
-                {totalValuation.toLocaleString("fr-FR")} €
-              </span>
+            {/* Center Overlay: Active slice details on hover or Total when idle */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-4 transition-all duration-200">
+              {activeItem ? (
+                <div className="flex flex-col items-center animate-in fade-in zoom-in-95 duration-150">
+                  <span className="text-xs font-bold text-sky-500 dark:text-sky-400 uppercase truncate max-w-[110px]">
+                    {activeItem.name}
+                  </span>
+                  <span className="text-lg font-bold text-main">
+                    {activeItem.value.toLocaleString("fr-FR")} €
+                  </span>
+                  <span className="text-[11px] font-semibold text-muted">
+                    {activeItem.percent.toFixed(1)}% du total
+                  </span>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-medium text-muted">Total</span>
+                  <span className="text-lg font-bold text-main">
+                    {totalValuation.toLocaleString("fr-FR")} €
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 

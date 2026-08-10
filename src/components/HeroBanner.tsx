@@ -58,10 +58,10 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
           </h1>
         </div>
 
-        {/* Right Side Floating White/Dark Cards */}
+        {/* Right Side Floating Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:w-auto">
           {/* Card 1: Your Savings */}
-          <div className="rounded-2xl bg-surface/90 border border-subtle/50 backdrop-blur-md p-6 text-main w-full sm:w-64">
+          <div className="rounded-2xl bg-surface p-6 text-main w-full sm:w-64">
             <div className="flex items-center justify-between">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500 text-white">
                 <PiggyBank className="h-5 w-5" />
@@ -83,7 +83,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
           </div>
 
           {/* Card 2: Your Investment */}
-          <div className="rounded-2xl bg-surface/90 border border-subtle/50 backdrop-blur-md p-6 text-main w-full sm:w-64">
+          <div className="rounded-2xl bg-surface p-6 text-main w-full sm:w-64">
             <div className="flex items-center justify-between">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500 text-white">
                 <TrendingUp className="h-5 w-5" />

@@ -22,7 +22,7 @@ export function Navbar({
   const isHistorique = pathname === "/historique";
 
   return (
-    <header className="w-full bg-[var(--nav-bg)] backdrop-blur-md sticky top-0 z-40 border-b border-subtle/40">
+    <header className="w-full bg-[var(--nav-bg)] backdrop-blur-md sticky top-0 z-40">
       <div className="relative w-full px-4 sm:px-8 lg:px-12 flex items-center justify-between py-4">
         {/* Left Side: Brand Logo */}
         <Link href="/" className="flex items-center gap-3">

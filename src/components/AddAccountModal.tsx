@@ -46,33 +46,33 @@ export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
       onClose={onClose}
       title={
         <div className="flex items-center gap-2">
-          <Wallet className="h-5 w-5 text-slate-800" />
-          <span className="text-2xl font-normal text-slate-900 font-serif-display">Nouveau Compte</span>
+          <Wallet className="h-5 w-5 text-main" />
+          <span className="text-2xl font-normal text-main font-serif-display">Nouveau Compte</span>
         </div>
       }
       maxWidth="md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="rounded-2xl bg-rose-50 p-3 text-xs text-rose-700">
+          <div className="rounded-2xl bg-rose-50 dark:bg-rose-950/40 p-3 text-xs text-rose-700 dark:text-rose-300">
             {error}
           </div>
         )}
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">Nom du compte</label>
+          <label className="block text-xs font-semibold text-muted mb-1">Nom du compte</label>
           <input
             type="text"
             placeholder="ex: PEA Fortuneo, CTO Trade Republic"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
+            className="w-full rounded-2xl bg-surface-subtle border border-subtle px-3.5 py-2.5 text-sm text-main focus:outline-none"
             required
           />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">Type d'enveloppe</label>
+          <label className="block text-xs font-semibold text-muted mb-1">Type d'enveloppe</label>
           <div className="grid grid-cols-2 gap-2">
             {(["PEA", "CTO"] as const).map((t) => (
               <button
@@ -81,8 +81,8 @@ export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
                 onClick={() => setType(t)}
                 className={`rounded-2xl p-3 text-xs font-semibold transition cursor-pointer ${
                   type === t
-                    ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
+                    : "bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800"
                 }`}
               >
                 {t === "PEA" ? "PEA (Plan Épargne Actions)" : "CTO (Compte Titres)"}
@@ -95,14 +95,14 @@ export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-2xl px-5 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 transition"
+            className="rounded-2xl px-5 py-2.5 text-xs font-semibold text-muted hover:bg-slate-100 dark:hover:bg-slate-800 transition"
           >
             Annuler
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-2.5 text-xs font-semibold text-white hover:bg-slate-800 transition disabled:opacity-50"
+            className="flex items-center gap-2 rounded-2xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-6 py-2.5 text-xs font-semibold hover:bg-slate-800 dark:hover:bg-white transition disabled:opacity-50"
           >
             <CheckCircle2 className="h-4 w-4" />
             {loading ? "Création..." : "Créer le compte"}

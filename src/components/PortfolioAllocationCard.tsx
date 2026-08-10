@@ -36,21 +36,21 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
   }));
 
   return (
-    <div className="card-light rounded-2xl p-6 sm:p-8 bg-white h-full flex flex-col justify-between space-y-6">
+    <div className="card-light rounded-2xl p-6 sm:p-8 h-full flex flex-col justify-between space-y-6">
       <div>
-        <h3 className="text-2xl font-normal text-slate-900 font-serif-display">
+        <h3 className="text-2xl font-normal text-main font-serif-display">
           Répartition par Actif
         </h3>
-        <p className="text-xs text-slate-500 mt-0.5">
+        <p className="text-xs text-muted mt-0.5">
           Ventilation du capital selon la valeur de chaque position
         </p>
       </div>
 
       {activeHoldings.length === 0 ? (
-        <div className="h-64 w-full flex flex-col items-center justify-center rounded-xl bg-slate-50 p-6 text-center border border-dashed border-slate-200">
-          <PieChartIcon className="h-8 w-8 text-slate-400 mb-2" />
-          <p className="text-sm font-semibold text-slate-700">Aucune position active</p>
-          <p className="text-xs text-slate-500 mt-1 max-w-xs">
+        <div className="h-64 w-full flex flex-col items-center justify-center rounded-xl bg-surface-subtle p-6 text-center border border-dashed border-subtle">
+          <PieChartIcon className="h-8 w-8 text-muted mb-2" />
+          <p className="text-sm font-semibold text-main">Aucune position active</p>
+          <p className="text-xs text-muted mt-1 max-w-xs">
             Ajoutez votre premier achat pour voir le camembert de répartition de votre portefeuille.
           </p>
         </div>
@@ -97,8 +97,8 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
             </ResponsiveContainer>
             {/* Center Total Overlay */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-              <span className="text-xs font-medium text-slate-400">Total</span>
-              <span className="text-lg font-bold text-slate-900">
+              <span className="text-xs font-medium text-muted">Total</span>
+              <span className="text-lg font-bold text-main">
                 {totalValuation.toLocaleString("fr-FR")} €
               </span>
             </div>
@@ -113,11 +113,11 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
                     className="h-3 w-3 rounded-full shrink-0 inline-block"
                     style={{ backgroundColor: COLORS[idx % COLORS.length] }}
                   />
-                  <span className="font-bold text-slate-900 uppercase truncate">{item.name}</span>
+                  <span className="font-bold text-main uppercase truncate">{item.name}</span>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-slate-500 font-medium">{item.value.toLocaleString("fr-FR")} €</span>
-                  <span className="font-semibold text-slate-900 bg-slate-100 px-2 py-0.5 rounded-full text-[11px]">
+                  <span className="text-muted font-medium">{item.value.toLocaleString("fr-FR")} €</span>
+                  <span className="font-semibold text-main bg-surface-subtle border border-subtle px-2 py-0.5 rounded-full text-[11px]">
                     {item.percent.toFixed(1)}%
                   </span>
                 </div>

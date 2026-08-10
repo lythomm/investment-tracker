@@ -40,7 +40,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#edf1f2] text-slate-900">
+      <div className="flex min-h-screen items-center justify-center bg-app text-main">
         <Loader2 className="h-8 w-8 animate-spin font-sans" />
       </div>
     );
@@ -58,7 +58,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         accounts,
       }}
     >
-      <div className="min-h-screen w-full bg-[#edf1f2] text-slate-900 flex flex-col pb-28 md:pb-12">
+      <div className="min-h-screen w-full bg-app text-main flex flex-col pb-28 md:pb-12">
         <PriceAutoSync />
         {/* Rendered ONCE Globally for all pages */}
         <Navbar

@@ -432,40 +432,40 @@ export default function NewTransactionPage() {
         <button
           type="button"
           onClick={() => router.back()}
-          className="flex items-center gap-2.5 text-sm font-bold text-slate-600 hover:text-slate-900 transition"
+          className="flex items-center gap-2.5 text-sm font-bold text-muted hover:text-main transition cursor-pointer"
         >
           <ArrowLeft className="h-5 w-5" />
           <span>Retour</span>
         </button>
-        <span className="text-sm font-bold text-slate-500">
+        <span className="text-sm font-bold text-muted">
           Étape {currentDisplayStep} sur {totalDisplaySteps}
         </span>
       </div>
 
       {/* Progress Indicator */}
       <div className="space-y-3">
-        <div className="flex justify-between text-xs sm:text-sm font-medium text-slate-500">
+        <div className="flex justify-between text-xs sm:text-sm font-medium text-muted">
           {stepTitles.map((title, idx) => (
             <span
               key={title}
-              className={idx + 1 <= currentDisplayStep ? "text-slate-900 font-bold" : ""}
+              className={idx + 1 <= currentDisplayStep ? "text-main font-bold" : ""}
             >
               {title}
             </span>
           ))}
         </div>
-        <div className="h-3 w-full bg-slate-200/80 rounded-full overflow-hidden">
+        <div className="h-3 w-full bg-surface-subtle border border-subtle rounded-full overflow-hidden">
           <div
-            className="h-full bg-slate-900 transition-all duration-300 ease-out"
+            className="h-full bg-slate-900 dark:bg-slate-100 transition-all duration-300 ease-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
       </div>
 
       {/* Main Multistep Form Card Container */}
-      <div className="bg-white rounded-3xl p-5 sm:p-12 shadow-sm border border-slate-100 space-y-8">
+      <div className="card-light rounded-3xl p-5 sm:p-12 space-y-8">
         {error && (
-          <div className="flex items-center gap-3 rounded-2xl bg-rose-50 p-4 text-sm font-semibold text-rose-700">
+          <div className="flex items-center gap-3 rounded-2xl bg-rose-50 dark:bg-rose-950/40 p-4 text-sm font-semibold text-rose-700 dark:text-rose-300">
             <AlertCircle className="h-5 w-5 shrink-0" />
             <span>{error}</span>
           </div>
@@ -475,10 +475,10 @@ export default function NewTransactionPage() {
         {step === 1 && (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-slate-900">
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-main">
                 Quel est le type d'opération ?
               </h2>
-              <p className="text-sm sm:text-base text-slate-500 mt-2">
+              <p className="text-sm sm:text-base text-muted mt-2">
                 Choisissez s'il s'agit d'un achat, d'une vente ou d'un dividende perçu.
               </p>
             </div>
@@ -487,61 +487,61 @@ export default function NewTransactionPage() {
               <button
                 type="button"
                 onClick={() => setType("ACHAT")}
-                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 ${
+                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 cursor-pointer ${
                   type === "ACHAT"
-                    ? "border-emerald-600 bg-emerald-50/50 text-emerald-950 shadow-sm"
-                    : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
+                    ? "border-emerald-600 bg-emerald-50/50 dark:bg-emerald-950/30 text-emerald-950 dark:text-emerald-300"
+                    : "border-subtle hover:border-slate-300 dark:hover:border-slate-700 text-muted bg-surface-subtle"
                 }`}
               >
                 <div
                   className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl mb-1.5 sm:mb-4 ${
-                    type === "ACHAT" ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600"
+                    type === "ACHAT" ? "bg-emerald-600 text-white" : "bg-surface text-main border border-subtle"
                   }`}
                 >
                   <TrendingUp className="h-5 w-5 sm:h-8 sm:w-8" />
                 </div>
                 <span className="font-bold text-xs sm:text-lg">Achat</span>
-                <span className="hidden sm:block text-xs sm:text-sm text-slate-400 mt-1">Nouvel investissement</span>
+                <span className="hidden sm:block text-xs sm:text-sm text-muted mt-1">Nouvel investissement</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setType("VENTE")}
-                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 ${
+                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 cursor-pointer ${
                   type === "VENTE"
-                    ? "border-rose-600 bg-rose-50/50 text-rose-950 shadow-sm"
-                    : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
+                    ? "border-rose-600 bg-rose-50/50 dark:bg-rose-950/30 text-rose-950 dark:text-rose-300"
+                    : "border-subtle hover:border-slate-300 dark:hover:border-slate-700 text-muted bg-surface-subtle"
                 }`}
               >
                 <div
                   className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl mb-1.5 sm:mb-4 ${
-                    type === "VENTE" ? "bg-rose-600 text-white" : "bg-slate-100 text-slate-600"
+                    type === "VENTE" ? "bg-rose-600 text-white" : "bg-surface text-main border border-subtle"
                   }`}
                 >
                   <TrendingDown className="h-5 w-5 sm:h-8 sm:w-8" />
                 </div>
                 <span className="font-bold text-xs sm:text-lg">Vente</span>
-                <span className="hidden sm:block text-xs sm:text-sm text-slate-400 mt-1">Cession de titres</span>
+                <span className="hidden sm:block text-xs sm:text-sm text-muted mt-1">Cession de titres</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setType("DIVIDENDE")}
-                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 ${
+                className={`flex flex-col items-center justify-center p-3 sm:p-8 rounded-2xl sm:rounded-3xl border-2 transition-all duration-150 cursor-pointer ${
                   type === "DIVIDENDE"
-                    ? "border-amber-600 bg-amber-50/50 text-amber-950 shadow-sm"
-                    : "border-slate-100 hover:border-slate-200 text-slate-600 bg-slate-50/30"
+                    ? "border-amber-600 bg-amber-50/50 dark:bg-amber-950/30 text-amber-950 dark:text-amber-300"
+                    : "border-subtle hover:border-slate-300 dark:hover:border-slate-700 text-muted bg-surface-subtle"
                 }`}
               >
                 <div
                   className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl mb-1.5 sm:mb-4 ${
-                    type === "DIVIDENDE" ? "bg-amber-600 text-white" : "bg-slate-100 text-slate-600"
+                    type === "DIVIDENDE" ? "bg-amber-600 text-white" : "bg-surface text-main border border-subtle"
                   }`}
                 >
                   <Coins className="h-5 w-5 sm:h-8 sm:w-8" />
                 </div>
                 <span className="font-bold text-xs sm:text-lg">Dividende</span>
-                <span className="hidden sm:block text-xs sm:text-sm text-slate-400 mt-1">Revenu d'actif</span>
+                <span className="hidden sm:block text-xs sm:text-sm text-muted mt-1">Revenu d'actif</span>
               </button>
             </div>
           </div>

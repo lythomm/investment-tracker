@@ -141,20 +141,20 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
   const renderSortIcon = (col: SortColumn) => {
     if (sortColumn !== col) {
-      return <ArrowUpDown className="h-3.5 w-3.5 text-slate-400 opacity-60 group-hover:opacity-100" />;
+      return <ArrowUpDown className="h-3.5 w-3.5 text-muted opacity-60 group-hover:opacity-100" />;
     }
     return sortDirection === "asc" ? (
-      <ArrowUp className="h-3.5 w-3.5 text-slate-900" />
+      <ArrowUp className="h-3.5 w-3.5 text-main" />
     ) : (
-      <ArrowDown className="h-3.5 w-3.5 text-slate-900" />
+      <ArrowDown className="h-3.5 w-3.5 text-main" />
     );
   };
 
   if (transactions.length === 0) {
     return (
-      <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center bg-white">
-        <History className="h-12 w-12 text-slate-300 mb-3" />
-        <p className="text-lg font-medium text-slate-600 font-serif-display">
+      <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center">
+        <History className="h-12 w-12 text-muted mb-3" />
+        <p className="text-lg font-medium text-muted font-serif-display">
           Aucune transaction enregistrée dans le journal.
         </p>
         <Link href="/transactions/new" className="mt-4">
@@ -167,18 +167,18 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
   }
 
   return (
-    <div className="card-light rounded-2xl p-6 sm:p-8 bg-white space-y-6">
+    <div className="card-light rounded-2xl p-6 sm:p-8 space-y-6">
       {/* Header & Title */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-normal text-slate-900 font-serif-display">
+          <h2 className="text-3xl font-normal text-main font-serif-display">
             Journal d'Historique
           </h2>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-muted mt-1">
             {filteredAndSortedTransactions.length} transaction
             {filteredAndSortedTransactions.length > 1 ? "s" : ""} affichée
             {filteredAndSortedTransactions.length > 1 ? "s" : ""} • Total :{" "}
-            <strong className="text-slate-900 font-bold">
+            <strong className="text-main font-bold">
               {totalVolume.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
             </strong>
           </p>
@@ -192,10 +192,10 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
       </div>
 
       {/* Dynamic Filters Bar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t border-slate-100">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t border-subtle">
         {/* Search Bar */}
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted" />
           <input
             type="text"
             placeholder="Rechercher par actif, nom ou compte..."
@@ -204,7 +204,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
               setSearchQuery(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full rounded-2xl bg-slate-100 pl-10 pr-9 py-2 text-xs font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+            className="w-full rounded-2xl bg-surface-subtle border border-subtle pl-10 pr-9 py-2 text-xs font-medium text-main focus:outline-none focus:ring-2 focus:ring-slate-900/10"
           />
           {searchQuery && (
             <button
@@ -212,7 +212,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                 setSearchQuery("");
                 setCurrentPage(1);
               }}
-              className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
+              className="absolute right-3 top-2.5 text-muted hover:text-main"
             >
               <X className="h-4 w-4" />
             </button>
@@ -230,8 +230,8 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
               }}
               className={`rounded-2xl px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
                 typeFilter === t
-                  ? "bg-slate-900 text-white shadow-xs"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
+                  : "bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800"
               }`}
             >
               {t === "ALL" ? "Toutes" : t}
@@ -242,15 +242,15 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
       {/* Table Section */}
       {filteredAndSortedTransactions.length === 0 ? (
-        <div className="py-12 text-center text-slate-500 rounded-2xl bg-slate-50 border border-dashed border-slate-200">
-          <Filter className="h-8 w-8 text-slate-400 mx-auto mb-2" />
-          <p className="font-semibold text-sm text-slate-700">Aucun résultat ne correspond aux filtres</p>
+        <div className="py-12 text-center text-muted rounded-2xl bg-surface-subtle border border-dashed border-subtle">
+          <Filter className="h-8 w-8 text-muted mx-auto mb-2" />
+          <p className="font-semibold text-sm text-main">Aucun résultat ne correspond aux filtres</p>
           <button
             onClick={() => {
               setSearchQuery("");
               setTypeFilter("ALL");
             }}
-            className="mt-3 text-xs text-slate-900 underline font-bold cursor-pointer"
+            className="mt-3 text-xs text-main underline font-bold cursor-pointer"
           >
             Réinitialiser les filtres
           </button>
@@ -259,10 +259,10 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead>
-              <tr className="text-slate-500 font-semibold text-xs uppercase tracking-wide border-b border-slate-100">
+              <tr className="text-muted font-semibold text-xs uppercase tracking-wide border-b border-subtle">
                 <th
                   onClick={() => handleSort("date")}
-                  className="py-3 px-4 sm:px-6 cursor-pointer select-none group hover:text-slate-900"
+                  className="py-3 px-4 sm:px-6 cursor-pointer select-none group hover:text-main"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Date</span>
@@ -272,7 +272,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                 <th
                   onClick={() => handleSort("ticker")}
-                  className="py-3 px-4 sm:px-6 cursor-pointer select-none group hover:text-slate-900"
+                  className="py-3 px-4 sm:px-6 cursor-pointer select-none group hover:text-main"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Actif / Nom</span>
@@ -284,7 +284,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                 <th
                   onClick={() => handleSort("type")}
-                  className="py-3 px-4 sm:px-6 cursor-pointer select-none group hover:text-slate-900"
+                  className="py-3 px-4 sm:px-6 cursor-pointer select-none group hover:text-main"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Type</span>
@@ -294,7 +294,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                 <th
                   onClick={() => handleSort("quantity")}
-                  className="py-3 px-4 sm:px-6 text-right cursor-pointer select-none group hover:text-slate-900"
+                  className="py-3 px-4 sm:px-6 text-right cursor-pointer select-none group hover:text-main"
                 >
                   <div className="flex items-center justify-end gap-1.5">
                     <span>Quantité</span>
@@ -304,7 +304,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                 <th
                   onClick={() => handleSort("unitPrice")}
-                  className="py-3 px-4 sm:px-6 text-right cursor-pointer select-none group hover:text-slate-900"
+                  className="py-3 px-4 sm:px-6 text-right cursor-pointer select-none group hover:text-main"
                 >
                   <div className="flex items-center justify-end gap-1.5">
                     <span>Prix Unit.</span>
@@ -316,7 +316,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                 <th
                   onClick={() => handleSort("total")}
-                  className="py-3 px-4 sm:px-6 text-right cursor-pointer select-none group hover:text-slate-900"
+                  className="py-3 px-4 sm:px-6 text-right cursor-pointer select-none group hover:text-main"
                 >
                   <div className="flex items-center justify-end gap-1.5">
                     <span>Total</span>
@@ -337,25 +337,25 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                 return (
                   <tr
                     key={tx._id}
-                    className="hover:bg-slate-50/80 transition border-b border-slate-50 last:border-0"
+                    className="hover:bg-surface-hover transition border-b border-subtle last:border-0"
                   >
-                    <td className="py-4 px-4 sm:px-6 font-medium text-sm text-slate-700">
+                    <td className="py-4 px-4 sm:px-6 font-medium text-sm text-muted">
                       {prettyDisplayDate(tx.date)}
                     </td>
 
-                    <td className="py-4 px-4 sm:px-6 font-medium text-slate-900">
-                      <div className="font-bold text-base text-slate-900 uppercase">
+                    <td className="py-4 px-4 sm:px-6 font-medium text-main">
+                      <div className="font-bold text-base text-main uppercase">
                         {tx.asset?.ticker || "—"}
                       </div>
                       {tx.asset?.name && (
-                        <div className="text-xs text-slate-500" title={fullName}>
+                        <div className="text-xs text-muted" title={fullName}>
                           <span className="sm:hidden">{mobileName}</span>
                           <span className="hidden sm:inline">{fullName}</span>
                         </div>
                       )}
                     </td>
 
-                    <td className="py-4 px-4 sm:px-6 text-slate-700 font-medium">
+                    <td className="py-4 px-4 sm:px-6 text-main font-medium">
                       {tx.account?.name || "Compte"}
                     </td>
 
@@ -363,36 +363,36 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                       <span
                         className={`rounded-2xl px-3 py-1 text-xs font-semibold ${
                           tx.type === "ACHAT"
-                            ? "bg-emerald-100 text-emerald-800"
+                            ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
                             : tx.type === "VENTE"
-                            ? "bg-rose-100 text-rose-800"
-                            : "bg-amber-100 text-amber-800"
+                            ? "bg-rose-100 text-rose-800 dark:bg-rose-950/50 dark:text-rose-300"
+                            : "bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300"
                         }`}
                       >
                         {tx.type}
                       </span>
                     </td>
 
-                    <td className="py-4 px-4 sm:px-6 text-right font-medium text-slate-900">
+                    <td className="py-4 px-4 sm:px-6 text-right font-medium text-main">
                       {tx.quantity}
                     </td>
 
-                    <td className="py-4 px-4 sm:px-6 text-right text-slate-700">
+                    <td className="py-4 px-4 sm:px-6 text-right text-muted">
                       {tx.unitPrice.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
                     </td>
 
-                    <td className="py-4 px-4 sm:px-6 text-right text-slate-500">
+                    <td className="py-4 px-4 sm:px-6 text-right text-muted">
                       {tx.fees.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
                     </td>
 
-                    <td className="py-4 px-4 sm:px-6 text-right font-bold text-base text-slate-900">
+                    <td className="py-4 px-4 sm:px-6 text-right font-bold text-base text-main">
                       {total.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
                     </td>
 
                     <td className="py-4 px-4 sm:px-6 text-right">
                       <button
                         onClick={() => setDeleteId(tx._id)}
-                        className="rounded-2xl p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-600 transition cursor-pointer"
+                        className="rounded-2xl p-2 text-muted hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-rose-600 dark:hover:text-rose-400 transition cursor-pointer"
                         title="Supprimer"
                       >
                         <Trash2 className="h-4.5 w-4.5" />
@@ -408,33 +408,33 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-100 text-xs text-slate-500 font-medium">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-subtle text-xs text-muted font-medium">
           <div>
-            Affichage de <span className="font-bold text-slate-900">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> à{" "}
-            <span className="font-bold text-slate-900">
+            Affichage de <span className="font-bold text-main">{(currentPage - 1) * ITEMS_PER_PAGE + 1}</span> à{" "}
+            <span className="font-bold text-main">
               {Math.min(currentPage * ITEMS_PER_PAGE, filteredAndSortedTransactions.length)}
             </span>{" "}
-            sur <span className="font-bold text-slate-900">{filteredAndSortedTransactions.length}</span> transactions
+            sur <span className="font-bold text-main">{filteredAndSortedTransactions.length}</span> transactions
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="flex items-center gap-1 px-3.5 py-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="flex items-center gap-1 px-3.5 py-2 rounded-2xl bg-surface-subtle border border-subtle hover:bg-slate-200 dark:hover:bg-slate-800 text-main font-bold transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               <ChevronLeft className="h-4 w-4" />
               <span>Précédent</span>
             </button>
 
-            <span className="px-3 py-1 font-bold text-slate-900">
+            <span className="px-3 py-1 font-bold text-main">
               Page {currentPage} sur {totalPages}
             </span>
 
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="flex items-center gap-1 px-3.5 py-2 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="flex items-center gap-1 px-3.5 py-2 rounded-2xl bg-surface-subtle border border-subtle hover:bg-slate-200 dark:hover:bg-slate-800 text-main font-bold transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               <span>Suivant</span>
               <ChevronRight className="h-4 w-4" />

@@ -28,11 +28,11 @@ export function ConfirmModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} maxWidth="sm">
       <div className="flex flex-col items-center text-center p-2">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-rose-600 mb-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 mb-4">
           <AlertTriangle className="h-6 w-6" />
         </div>
-        <h3 className="text-xl font-bold text-slate-900 font-serif-display mb-2">{title}</h3>
-        <p className="text-sm text-slate-500 mb-6">{message}</p>
+        <h3 className="text-xl font-bold text-main font-serif-display mb-2">{title}</h3>
+        <p className="text-sm text-muted mb-6">{message}</p>
         <div className="flex items-center justify-end gap-3 w-full">
           <Button variant="secondary" size="md" onClick={onClose} className="w-full">
             {cancelText}

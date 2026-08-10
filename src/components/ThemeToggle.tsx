@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Sun, Moon, Monitor } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -18,22 +18,24 @@ export function ThemeToggle() {
     );
   }
 
-  const cycleTheme = () => {
-    if (theme === "light") setTheme("dark");
-    else if (theme === "dark") setTheme("system");
-    else setTheme("light");
+  const isDark = theme === "dark";
+
+  const toggleTheme = () => {
+    setTheme(isDark ? "light" : "dark");
   };
 
   return (
     <button
-      onClick={cycleTheme}
+      onClick={toggleTheme}
       className="p-2.5 rounded-2xl border border-subtle bg-surface text-main hover:bg-surface-hover transition-colors duration-150 flex items-center justify-center select-none cursor-pointer"
-      title={`Thème actuel : ${theme === "light" ? "Clair" : theme === "dark" ? "Sombre" : "Système"} (Cliquez pour changer)`}
-      aria-label="Changer le thème"
+      title={`Thème : ${isDark ? "Sombre" : "Clair"} (Cliquez pour passer au mode ${isDark ? "Clair" : "Sombre"})`}
+      aria-label="Basculer le mode sombre"
     >
-      {theme === "light" && <Sun className="h-4 w-4 text-amber-500" />}
-      {theme === "dark" && <Moon className="h-4 w-4 text-indigo-400" />}
-      {theme === "system" && <Monitor className="h-4 w-4 text-slate-400" />}
+      {isDark ? (
+        <Moon className="h-4 w-4 text-indigo-400" />
+      ) : (
+        <Sun className="h-4 w-4 text-amber-500" />
+      )}
     </button>
   );
 }

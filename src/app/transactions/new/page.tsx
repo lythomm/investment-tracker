@@ -94,10 +94,10 @@ function AirbnbCalendar({ value, onChange }: { value: string; onChange: (val: st
         <button
           type="button"
           onClick={() => setShortcut("today")}
-          className={`px-3.5 py-2 rounded-2xl text-xs font-semibold transition ${
+          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition cursor-pointer ${
             value === todayStr
-              ? "bg-slate-900 text-white shadow-xs"
-              : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+              ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-xs"
+              : "bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800"
           }`}
         >
           Aujourd'hui
@@ -105,21 +105,21 @@ function AirbnbCalendar({ value, onChange }: { value: string; onChange: (val: st
         <button
           type="button"
           onClick={() => setShortcut("yesterday")}
-          className="px-3.5 py-2 rounded-2xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition"
+          className="px-3.5 py-2 rounded-2xl text-xs font-bold bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer"
         >
           Hier
         </button>
         <button
           type="button"
           onClick={() => setShortcut("startOfMonth")}
-          className="px-3.5 py-2 rounded-2xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition"
+          className="px-3.5 py-2 rounded-2xl text-xs font-bold bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer"
         >
           1er du mois
         </button>
         <button
           type="button"
           onClick={() => setShortcut("endOfPrevMonth")}
-          className="px-3.5 py-2 rounded-2xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition"
+          className="px-3.5 py-2 rounded-2xl text-xs font-bold bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer"
         >
           Fin du mois dernier
         </button>
@@ -130,24 +130,24 @@ function AirbnbCalendar({ value, onChange }: { value: string; onChange: (val: st
         <button
           type="button"
           onClick={prevMonth}
-          className="p-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer"
+          className="p-2.5 rounded-2xl bg-surface-subtle border border-subtle hover:bg-slate-200 dark:hover:bg-slate-800 text-main transition cursor-pointer"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
-        <span className="font-bold text-slate-900 text-lg sm:text-xl font-serif-display">
+        <span className="font-bold text-main text-lg sm:text-xl font-serif-display">
           {formattedMonthName}
         </span>
         <button
           type="button"
           onClick={nextMonth}
-          className="p-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer"
+          className="p-2.5 rounded-2xl bg-surface-subtle border border-subtle hover:bg-slate-200 dark:hover:bg-slate-800 text-main transition cursor-pointer"
         >
           <ChevronRight className="h-5 w-5" />
         </button>
       </div>
 
       {/* Weekday headers */}
-      <div className="grid grid-cols-7 text-center text-xs font-bold text-slate-400 tracking-wider py-1">
+      <div className="grid grid-cols-7 text-center text-xs font-bold text-muted uppercase tracking-wider py-1">
         <span>Lun</span>
         <span>Mar</span>
         <span>Mer</span>
@@ -175,10 +175,10 @@ function AirbnbCalendar({ value, onChange }: { value: string; onChange: (val: st
               onClick={() => handleSelectDay(day)}
               className={`h-11 sm:h-12 w-full flex items-center justify-center rounded-2xl text-sm sm:text-base font-bold transition cursor-pointer ${
                 isSelected
-                  ? "bg-slate-900 text-white shadow-md scale-102"
+                  ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-md scale-102"
                   : isToday
-                  ? "border-2 border-slate-900 text-slate-900 hover:bg-slate-200 bg-slate-100"
-                  : "text-slate-700 hover:bg-slate-200 bg-slate-100"
+                  ? "border-2 border-slate-900 dark:border-slate-100 text-main bg-surface-subtle"
+                  : "text-main hover:bg-slate-200 dark:hover:bg-slate-800 bg-surface-subtle border border-subtle"
               }`}
             >
               {day}
@@ -188,9 +188,9 @@ function AirbnbCalendar({ value, onChange }: { value: string; onChange: (val: st
       </div>
 
       {/* Selected date confirmation display */}
-      <div className="text-center pt-2 border-t border-slate-200/80">
-        <span className="text-xs text-slate-500 font-medium">Date sélectionnée :</span>
-        <div className="text-sm font-bold text-slate-900 capitalize mt-0.5">
+      <div className="text-center pt-3 border-t border-subtle">
+        <span className="text-xs text-muted font-medium">Date sélectionnée :</span>
+        <div className="text-sm font-bold text-main capitalize mt-0.5">
           {formattedSelectedDate}
         </div>
       </div>
@@ -273,7 +273,7 @@ export default function NewTransactionPage() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Local assets matching search (restricted to assets used in user's actual transactions)
+  // Local assets matching search
   const filteredLocalAssets = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const queryUpper = searchQuery.trim().toUpperCase();
@@ -448,7 +448,7 @@ export default function NewTransactionPage() {
           {stepTitles.map((title, idx) => (
             <span
               key={title}
-              className={idx + 1 <= currentDisplayStep ? "text-main font-bold" : ""}
+              className={idx + 1 <= currentDisplayStep ? "text-main font-bold" : "text-muted"}
             >
               {title}
             </span>
@@ -551,25 +551,25 @@ export default function NewTransactionPage() {
         {step === 2 && (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-slate-900">
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-main">
                 Sur quel compte d'investissement ?
               </h2>
-              <p className="text-sm sm:text-base text-slate-500 mt-2">
+              <p className="text-sm sm:text-base text-muted mt-2">
                 Sélectionnez l'enveloppe fiscale à laquelle rattachée cette transaction.
               </p>
             </div>
 
             {accounts.length === 0 ? (
-              <div className="rounded-3xl bg-amber-50 p-6 text-sm text-amber-900 space-y-4">
+              <div className="rounded-3xl bg-amber-50 dark:bg-amber-950/40 p-6 text-sm text-amber-900 dark:text-amber-200 border border-amber-500/20 space-y-4">
                 <div className="flex items-center gap-2.5 font-bold text-base">
-                  <AlertCircle className="h-5 w-5 shrink-0 text-amber-600" />
+                  <AlertCircle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" />
                   <span>Aucun compte trouvé</span>
                 </div>
-                <p className="text-slate-600">Vous n'avez pas encore créé de compte d'investissement (PEA ou CTO).</p>
+                <p className="text-muted">Vous n'avez pas encore créé de compte d'investissement (PEA ou CTO).</p>
                 <button
                   type="button"
                   onClick={() => router.push("/")}
-                  className="inline-flex items-center gap-2 rounded-2xl bg-amber-600 px-5 py-3 text-sm font-bold text-white hover:bg-amber-700 transition"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-amber-600 text-white hover:bg-amber-700 px-5 py-3 text-sm font-bold transition cursor-pointer"
                 >
                   <PlusCircle className="h-5 w-5" />
                   Créer mon premier compte
@@ -577,41 +577,44 @@ export default function NewTransactionPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {accounts.map((acc: any) => (
-                  <button
-                    key={acc._id}
-                    type="button"
-                    onClick={() => setAccountId(acc._id)}
-                    className={`flex items-center justify-between p-6 rounded-3xl border-2 text-left transition-all duration-150 ${
-                      accountId === acc._id
-                        ? "border-slate-900 bg-slate-900 text-white shadow-md"
-                        : "border-slate-100 hover:border-slate-200 text-slate-800 bg-slate-50/50"
-                    }`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div
-                        className={`p-3.5 rounded-2xl ${
-                          accountId === acc._id
-                            ? "bg-slate-800 text-white"
-                            : "bg-white text-slate-700 shadow-sm"
-                        }`}
-                      >
-                        <Building2 className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <div className="font-bold text-lg">{acc.name}</div>
+                {accounts.map((acc: any) => {
+                  const isSelected = accountId === acc._id;
+                  return (
+                    <button
+                      key={acc._id}
+                      type="button"
+                      onClick={() => setAccountId(acc._id)}
+                      className={`flex items-center justify-between p-6 rounded-3xl border-2 text-left transition-all duration-150 cursor-pointer ${
+                        isSelected
+                          ? "border-slate-900 bg-slate-900 text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900 shadow-md"
+                          : "border-subtle bg-surface-subtle hover:border-slate-300 dark:hover:border-slate-700 text-main"
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
                         <div
-                          className={`text-sm mt-0.5 ${
-                            accountId === acc._id ? "text-slate-300" : "text-slate-500"
+                          className={`p-3.5 rounded-2xl ${
+                            isSelected
+                              ? "bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900"
+                              : "bg-surface text-main border border-subtle"
                           }`}
                         >
-                          Enveloppe : {acc.type}
+                          <Building2 className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <div className="font-bold text-lg">{acc.name}</div>
+                          <div
+                            className={`text-sm mt-0.5 ${
+                              isSelected ? "text-slate-300 dark:text-slate-600" : "text-muted"
+                            }`}
+                          >
+                            Enveloppe : {acc.type}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    {accountId === acc._id && <CheckCircle2 className="h-6 w-6 text-emerald-400" />}
-                  </button>
-                ))}
+                      {isSelected && <CheckCircle2 className="h-6 w-6 text-emerald-400 dark:text-emerald-600" />}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -621,21 +624,21 @@ export default function NewTransactionPage() {
         {step === 3 && (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-slate-900">
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-main">
                 Quel est l'actif concerné ?
               </h2>
-              <p className="text-sm sm:text-base text-slate-500 mt-2">
+              <p className="text-sm sm:text-base text-muted mt-2">
                 Tapez le Ticker ou le nom de l'actif pour utiliser l'autocomplétion Yahoo Finance.
               </p>
             </div>
 
             {/* Live Search Input */}
             <div className="relative">
-              <label className="block text-sm font-bold text-slate-800 mb-2">
+              <label className="block text-sm font-bold text-main mb-2">
                 Rechercher par Ticker / ISIN / Nom
               </label>
               <div className="relative">
-                <Search className="absolute left-4 top-4 h-5 w-5 text-slate-400" />
+                <Search className="absolute left-4 top-4 h-5 w-5 text-muted" />
                 <input
                   type="text"
                   placeholder="Ex: CW8, AAPL, Amundi MSCI World..."
@@ -645,19 +648,19 @@ export default function NewTransactionPage() {
                     setShowDropdown(true);
                   }}
                   onFocus={() => setShowDropdown(true)}
-                  className="w-full rounded-2xl bg-slate-100 pl-12 pr-12 py-3.5 text-base font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+                  className="w-full rounded-2xl bg-surface-subtle border border-subtle pl-12 pr-12 py-3.5 text-base font-medium text-main focus:outline-none focus:ring-2 focus:ring-slate-900/10"
                 />
                 {isSearching && (
-                  <Loader2 className="absolute right-4 top-4 h-5 w-5 animate-spin text-slate-400" />
+                  <Loader2 className="absolute right-4 top-4 h-5 w-5 animate-spin text-muted" />
                 )}
               </div>
 
               {/* Search Autocomplete Dropdown */}
               {showDropdown && searchQuery.trim().length > 0 && (
-                <div className="absolute z-20 mt-2 w-full rounded-3xl bg-white border border-slate-100 shadow-2xl max-h-72 overflow-y-auto p-3 space-y-1.5">
+                <div className="absolute z-20 mt-2 w-full rounded-3xl card-light border border-subtle shadow-2xl max-h-72 overflow-y-auto p-3 space-y-1.5">
                   {/* Local assets */}
                   {filteredLocalAssets.length > 0 && (
-                    <div className="px-3 py-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    <div className="px-3 py-1.5 text-xs font-bold text-muted uppercase tracking-wider">
                       Vos actifs en portefeuille
                     </div>
                   )}
@@ -673,13 +676,13 @@ export default function NewTransactionPage() {
                           currentPrice: asset.currentPrice,
                         })
                       }
-                      className="w-full text-left p-3.5 rounded-2xl hover:bg-slate-50 flex items-center justify-between text-sm transition"
+                      className="w-full text-left p-3.5 rounded-2xl hover:bg-surface-hover flex items-center justify-between text-sm transition cursor-pointer"
                     >
                       <div>
-                        <span className="font-bold text-slate-900">{asset.ticker}</span>
-                        <span className="text-slate-600 ml-3">{asset.name}</span>
+                        <span className="font-bold text-main">{asset.ticker}</span>
+                        <span className="text-muted ml-3">{asset.name}</span>
                       </div>
-                      <span className="text-xs font-bold bg-slate-100 px-3 py-1 rounded-xl text-slate-600">
+                      <span className="text-xs font-bold bg-surface-subtle border border-subtle px-3 py-1 rounded-xl text-muted">
                         {asset.type}
                       </span>
                     </button>
@@ -687,7 +690,7 @@ export default function NewTransactionPage() {
 
                   {/* API results */}
                   {searchResults.length > 0 && (
-                    <div className="px-3 py-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">
+                    <div className="px-3 py-1.5 text-xs font-bold text-muted uppercase tracking-wider mt-2">
                       Suggestions
                     </div>
                   )}
@@ -696,19 +699,19 @@ export default function NewTransactionPage() {
                       key={`${res.ticker}-${idx}`}
                       type="button"
                       onClick={() => selectSearchResult(res)}
-                      className="w-full text-left p-3.5 rounded-2xl hover:bg-slate-50 flex items-center justify-between text-sm transition"
+                      className="w-full text-left p-3.5 rounded-2xl hover:bg-surface-hover flex items-center justify-between text-sm transition cursor-pointer"
                     >
                       <div className="truncate pr-3">
-                        <span className="font-bold text-slate-900">{res.ticker}</span>
-                        <span className="text-slate-600 ml-3 truncate">{res.name}</span>
+                        <span className="font-bold text-main">{res.ticker}</span>
+                        <span className="text-muted ml-3 truncate">{res.name}</span>
                       </div>
                       <div className="flex items-center gap-3 shrink-0">
                         {res.currentPrice ? (
-                          <span className="font-bold text-slate-800">
+                          <span className="font-bold text-main">
                             {res.currentPrice.toFixed(2)} €
                           </span>
                         ) : null}
-                        <span className="text-xs font-bold bg-slate-100 px-3 py-1 rounded-xl text-slate-600">
+                        <span className="text-xs font-bold bg-surface-subtle border border-subtle px-3 py-1 rounded-xl text-muted">
                           {res.type}
                         </span>
                       </div>
@@ -718,7 +721,7 @@ export default function NewTransactionPage() {
                   {!isSearching &&
                     filteredLocalAssets.length === 0 &&
                     searchResults.length === 0 && (
-                      <div className="p-4 text-center text-sm text-slate-400">
+                      <div className="p-4 text-center text-sm text-muted">
                         Aucun résultat trouvé pour "{searchQuery}". Vous pouvez remplir les champs ci-dessous.
                       </div>
                     )}
@@ -729,7 +732,7 @@ export default function NewTransactionPage() {
             {/* Ticker & Asset Details Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-bold text-slate-800 mb-2">
+                <label className="block text-sm font-bold text-main mb-2">
                   Ticker (symbole boursier)
                 </label>
                 <input
@@ -737,24 +740,24 @@ export default function NewTransactionPage() {
                   placeholder="CW8"
                   value={ticker}
                   onChange={(e) => setTicker(e.target.value.toUpperCase())}
-                  className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-bold uppercase text-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-bold uppercase text-main focus:outline-none"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-slate-800 mb-2">
+                <label className="block text-sm font-bold text-main mb-2">
                   Type d'actif
                 </label>
-                <div className="grid grid-cols-2 gap-1.5 rounded-2xl bg-slate-100 p-1.5">
+                <div className="grid grid-cols-2 gap-1.5 rounded-2xl bg-surface-subtle border border-subtle p-1.5">
                   {(["ETF", "Action"] as const).map((t) => (
                     <button
                       key={t}
                       type="button"
                       onClick={() => setAssetType(t)}
-                      className={`rounded-xl py-2.5 text-sm font-bold transition ${
+                      className={`rounded-xl py-2.5 text-sm font-bold transition cursor-pointer ${
                         assetType === t
-                          ? "bg-slate-900 text-white shadow-xs"
-                          : "text-slate-600 hover:text-slate-900"
+                          ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-xs"
+                          : "text-muted hover:text-main"
                       }`}
                     >
                       {t}
@@ -765,7 +768,7 @@ export default function NewTransactionPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-slate-800 mb-2">
+              <label className="block text-sm font-bold text-main mb-2">
                 Nom complet de l'actif
               </label>
               <input
@@ -773,7 +776,7 @@ export default function NewTransactionPage() {
                 placeholder="Ex: Amundi MSCI World UCITS ETF"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-medium text-slate-900 focus:outline-none"
+                className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-medium text-main focus:outline-none"
                 required
               />
             </div>
@@ -784,23 +787,23 @@ export default function NewTransactionPage() {
         {step === 4 && (
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-slate-900">
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-main">
                 Montants financiers
               </h2>
-              <p className="text-sm sm:text-base text-slate-500 mt-2">
+              <p className="text-sm sm:text-base text-muted mt-2">
                 Saisissez la quantité de titres, le prix unitaire d'exécution et les frais de courtage.
               </p>
             </div>
 
             {/* Summary Banner Pill */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between rounded-3xl bg-slate-100 p-6 gap-4 text-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between rounded-3xl bg-surface-subtle border border-subtle p-6 gap-4 text-sm">
               <div>
-                <div className="text-slate-400 font-medium text-xs uppercase tracking-wider">Actif sélectionné</div>
-                <div className="font-bold text-base text-slate-900 mt-0.5">{ticker} — {name}</div>
+                <div className="text-muted font-medium text-xs uppercase tracking-wider">Actif sélectionné</div>
+                <div className="font-bold text-base text-main mt-0.5">{ticker} — {name}</div>
               </div>
               <div className="sm:text-right">
-                <div className="text-slate-400 font-medium text-xs uppercase tracking-wider">Opération & Compte</div>
-                <div className="font-bold text-base text-slate-800 mt-0.5">
+                <div className="text-muted font-medium text-xs uppercase tracking-wider">Opération & Compte</div>
+                <div className="font-bold text-base text-main mt-0.5">
                   {type} • {accounts.find((a: any) => a._id === accountId)?.name || "Compte"}
                 </div>
               </div>
@@ -808,7 +811,7 @@ export default function NewTransactionPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
               <div className="col-span-1 sm:col-span-1">
-                <label className="block text-sm font-bold text-slate-800 mb-2">
+                <label className="block text-sm font-bold text-main mb-2">
                   Quantité
                 </label>
                 <input
@@ -817,14 +820,14 @@ export default function NewTransactionPage() {
                   placeholder="10"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
-                  className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-medium text-slate-900 focus:outline-none"
+                  className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-medium text-main focus:outline-none"
                   required
                 />
               </div>
 
               <div className="col-span-1 sm:col-span-2 grid grid-cols-2 gap-3 sm:gap-6">
                 <div>
-                  <label className="block text-sm font-bold text-slate-800 mb-2">
+                  <label className="block text-sm font-bold text-main mb-2">
                     Prix unitaire (€)
                   </label>
                   <input
@@ -833,12 +836,12 @@ export default function NewTransactionPage() {
                     placeholder="500"
                     value={unitPrice}
                     onChange={(e) => setUnitPrice(e.target.value)}
-                    className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-medium text-slate-900 focus:outline-none"
+                    className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-medium text-main focus:outline-none"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-slate-800 mb-2">
+                  <label className="block text-sm font-bold text-main mb-2">
                     Frais (€)
                   </label>
                   <input
@@ -847,7 +850,7 @@ export default function NewTransactionPage() {
                     placeholder="0"
                     value={fees}
                     onChange={(e) => setFees(e.target.value)}
-                    className="w-full rounded-2xl bg-slate-100 px-4 py-3.5 text-base font-medium text-slate-900 focus:outline-none"
+                    className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-medium text-main focus:outline-none"
                   />
                 </div>
               </div>
@@ -855,7 +858,7 @@ export default function NewTransactionPage() {
 
             {/* Total Calculation Display */}
             {quantity && unitPrice && (
-              <div className="rounded-3xl bg-emerald-50 p-6 flex items-center justify-between text-emerald-950">
+              <div className="rounded-3xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/30 p-6 flex items-center justify-between text-emerald-950 dark:text-emerald-200">
                 <span className="font-bold text-base">Total estimé de l'opération :</span>
                 <span className="font-extrabold text-xl sm:text-2xl">
                   {(
@@ -873,10 +876,10 @@ export default function NewTransactionPage() {
         {step === 5 && (
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-slate-900">
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif-display text-main">
                 Date de l'opération
               </h2>
-              <p className="text-sm sm:text-base text-slate-500 mt-2">
+              <p className="text-sm sm:text-base text-muted mt-2">
                 Sélectionnez le jour exact de votre transaction sur le calendrier interactif.
               </p>
             </div>
@@ -887,12 +890,12 @@ export default function NewTransactionPage() {
         )}
 
         {/* Action Navigation Buttons */}
-        <div className="flex items-center justify-between pt-6 border-t border-slate-100">
+        <div className="flex items-center justify-between pt-6 border-t border-subtle">
           {step > 1 ? (
             <button
               type="button"
               onClick={handleBack}
-              className="flex items-center gap-2.5 rounded-2xl px-6 py-3.5 text-sm font-bold text-slate-700 hover:bg-slate-100 transition"
+              className="flex items-center gap-2.5 rounded-2xl bg-surface-subtle border border-subtle px-6 py-3.5 text-sm font-bold text-main hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer"
             >
               <ArrowLeft className="h-5 w-5" />
               <span>Précédent</span>
@@ -909,7 +912,7 @@ export default function NewTransactionPage() {
                 (step === 2 && !canGoNextFromStep2) ||
                 (step === 3 && !canGoNextFromStep3)
               }
-              className="flex items-center gap-2.5 rounded-2xl bg-slate-900 px-8 py-3.5 text-sm font-bold text-white hover:bg-slate-800 transition disabled:opacity-50 cursor-pointer"
+              className="flex items-center gap-2.5 rounded-2xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-8 py-3.5 text-sm font-bold hover:bg-slate-800 dark:hover:bg-white transition disabled:opacity-50 cursor-pointer"
             >
               <span>Suivant</span>
               <ArrowRight className="h-5 w-5" />
@@ -919,7 +922,7 @@ export default function NewTransactionPage() {
               type="button"
               onClick={handleSubmit}
               disabled={loading}
-              className="flex items-center gap-2.5 rounded-2xl bg-emerald-600 px-8 py-3.5 text-sm font-bold text-white hover:bg-emerald-700 transition disabled:opacity-50 cursor-pointer"
+              className="flex items-center gap-2.5 rounded-2xl bg-emerald-600 text-white hover:bg-emerald-700 px-8 py-3.5 text-sm font-bold transition disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <Loader2 className="h-5 w-5 animate-spin" />

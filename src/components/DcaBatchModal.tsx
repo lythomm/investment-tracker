@@ -154,21 +154,21 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
 
         {/* Date Selection */}
         <div className="max-w-xs">
-          <label className="mb-1 block text-xs font-semibold text-slate-700">
+          <label className="mb-1 block text-xs font-semibold text-muted">
             Date du DCA
           </label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full rounded-2xl bg-slate-100 px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none"
+            className="input input-sm cursor-pointer"
             required
           />
         </div>
 
         {/* Batch Rows */}
         <div className="space-y-3">
-          <div className="hidden grid-cols-12 gap-2 text-xs font-semibold text-slate-500 sm:grid px-2">
+          <div className="hidden grid-cols-12 gap-2 text-xs font-semibold text-muted sm:grid px-2">
             <span className="col-span-2">Ticker (ex: CW8)</span>
             <span className="col-span-3">Nom (ex: MSCI World)</span>
             <span className="col-span-2">Compte</span>
@@ -180,7 +180,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
           {rows.map((row) => (
             <div
               key={row.id}
-              className="grid grid-cols-1 gap-2 rounded-2xl bg-slate-100 p-3 sm:grid-cols-12 sm:items-center sm:p-2"
+              className="grid grid-cols-1 gap-2 rounded-2xl bg-surface-subtle p-3 sm:grid-cols-12 sm:items-center sm:p-2 border border-subtle"
             >
               <div className="sm:col-span-2">
                 <input
@@ -188,7 +188,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="CW8"
                   value={row.ticker}
                   onChange={(e) => handleUpdateRow(row.id, "ticker", e.target.value)}
-                  className="w-full rounded-2xl bg-white px-3 py-2 text-xs text-slate-900 uppercase focus:outline-none"
+                  className="input input-sm uppercase font-bold"
                   required
                 />
               </div>
@@ -199,7 +199,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="Amundi MSCI World"
                   value={row.name}
                   onChange={(e) => handleUpdateRow(row.id, "name", e.target.value)}
-                  className="w-full rounded-2xl bg-white px-3 py-2 text-xs text-slate-900 focus:outline-none"
+                  className="input input-sm"
                 />
               </div>
 
@@ -207,7 +207,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                 <select
                   value={row.accountId || accounts[0]?._id || ""}
                   onChange={(e) => handleUpdateRow(row.id, "accountId", e.target.value)}
-                  className="w-full rounded-2xl bg-white px-2.5 py-2 text-xs text-slate-900 focus:outline-none"
+                  className="input-select input-sm"
                   required
                 >
                   {accounts.map((acc) => (
@@ -225,7 +225,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="1"
                   value={row.quantity}
                   onChange={(e) => handleUpdateRow(row.id, "quantity", e.target.value)}
-                  className="w-full rounded-2xl bg-white px-3 py-2 text-xs text-slate-900 focus:outline-none"
+                  className="input input-sm"
                   required
                 />
               </div>
@@ -237,7 +237,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   placeholder="500.00"
                   value={row.unitPrice}
                   onChange={(e) => handleUpdateRow(row.id, "unitPrice", e.target.value)}
-                  className="w-full rounded-2xl bg-white px-3 py-2 text-xs text-slate-900 focus:outline-none"
+                  className="input input-sm"
                   required
                 />
               </div>

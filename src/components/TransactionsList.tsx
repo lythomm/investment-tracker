@@ -207,7 +207,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-2 border-t border-subtle">
         {/* Search Bar */}
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3.5 top-3 h-4 w-4 text-muted" />
+          <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-muted pointer-events-none z-10" />
           <input
             type="text"
             placeholder="Rechercher par actif, nom ou compte..."
@@ -216,7 +216,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
               setSearchQuery(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full rounded-2xl bg-surface-subtle border border-subtle pl-10 pr-9 py-2 text-xs font-medium text-main focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+            className="input input-sm !pl-10 !pr-9 font-medium"
           />
           {searchQuery && (
             <button
@@ -240,11 +240,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                 setTypeFilter(t);
                 setCurrentPage(1);
               }}
-              className={`rounded-2xl px-3.5 py-1.5 text-xs font-bold transition cursor-pointer ${
-                typeFilter === t
-                  ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900"
-                  : "bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800"
-              }`}
+              className={`pill ${typeFilter === t ? "pill-active" : "pill-inactive"}`}
             >
               {t === "ALL" ? "Toutes" : t}
             </button>
@@ -374,13 +370,13 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                     <td className="py-4 px-4 sm:px-6">
                       <span
-                        className={`rounded-2xl px-3 py-1 text-xs font-semibold ${
+                        className={
                           tx.type === "ACHAT"
-                            ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300"
+                            ? "badge-achat"
                             : tx.type === "VENTE"
-                            ? "bg-rose-100 text-rose-800 dark:bg-rose-950/50 dark:text-rose-300"
-                            : "bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-300"
-                        }`}
+                            ? "badge-vente"
+                            : "badge-dividende"
+                        }
                       >
                         {tx.type}
                       </span>

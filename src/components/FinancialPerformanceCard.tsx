@@ -94,7 +94,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
               <select
                 value={timeframe}
                 onChange={(e) => setTimeframe(e.target.value as any)}
-                className="appearance-none rounded-2xl bg-surface-subtle border border-subtle pl-3.5 pr-8 py-1.5 text-xs font-semibold text-main focus:outline-none cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800 transition"
+                className="input-select input-sm pl-3.5 pr-8 py-1.5 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-800 transition"
               >
                 <option value="1Y">1 An</option>
                 <option value="3Y">3 Ans</option>

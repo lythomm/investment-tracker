@@ -66,7 +66,7 @@ export function AddAccountModal({ isOpen, onClose }: AddAccountModalProps) {
             placeholder="ex: PEA Fortuneo, CTO Trade Republic"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-2xl bg-surface-subtle border border-subtle px-3.5 py-2.5 text-sm text-main focus:outline-none"
+            className="input"
             required
           />
         </div>

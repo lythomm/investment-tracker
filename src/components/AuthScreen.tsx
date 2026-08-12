@@ -96,13 +96,13 @@ export function AuthScreen() {
               Adresse email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+              <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-muted pointer-events-none z-10" />
               <input
                 type="email"
                 placeholder="votre@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-2xl bg-slate-100 pl-10 pr-4 py-3 text-sm text-slate-900 focus:outline-none"
+                className="input !pl-10 !pr-4"
                 required
               />
             </div>
@@ -113,13 +113,13 @@ export function AuthScreen() {
               Mot de passe
             </label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-3 h-4 w-4 text-slate-400" />
+              <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-muted pointer-events-none z-10" />
               <input
                 type="password"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-2xl bg-slate-100 pl-10 pr-4 py-3 text-sm text-slate-900 focus:outline-none"
+                className="input !pl-10 !pr-4"
                 required
               />
             </div>

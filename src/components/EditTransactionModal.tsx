@@ -237,7 +237,7 @@ export function EditTransactionModal({
                 <select
                   value={accountId}
                   onChange={(e) => setAccountId(e.target.value)}
-                  className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3 text-sm font-semibold text-main focus:outline-none appearance-none"
+                  className="input-select"
                 >
                   {accounts.map((acc: any) => (
                     <option key={acc._id} value={acc._id}>
@@ -256,7 +256,7 @@ export function EditTransactionModal({
               <select
                 value={assetId}
                 onChange={(e) => setAssetId(e.target.value)}
-                className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3 text-sm font-semibold text-main focus:outline-none appearance-none"
+                className="input-select"
               >
                 {assets.map((ast: any) => (
                   <option key={ast._id} value={ast._id}>
@@ -278,7 +278,7 @@ export function EditTransactionModal({
                 step="any"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3 text-sm font-semibold text-main focus:outline-none"
+                className="input"
                 required
               />
             </div>
@@ -292,7 +292,7 @@ export function EditTransactionModal({
                 step="any"
                 value={unitPrice}
                 onChange={(e) => setUnitPrice(e.target.value)}
-                className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3 text-sm font-semibold text-main focus:outline-none"
+                className="input"
                 required
               />
             </div>
@@ -306,7 +306,7 @@ export function EditTransactionModal({
                 step="any"
                 value={fees}
                 onChange={(e) => setFees(e.target.value)}
-                className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3 text-sm font-semibold text-main focus:outline-none"
+                className="input"
               />
             </div>
           </div>
@@ -325,7 +325,7 @@ export function EditTransactionModal({
                     e.currentTarget.showPicker?.();
                   } catch {}
                 }}
-                className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3 text-sm font-semibold text-main focus:outline-none cursor-pointer"
+                className="input cursor-pointer"
                 required
               />
 

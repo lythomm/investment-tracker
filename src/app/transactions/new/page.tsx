@@ -94,32 +94,28 @@ function AirbnbCalendar({ value, onChange }: { value: string; onChange: (val: st
         <button
           type="button"
           onClick={() => setShortcut("today")}
-          className={`px-3.5 py-2 rounded-2xl text-xs font-bold transition cursor-pointer ${
-            value === todayStr
-              ? "bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 shadow-xs"
-              : "bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800"
-          }`}
+          className={`pill ${value === todayStr ? "pill-active" : "pill-inactive"}`}
         >
           Aujourd'hui
         </button>
         <button
           type="button"
           onClick={() => setShortcut("yesterday")}
-          className="px-3.5 py-2 rounded-2xl text-xs font-bold bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer"
+          className="pill pill-inactive"
         >
           Hier
         </button>
         <button
           type="button"
           onClick={() => setShortcut("startOfMonth")}
-          className="px-3.5 py-2 rounded-2xl text-xs font-bold bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer"
+          className="pill pill-inactive"
         >
           1er du mois
         </button>
         <button
           type="button"
           onClick={() => setShortcut("endOfPrevMonth")}
-          className="px-3.5 py-2 rounded-2xl text-xs font-bold bg-surface-subtle border border-subtle text-muted hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer"
+          className="pill pill-inactive"
         >
           Fin du mois dernier
         </button>
@@ -638,7 +634,7 @@ export default function NewTransactionPage() {
                 Rechercher par Ticker / ISIN / Nom
               </label>
               <div className="relative">
-                <Search className="absolute left-4 top-4 h-5 w-5 text-muted" />
+                <Search className="absolute left-4 top-3.5 h-5 w-5 text-muted pointer-events-none z-10" />
                 <input
                   type="text"
                   placeholder="Ex: CW8, AAPL, Amundi MSCI World..."
@@ -648,10 +644,10 @@ export default function NewTransactionPage() {
                     setShowDropdown(true);
                   }}
                   onFocus={() => setShowDropdown(true)}
-                  className="w-full rounded-2xl bg-surface-subtle border border-subtle pl-12 pr-12 py-3.5 text-base font-medium text-main focus:outline-none focus:ring-2 focus:ring-slate-900/10"
+                  className="input input-lg !pl-12 !pr-12 font-medium"
                 />
                 {isSearching && (
-                  <Loader2 className="absolute right-4 top-4 h-5 w-5 animate-spin text-muted" />
+                  <Loader2 className="absolute right-4 top-3.5 h-5 w-5 animate-spin text-muted pointer-events-none z-10" />
                 )}
               </div>
 
@@ -740,7 +736,7 @@ export default function NewTransactionPage() {
                   placeholder="CW8"
                   value={ticker}
                   onChange={(e) => setTicker(e.target.value.toUpperCase())}
-                  className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-bold uppercase text-main focus:outline-none"
+                  className="input input-lg font-bold uppercase"
                   required
                 />
               </div>
@@ -776,7 +772,7 @@ export default function NewTransactionPage() {
                 placeholder="Ex: Amundi MSCI World UCITS ETF"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-medium text-main focus:outline-none"
+                className="input input-lg font-medium"
                 required
               />
             </div>
@@ -820,7 +816,7 @@ export default function NewTransactionPage() {
                   placeholder="10"
                   value={quantity}
                   onChange={(e) => setQuantity(e.target.value)}
-                  className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-medium text-main focus:outline-none"
+                  className="input input-lg font-medium"
                   required
                 />
               </div>
@@ -836,7 +832,7 @@ export default function NewTransactionPage() {
                     placeholder="500"
                     value={unitPrice}
                     onChange={(e) => setUnitPrice(e.target.value)}
-                    className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-medium text-main focus:outline-none"
+                    className="input input-lg font-medium"
                     required
                   />
                 </div>
@@ -850,7 +846,7 @@ export default function NewTransactionPage() {
                     placeholder="0"
                     value={fees}
                     onChange={(e) => setFees(e.target.value)}
-                    className="w-full rounded-2xl bg-surface-subtle border border-subtle px-4 py-3.5 text-base font-medium text-main focus:outline-none"
+                    className="input input-lg font-medium"
                   />
                 </div>
               </div>

@@ -29,7 +29,7 @@ export default function PositionsPage() {
   return (
     <main className="flex-1 w-full px-4 sm:px-8 lg:px-12 pt-4 space-y-6">
       {accounts.length === 0 ? (
-        <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center my-8">
+        <div className="card flex flex-col items-center justify-center rounded-2xl p-16 text-center my-8">
           <Wallet className="h-12 w-12 text-main mb-4" />
           <h2 className="text-3xl font-bold text-main font-serif-display">Bienvenue sur Folio !</h2>
           <p className="mt-2 text-base text-muted max-w-md">

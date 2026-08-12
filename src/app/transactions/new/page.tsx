@@ -463,7 +463,7 @@ export default function NewTransactionPage() {
       </div>
 
       {/* Main Multistep Form Card Container */}
-      <div className="card-light rounded-3xl p-5 sm:p-12 space-y-8">
+      <div className="card rounded-3xl p-5 sm:p-12 space-y-8">
         {error && (
           <div className="flex items-center gap-3 rounded-2xl bg-rose-50 dark:bg-rose-950/40 p-4 text-sm font-semibold text-rose-700 dark:text-rose-300">
             <AlertCircle className="h-5 w-5 shrink-0" />
@@ -657,7 +657,7 @@ export default function NewTransactionPage() {
 
               {/* Search Autocomplete Dropdown */}
               {showDropdown && searchQuery.trim().length > 0 && (
-                <div className="absolute z-20 mt-2 w-full rounded-3xl card-light border border-subtle shadow-2xl max-h-72 overflow-y-auto p-3 space-y-1.5">
+                <div className="absolute z-20 mt-2 w-full rounded-3xl card border border-subtle shadow-2xl max-h-72 overflow-y-auto p-3 space-y-1.5">
                   {/* Local assets */}
                   {filteredLocalAssets.length > 0 && (
                     <div className="px-3 py-1.5 text-xs font-bold text-muted uppercase tracking-wider">

@@ -79,7 +79,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
   return (
     <div className="space-y-6">
       {/* Top Chart Card: Financial Performance */}
-      <div className="card-light rounded-2xl p-6 sm:p-8">
+      <div className="card rounded-2xl p-6 sm:p-8">
         <div className="flex items-center justify-between mb-2">
           <div>
             <h3 className="text-2xl font-normal text-main font-serif-display">
@@ -206,7 +206,7 @@ export function FinancialPerformanceCard({ snapshots, summary }: FinancialPerfor
       </div>
 
       {/* Bottom Insights Card: Dynamic Quick Insights */}
-      <div className="card-light rounded-2xl p-6 sm:p-8">
+      <div className="card rounded-2xl p-6 sm:p-8">
         <h3 className="text-2xl font-normal text-main font-serif-display mb-4">
           Aperçu Rapide
         </h3>

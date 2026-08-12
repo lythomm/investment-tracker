@@ -20,8 +20,8 @@ Au lieu d'utiliser des couleurs brutes (`#edf1f2`, `bg-white`, `text-slate-900`)
 | Token Sémantique | Classe utilitaire / Usage | Valeur Mode Clair | Valeur Mode Sombre |
 | :--- | :--- | :--- | :--- |
 | `--bg-app` | `.bg-app` (Fond d'écran) | `#edf1f2` | `#0b0f17` |
-| `--bg-surface` | `.bg-surface` / `.card-light` | `#ffffff` | `#131926` |
-| `--bg-surface-hover` | `.card-light-hover:hover` | `#f8fafc` | `#1a2334` |
+| `--bg-surface` | `.bg-surface` / `.card` | `#ffffff` | `#131926` |
+| `--bg-surface-hover` | `.card-hover:hover` | `#f8fafc` | `#1a2334` |
 | `--bg-surface-subtle` | `.bg-surface-subtle` | `#f1f5f9` | `#192233` |
 | `--text-main` | `.text-main` (Titres & texte principal) | `#0f172a` | `#f8fafc` |
 | `--text-muted` | `.text-muted` (Sous-titres & labels) | `#64748b` | `#94a3b8` |
@@ -33,6 +33,7 @@ Au lieu d'utiliser des couleurs brutes (`#edf1f2`, `bg-white`, `text-slate-900`)
 
 ## Conséquences et Directives pour les Nouveaux Composants
 Lors de la création de nouveaux composants ou de nouvelles pages :
-1. **Cartes & Conteneurs** : Préférer la classe `.card-light` ou `bg-surface border border-subtle` au lieu de `bg-white`.
+1. **Cartes & Conteneurs** : Préférer la classe `.card` ou `bg-surface border border-subtle` au lieu de `bg-white`.
+
 2. **Typographie** : Utiliser `text-main` pour le texte principal et `text-muted` pour le texte secondaire.
 3. **Boutons & Actions** : Utiliser le composant `<Button variant="..." />` qui gère nativement les styles dark mode.

@@ -28,7 +28,7 @@ interface HoldingsTableProps {
 export function HoldingsTable({ holdings }: HoldingsTableProps) {
   if (holdings.length === 0) {
     return (
-      <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center">
+      <div className="card flex flex-col items-center justify-center rounded-2xl p-16 text-center">
         <Layers className="h-12 w-12 text-muted mb-3" />
         <p className="text-lg font-medium text-muted font-serif-display">
           Aucun actif détenu dans le portefeuille.
@@ -43,7 +43,7 @@ export function HoldingsTable({ holdings }: HoldingsTableProps) {
   }
 
   return (
-    <div className="card-light rounded-2xl p-6 sm:p-8">
+    <div className="card rounded-2xl p-6 sm:p-8">
       <div className="mb-6">
         <h2 className="text-3xl font-normal text-main font-serif-display">
           Positions Ouvertes

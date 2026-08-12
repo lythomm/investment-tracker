@@ -164,7 +164,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
   if (transactions.length === 0) {
     return (
-      <div className="card-light flex flex-col items-center justify-center rounded-2xl p-16 text-center">
+      <div className="card flex flex-col items-center justify-center rounded-2xl p-16 text-center">
         <History className="h-12 w-12 text-muted mb-3" />
         <p className="text-lg font-medium text-muted font-serif-display">
           Aucune transaction enregistrée dans le journal.
@@ -179,7 +179,7 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
   }
 
   return (
-    <div className="card-light rounded-2xl p-6 sm:p-8 space-y-6">
+    <div className="card rounded-2xl p-6 sm:p-8 space-y-6">
       {/* Header & Title */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>

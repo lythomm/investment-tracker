@@ -41,7 +41,7 @@ export function PortfolioAllocationCard({ holdings, totalValuation }: PortfolioA
   const activeItem = activeIndex !== null ? chartData[activeIndex] : null;
 
   return (
-    <div className="card-light rounded-2xl p-6 sm:p-8 h-full flex flex-col justify-between space-y-6">
+    <div className="card rounded-2xl p-6 sm:p-8 h-full flex flex-col justify-between space-y-6">
       <div>
         <h3 className="text-2xl font-normal text-main font-serif-display">
           Répartition par Actif

@@ -43,7 +43,7 @@ export function MetricsOverview({ summary }: MetricsOverviewProps) {
       className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
     >
       {/* Total Valuation */}
-      <motion.div variants={itemVariants} className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
+      <motion.div variants={itemVariants} className="card card-hover rounded-2xl p-5 relative overflow-hidden">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted">
             Valeur du Portefeuille
@@ -63,7 +63,7 @@ export function MetricsOverview({ summary }: MetricsOverviewProps) {
       </motion.div>
 
       {/* Total Invested */}
-      <motion.div variants={itemVariants} className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
+      <motion.div variants={itemVariants} className="card card-hover rounded-2xl p-5 relative overflow-hidden">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted">
             Total Apports Investis
@@ -83,7 +83,7 @@ export function MetricsOverview({ summary }: MetricsOverviewProps) {
       </motion.div>
 
       {/* Plus-Value Latente */}
-      <motion.div variants={itemVariants} className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
+      <motion.div variants={itemVariants} className="card card-hover rounded-2xl p-5 relative overflow-hidden">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted">
             Plus-Value Latente
@@ -122,7 +122,7 @@ export function MetricsOverview({ summary }: MetricsOverviewProps) {
       </motion.div>
 
       {/* Dividendes Cumulés */}
-      <motion.div variants={itemVariants} className="card-light card-light-hover rounded-2xl p-5 relative overflow-hidden">
+      <motion.div variants={itemVariants} className="card card-hover rounded-2xl p-5 relative overflow-hidden">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted">
             Dividendes Cumulés

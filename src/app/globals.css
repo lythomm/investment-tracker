@@ -47,11 +47,19 @@
 }
 
 @layer base {
-  *, ::before, ::after {
+
+  *,
+  ::before,
+  ::after {
     box-shadow: none !important;
   }
 
-  html, body, button, input, select, textarea {
+  html,
+  body,
+  button,
+  input,
+  select,
+  textarea {
     background-color: var(--bg-app);
     color: var(--text-main);
     font-family: 'Satoshi', system-ui, -apple-system, sans-serif !important;
@@ -60,19 +68,31 @@
     box-shadow: none !important;
   }
 
-  button, [role="button"], a, select {
+  button,
+  [role="button"],
+  a,
+  select {
     cursor: pointer;
   }
 
-  button:disabled, [role="button"][aria-disabled="true"] {
+  button:disabled,
+  [role="button"][aria-disabled="true"] {
     cursor: not-allowed;
   }
 
-  h1, h2, h3, h4, h5, h6, .font-serif, .font-serif-display {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-serif,
+  .font-serif-display {
     font-family: 'Gambarino', serif !important;
   }
 
-  table th, table td {
+  table th,
+  table td {
     white-space: nowrap !important;
     padding-left: 1.25rem !important;
     padding-right: 1.25rem !important;
@@ -104,27 +124,29 @@
     border-color: var(--border-subtle);
   }
 
-  .font-serif, .font-serif-display {
+  .font-serif,
+  .font-serif-display {
     font-family: 'Gambarino', serif !important;
   }
 
-  .font-sans, .font-sans-body {
+  .font-sans,
+  .font-sans-body {
     font-family: 'Satoshi', system-ui, -apple-system, sans-serif !important;
   }
 
-  .card-light {
+  .card {
     background-color: var(--bg-surface);
-    border: 1px solid var(--border-subtle) !important;
     border-radius: 1rem;
     box-shadow: none !important;
     transition: background-color 0.2s ease, border-color 0.2s ease;
   }
 
-  .card-light-hover:hover {
+  .card-hover:hover {
     background-color: var(--bg-surface-hover);
     box-shadow: none !important;
     transform: translateY(-1px);
   }
+
 
   .status-badge-complete {
     background-color: var(--badge-complete-bg);

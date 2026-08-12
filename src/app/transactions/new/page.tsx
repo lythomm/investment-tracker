@@ -826,28 +826,34 @@ export default function NewTransactionPage() {
                   <label className="block text-sm font-bold text-main mb-2">
                     Prix unitaire (€)
                   </label>
-                  <input
-                    type="number"
-                    step="any"
-                    placeholder="500"
-                    value={unitPrice}
-                    onChange={(e) => setUnitPrice(e.target.value)}
-                    className="input input-lg font-medium"
-                    required
-                  />
+                  <div className="input-currency-wrapper">
+                    <input
+                      type="number"
+                      step="any"
+                      placeholder="500"
+                      value={unitPrice}
+                      onChange={(e) => setUnitPrice(e.target.value)}
+                      className="input input-lg font-medium"
+                      required
+                    />
+                    <span className="input-currency-symbol">€</span>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-bold text-main mb-2">
                     Frais (€)
                   </label>
-                  <input
-                    type="number"
-                    step="any"
-                    placeholder="0"
-                    value={fees}
-                    onChange={(e) => setFees(e.target.value)}
-                    className="input input-lg font-medium"
-                  />
+                  <div className="input-currency-wrapper">
+                    <input
+                      type="number"
+                      step="any"
+                      placeholder="0"
+                      value={fees}
+                      onChange={(e) => setFees(e.target.value)}
+                      className="input input-lg font-medium"
+                    />
+                    <span className="input-currency-symbol">€</span>
+                  </div>
                 </div>
               </div>
             </div>

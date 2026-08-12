@@ -230,7 +230,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                 />
               </div>
 
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-2 input-currency-wrapper">
                 <input
                   type="number"
                   step="any"
@@ -240,6 +240,7 @@ export function DcaBatchModal({ isOpen, onClose, accounts }: DcaBatchModalProps)
                   className="input input-sm"
                   required
                 />
+                <span className="input-currency-symbol">€</span>
               </div>
 
               <div className="flex items-center justify-end sm:col-span-1 pr-1">

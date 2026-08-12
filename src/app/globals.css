@@ -235,6 +235,30 @@
     font-size: 1rem;
   }
 
+  /* Currency Input Wrapper & Symbol */
+  .input-currency-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .input-currency-wrapper input,
+  .input-currency {
+    padding-right: 2.25rem !important;
+  }
+
+  .input-currency-symbol {
+    position: absolute;
+    right: 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    pointer-events: none;
+    user-select: none;
+  }
+
+
   /* Centralized Pills & Badges */
   .pill {
     display: inline-flex;

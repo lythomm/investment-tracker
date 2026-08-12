@@ -71,8 +71,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 350, damping: 25, delay: 0.15 }}
-            whileHover={{ y: -3 }}
-            className="rounded-2xl bg-surface p-6 text-main w-full sm:w-64 border border-subtle shadow-lg transition-all"
+            className="rounded-2xl bg-surface p-6 text-main w-full sm:w-64 shadow-lg transition-all"
           >
             <div className="flex items-center justify-between">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500 text-white">
@@ -83,7 +82,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
 
             <div className="mt-4">
               <div className="text-sm font-serif-display text-muted">Apports Investis</div>
-              <div className="text-3xl font-bold text-main mt-1">
+              <div className="text-3xl font-bold text-main mt-1 font-sans">
                 <NumberFlow
                   value={invested}
                   locales="fr-FR"
@@ -99,8 +98,7 @@ export function HeroBanner({ summary, selectedAccountName }: HeroBannerProps) {
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 350, damping: 25, delay: 0.22 }}
-            whileHover={{ y: -3 }}
-            className="rounded-2xl bg-surface p-6 text-main w-full sm:w-64 border border-subtle shadow-lg transition-all"
+            className="rounded-2xl bg-surface p-6 text-main w-full sm:w-64 shadow-lg transition-all"
           >
             <div className="flex items-center justify-between">
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-500 text-white">

@@ -17,6 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=gambarino@400&display=swap"
+        />
+      </head>
       <body className="min-h-full bg-app text-main transition-colors duration-200">
         <ThemeProvider>
           <ConvexClientProvider>

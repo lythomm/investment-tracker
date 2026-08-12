@@ -20,17 +20,21 @@ import { api } from "../../convex/_generated/api";
 import { prettyDisplayDate } from "@/lib/formatters";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { Button } from "@/components/ui/Button";
+import { EditTransactionModal, TransactionItem } from "@/components/EditTransactionModal";
+import { useToast } from "@/components/ui/Toast";
 
 interface TransactionsListProps {
   transactions: Array<{
     _id: string;
+    accountId: string;
+    assetId: string;
     type: "ACHAT" | "VENTE" | "DIVIDENDE";
     quantity: number;
     unitPrice: number;
     fees: number;
     date: string;
-    asset?: { ticker: string; name: string; type: string } | null;
-    account?: { name: string; type: string } | null;
+    asset?: { _id?: string; ticker: string; name: string; type: string } | null;
+    account?: { _id?: string; name: string; type: string } | null;
   }>;
 }
 
@@ -40,9 +44,27 @@ type SortDirection = "asc" | "desc";
 const ITEMS_PER_PAGE = 50;
 
 export function TransactionsList({ transactions }: TransactionsListProps) {
+  const { showToast } = useToast();
+  const [selectedTransaction, setSelectedTransaction] = useState<TransactionItem | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const deleteTransaction = useMutation(api.transactions.deleteTransaction);
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
+    try {
+      await deleteTransaction({ id: deleteId as any });
+      showToast("success", "Transaction supprimée avec succès.");
+      setDeleteId(null);
+    } catch (err: any) {
+      showToast("danger", err.message || "Erreur lors de la suppression de la transaction.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+
 
   // Filters & Sorting state
   const [searchQuery, setSearchQuery] = useState("");
@@ -51,16 +73,6 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const confirmDelete = async () => {
-    if (!deleteId) return;
-    setIsDeleting(true);
-    try {
-      await deleteTransaction({ id: deleteId as any });
-      setDeleteId(null);
-    } finally {
-      setIsDeleting(false);
-    }
-  };
 
   const handleSort = (col: SortColumn) => {
     setCurrentPage(1);
@@ -337,7 +349,8 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
                 return (
                   <tr
                     key={tx._id}
-                    className="hover:bg-surface-hover transition border-b border-subtle last:border-0"
+                    onClick={() => setSelectedTransaction(tx as any)}
+                    className="hover:bg-surface-hover transition border-b border-subtle last:border-0 cursor-pointer"
                   >
                     <td className="py-4 px-4 sm:px-6 font-medium text-sm text-muted">
                       {prettyDisplayDate(tx.date)}
@@ -391,7 +404,10 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 
                     <td className="py-4 px-4 sm:px-6 text-right">
                       <button
-                        onClick={() => setDeleteId(tx._id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDeleteId(tx._id);
+                        }}
                         className="rounded-2xl p-2 text-muted hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:text-rose-600 dark:hover:text-rose-400 transition cursor-pointer"
                         title="Supprimer"
                       >
@@ -443,6 +459,12 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
         </div>
       )}
 
+      <EditTransactionModal
+        isOpen={!!selectedTransaction}
+        onClose={() => setSelectedTransaction(null)}
+        transaction={selectedTransaction}
+      />
+
       <ConfirmModal
         isOpen={!!deleteId}
         onClose={() => setDeleteId(null)}
@@ -454,3 +476,4 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
     </div>
   );
 }
+

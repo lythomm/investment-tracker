@@ -5,7 +5,14 @@ import { getAuthUserId } from "@convex-dev/auth/server";
 export const createAccount = mutation({
   args: {
     name: v.string(),
-    type: v.union(v.literal("PEA"), v.literal("CTO")),
+    type: v.union(
+      v.literal("PEA"),
+      v.literal("CTO"),
+      v.literal("PER"),
+      v.literal("ASSURANCE_VIE"),
+      v.literal("CRYPTO"),
+      v.literal("SCPI")
+    ),
   },
   handler: async (ctx: any, args: any) => {
     const userId = await getAuthUserId(ctx);

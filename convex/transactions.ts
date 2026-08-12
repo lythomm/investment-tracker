@@ -153,3 +153,43 @@ export const deleteTransaction = mutation({
     await ctx.db.delete(args.id);
   },
 });
+
+export const updateTransaction = mutation({
+  args: {
+    id: v.id("transactions"),
+    accountId: v.id("accounts"),
+    assetId: v.id("assets"),
+    type: v.union(v.literal("ACHAT"), v.literal("VENTE"), v.literal("DIVIDENDE")),
+    quantity: v.number(),
+    unitPrice: v.number(),
+    fees: v.number(),
+    date: v.string(),
+  },
+  handler: async (ctx: any, args: any) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Non autorisé.");
+    }
+
+    const tx = await ctx.db.get(args.id);
+    if (!tx || tx.userId !== userId) {
+      throw new Error("Transaction non trouvée ou non autorisée.");
+    }
+
+    const account = await ctx.db.get(args.accountId);
+    if (!account || account.userId !== userId) {
+      throw new Error("Compte non trouvé ou non autorisé.");
+    }
+
+    await ctx.db.patch(args.id, {
+      accountId: args.accountId,
+      assetId: args.assetId,
+      type: args.type,
+      quantity: Math.abs(args.quantity),
+      unitPrice: Math.abs(args.unitPrice),
+      fees: Math.abs(args.fees),
+      date: args.date,
+    });
+  },
+});
+

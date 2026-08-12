@@ -7,7 +7,14 @@ export default defineSchema({
   accounts: defineTable({
     userId: v.id("users"),
     name: v.string(),
-    type: v.union(v.literal("PEA"), v.literal("CTO")),
+    type: v.union(
+      v.literal("PEA"),
+      v.literal("CTO"),
+      v.literal("PER"),
+      v.literal("ASSURANCE_VIE"),
+      v.literal("CRYPTO"),
+      v.literal("SCPI")
+    ),
     createdAt: v.number(),
   }).index("by_user", ["userId"]),
 
@@ -15,7 +22,12 @@ export default defineSchema({
     ticker: v.string(),
     isin: v.optional(v.string()),
     name: v.string(),
-    type: v.union(v.literal("ETF"), v.literal("Action")),
+    type: v.union(
+      v.literal("ETF"),
+      v.literal("Action"),
+      v.literal("Crypto"),
+      v.literal("SCPI")
+    ),
     currentPrice: v.number(),
     updatedAt: v.number(),
   }).index("by_ticker", ["ticker"]),

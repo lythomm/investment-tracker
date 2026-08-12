@@ -14,7 +14,12 @@ export const getOrCreateAsset = mutation({
     ticker: v.string(),
     name: v.string(),
     isin: v.optional(v.string()),
-    type: v.union(v.literal("ETF"), v.literal("Action")),
+    type: v.union(
+      v.literal("ETF"),
+      v.literal("Action"),
+      v.literal("Crypto"),
+      v.literal("SCPI")
+    ),
     currentPrice: v.number(),
   },
   handler: async (ctx: any, args: any) => {

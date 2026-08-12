@@ -3,6 +3,7 @@ import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AppShell } from "@/components/AppShell";
+import { ToastProvider } from "@/components/ui/Toast";
 
 export const metadata: Metadata = {
   title: "Folio — Tracker d'Investissement Long Terme",
@@ -19,10 +20,13 @@ export default function RootLayout({
       <body className="min-h-full bg-app text-main transition-colors duration-200">
         <ThemeProvider>
           <ConvexClientProvider>
-            <AppShell>{children}</AppShell>
+            <ToastProvider>
+              <AppShell>{children}</AppShell>
+            </ToastProvider>
           </ConvexClientProvider>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+
